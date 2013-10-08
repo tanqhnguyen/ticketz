@@ -9,6 +9,6 @@ pip install -r requirements.txt
 ```
 
 Setup local configuration
-- Copy `config.json.sample` and rename it to `config.json`. This file contains local configuration for each developer
+- Copy `config.json.sample` and rename it to `config.json`. This file contains local configuration for each developer. Database connection information should be specified in this file
 
 (Optional) There is also a chef (and vagrant) setting, that can be used to automatically configure the environment [More info here](http://www.vagrantup.com)
