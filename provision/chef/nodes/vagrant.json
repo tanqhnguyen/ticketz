@@ -1,0 +1,8 @@
+{
+  "run_list": ["role[app]"],
+  "app" : {
+    "root_dir" : "/vagrant",
+    "user" : "vagrant",
+    "group" : "vagrant"
+  },
+}
