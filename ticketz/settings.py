@@ -1,4 +1,13 @@
+import json
+import os
+
+root_path = os.path.dirname(os.path.abspath(__file__))
 # Django settings for ticketz project.
+
+with open(root_path + '/config.json') as data_file:
+    config = json.load(data_file)
+
+print config
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -11,13 +20,12 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
-        # The following settings are not used with sqlite3:
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',                      # Set to empty string for default.
+        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': config['db']['name'],
+        'USER': config['db']['username'],
+        'PASSWORD': config['db']['password'],
+        'HOST': config['db']['host'],
+        'PORT': config['db']['port'],
     }
 }
 
