@@ -1,13 +1,11 @@
 import json
 import os
 
-root_path = os.path.dirname(os.path.abspath(__file__))
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 # Django settings for ticketz project.
 
-with open(root_path + '/config.json') as data_file:
+with open(PROJECT_DIR + '/config.json') as data_file:
     config = json.load(data_file)
-
-print config
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -77,9 +75,10 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    # Put strings here, like "/home/html/static" or "C:/www/django/static".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+  (os.path.join(PROJECT_DIR, '../static'), )
+  # Put strings here, like "/home/html/static" or "C:/www/django/static".
+  # Always use forward slashes, even on Windows.
+  # Don't forget to use absolute paths, not relative paths.
 )
 
 # List of finder classes that know how to find static files in
