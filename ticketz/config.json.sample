@@ -10,6 +10,14 @@
     "facebook": {
       "key": "",
       "secret": ""
+    },
+    "live": {
+      "key": "",
+      "secret": ""
+    },
+    "google": {
+      "key": "",
+      "secret": ""
     }
   }
 }

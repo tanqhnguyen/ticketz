@@ -192,4 +192,17 @@ SOCIAL_AUTH_FACEBOOK_KEY = config["auth"]["facebook"]["key"]
 SOCIAL_AUTH_FACEBOOK_SECRET = config["auth"]["facebook"]["secret"]
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'read_friendlists', 'publish_stream']
 
+SOCIAL_AUTH_LIVE_KEY = config["auth"]["live"]["key"]
+SOCIAL_AUTH_LIVE_SECRET = config["auth"]["live"]["secret"]
+SOCIAL_AUTH_FACEBOOK_SCOPE = ["wl.basic", "wl.emails"]
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config["auth"]["google"]["key"]
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config["auth"]["google"]["secret"]
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
+    "https://www.googleapis.com/auth/userinfo.profile",
+    "https://www.googleapis.com/auth/userinfo.email",
+    "https://www.googleapis.com/auth/plus.login",
+    "https://www.googleapis.com/auth/plus.me"
+]
+
 SOCIAL_AUTH_SESSION_EXPIRATION = False
