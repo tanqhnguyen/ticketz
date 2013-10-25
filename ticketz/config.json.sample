@@ -2,8 +2,14 @@
   "db": {
     "username": "",
     "password": "",
-    "host": "",
-    "port": "",
+    "host": "127.0.0.1",
+    "port": "5432",
     "name": ""
+  },
+  "auth": {
+    "facebook": {
+      "key": "",
+      "secret": ""
+    }
   }
 }

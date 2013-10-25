@@ -5,6 +5,8 @@ from django.conf.urls import patterns, include, url
 # admin.autodiscover()
 
 urlpatterns = patterns('',
+    url(r'', include('social.apps.django_app.urls', namespace='social')),
+    url(r'', include('core.urls')),
     # Examples:
     # url(r'^$', 'ticketz.views.home', name='home'),
     # url(r'^ticketz/', include('ticketz.foo.urls')),

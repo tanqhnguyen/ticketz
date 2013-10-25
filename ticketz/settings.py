@@ -1,5 +1,6 @@
 import json
 import os
+from django.conf import global_settings
 
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 # Django settings for ticketz project.
@@ -18,7 +19,7 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': config['db']['name'],
         'USER': config['db']['username'],
         'PASSWORD': config['db']['password'],
@@ -99,6 +100,11 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
+    "django.core.context_processors.request",
+    "core.template_processors.user",
+)
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -108,6 +114,10 @@ MIDDLEWARE_CLASSES = (
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+
+AUTH_USER_MODEL = 'core.User'
+LOGIN_REDIRECT_URL = '/account/profile'
+LOGIN_URL = '/login'
 
 ROOT_URLCONF = 'ticketz.urls'
 
@@ -127,11 +137,15 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'social.apps.django_app.default',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+    'south',
+    'social.apps.django_app.default',
+    'djcelery',
+    'kombu.transport.django',
+    'core'
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
@@ -167,8 +181,15 @@ LOGGING = {
 
 # Authentication
 AUTHENTICATION_BACKENDS = (
-      'social.backends.google.GoogleOAuth2',
-      'social.backends.facebook.FacebookOAuth2',
-      'social.backends.live.LiveOAuth2',
-      'django.contrib.auth.backends.ModelBackend',
-  )
+    'social.backends.google.GoogleOAuth2',
+    'social.backends.facebook.FacebookOAuth2',
+    'social.backends.live.LiveOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+SOCIAL_AUTH_USER_MODEL = 'core.User'
+
+SOCIAL_AUTH_FACEBOOK_KEY = config["auth"]["facebook"]["key"]
+SOCIAL_AUTH_FACEBOOK_SECRET = config["auth"]["facebook"]["secret"]
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'read_friendlists', 'publish_stream']
+
+SOCIAL_AUTH_SESSION_EXPIRATION = False
