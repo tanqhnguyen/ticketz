@@ -18,7 +18,7 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': config['db']['name'],
         'USER': config['db']['username'],
         'PASSWORD': config['db']['password'],
@@ -127,6 +127,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social.apps.django_app.default',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -163,3 +164,11 @@ LOGGING = {
         },
     }
 }
+
+# Authentication
+AUTHENTICATION_BACKENDS = (
+      'social.backends.google.GoogleOAuth2',
+      'social.backends.facebook.FacebookOAuth2',
+      'social.backends.live.LiveOAuth2',
+      'django.contrib.auth.backends.ModelBackend',
+  )

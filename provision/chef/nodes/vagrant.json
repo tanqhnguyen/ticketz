@@ -1,8 +1,8 @@
 {
-  "run_list": ["role[app]"],
+  "run_list": ["role[app]","role[db]"],
   "app" : {
     "root_dir" : "/vagrant",
     "user" : "vagrant",
     "group" : "vagrant"
-  },
+  }
 }
