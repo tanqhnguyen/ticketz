@@ -15,8 +15,9 @@
   {% with "less/"|add:less|add:".less" as template %}
   <link rel="stylesheet/less" type="text/css" href="{% static template %}" />
   {% endwith %}
-  
   {% endif %}
+
+  {% block less %} {% endblock %}
 
   <script type="text/javascript" src="{% static 'js/less.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/bootstrap/bootstrap-alert.js' %}"></script>
@@ -46,7 +47,7 @@
           <ul class="nav pull-right">
             {% if not user.is_authenticated %}
             <li><a href="#">{% trans 'Login' %}</a></li>
-            <li><a href="#">{% trans 'Register' %}</a></li>
+            <li><a href="{% url 'register' %}">{% trans 'Register' %}</a></li>
             {% else %}
             <li class="divider-vertical"></li>
             <li class="dropdown">
@@ -54,7 +55,7 @@
               <ul class="dropdown-menu">
                 <li><a href="#">{% trans "Update profile" %}</a></li>
                 <li class="divider"></li>
-                <li><a href="#">{% trans 'Logout' %}</a></li>
+                <li><a href="{% url 'django.contrib.auth.views.logout' %}">{% trans 'Logout' %}</a></li>
               </ul>
             </li>
             {% endif %}

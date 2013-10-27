@@ -36,11 +36,14 @@ ALLOWED_HOSTS = []
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # In a Windows environment this must be set to your system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'Europe/Helsinki'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-us'
+LANGUAGES = (
+  ('en', 'English'),
+)
 
 SITE_ID = 1
 
@@ -180,6 +183,7 @@ LOGGING = {
 }
 
 # Authentication
+SOCIAL_AUTH_UID_LENGTH = 4
 AUTHENTICATION_BACKENDS = (
     'social.backends.google.GoogleOAuth2',
     'social.backends.facebook.FacebookOAuth2',
@@ -194,7 +198,7 @@ SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'read_friendlists', 'publish_stream']
 
 SOCIAL_AUTH_LIVE_KEY = config["auth"]["live"]["key"]
 SOCIAL_AUTH_LIVE_SECRET = config["auth"]["live"]["secret"]
-SOCIAL_AUTH_FACEBOOK_SCOPE = ["wl.basic", "wl.emails"]
+SOCIAL_AUTH_LIVE_SCOPE = ["wl.basic", "wl.emails"]
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config["auth"]["google"]["key"]
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config["auth"]["google"]["secret"]
@@ -205,4 +209,16 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
     "https://www.googleapis.com/auth/plus.me"
 ]
 
-SOCIAL_AUTH_SESSION_EXPIRATION = False
+SOCIAL_AUTH_USERNAME_FORM_HTML = 'core/login.html'
+
+SOCIAL_AUTH_PIPELINE = (
+    'social.pipeline.social_auth.social_details',
+    'social.pipeline.social_auth.social_uid',
+    'social.pipeline.social_auth.auth_allowed',
+    'social.pipeline.social_auth.social_user',
+    'core.pipeline.get_username',
+    'social.pipeline.user.create_user',
+    'social.pipeline.social_auth.associate_user',
+    'social.pipeline.social_auth.load_extra_data',
+    'social.pipeline.user.user_details'
+)
