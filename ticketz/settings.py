@@ -183,7 +183,6 @@ LOGGING = {
 }
 
 # Authentication
-SOCIAL_AUTH_UID_LENGTH = 4
 AUTHENTICATION_BACKENDS = (
     'social.backends.google.GoogleOAuth2',
     'social.backends.facebook.FacebookOAuth2',
