@@ -36,7 +36,7 @@
 * Do not touch `master` branch unless you know what you are doing
 
 ## Database migration
-In this project, we are using `South` to keep track of schema changes. Since we are having 4 people working on the same project, conflicts will probably happen quite often. Therefore, you need to keep in mind that you need to discuss with other before changing the database schema
+In this project, we are using `South` to keep track of schema changes. Since we are having 4 people working on the same project, conflicts will probably happen quite often. Therefore, you need to keep in mind that you must discuss with others before changing the database schema
 
 There are 2 steps to create new migration
 * Making changes to the models, for example, adding another `CharField`
