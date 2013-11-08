@@ -4,70 +4,72 @@
 
 {% block content %}
 <div class="decorated">
-  <form method="POST" class="form-horizontal">
+  <form method="POST" class="form-horizontal" role="form">
     {% csrf_token %}
     <legend>
       {% trans 'Registration' %}
     </legend>
     <fieldset>
       {% if form.errors.username %}
-      <div class="control-group error">
+      <div class="form-group error">
       {% else %}
-      <div class="control-group">
+      <div class="form-group">
       {% endif %}
-        <lable class="control-label" for="username">
+        <lable class="col-sm-2 control-label" for="username">
           {{ form.username.label }}
         </lable>
-        <div class="controls">
-          <input type="text" class="span4" id="username" name="username" placeholder="{{ form.username.label }}" value="{{ form.username.value|default_if_none:'' }}" />
+        <div class="col-sm-4">
+          <input type="text" class="form-control" id="username" name="username" placeholder="{{ form.username.label }}" value="{{ form.username.value|default_if_none:'' }}" />
           <span class="help-block">{{ form.errors.username }}</span>
         </div>
       </div>
 
       {% if form.errors.email %}
-      <div class="control-group error">
+      <div class="form-group has-error">
       {% else %}
-      <div class="control-group">
+      <div class="form-group">
       {% endif %}
-        <lable class="control-label" for="email">
+        <lable class="control-label col-sm-2" for="email">
           {{ form.email.label }}
         </lable>
-        <div class="controls">
-          <input type="text" class="span4" id="email" name="email" placeholder="{{ form.email.label }}" value="{{ form.email.value|default_if_none:'' }}" />
+        <div class="col-sm-4">
+          <input type="text" class="form-control" id="email" name="email" placeholder="{{ form.email.label }}" value="{{ form.email.value|default_if_none:'' }}" />
           <span class="help-block">{{ form.errors.email }}</span>
         </div>
       </div>
 
       {% if form.errors.password1 %}
-      <div class="control-group error">
+      <div class="form-group has-error">
       {% else %}
-      <div class="control-group">
+      <div class="form-group">
       {% endif %}
-        <lable class="control-label" for="password1">
+        <lable class="control-label col-sm-2" for="password1">
           {{ form.password1.label }}
         </lable>
-        <div class="controls">
-          <input type="password" class="span4" id="password1" name="password1" placeholder="{{ form.password1.label }}" value="{{ form.password1.value|default_if_none:'' }}" />
+        <div class="col-sm-4">
+          <input type="password" class="form-control" id="password1" name="password1" placeholder="{{ form.password1.label }}" value="{{ form.password1.value|default_if_none:'' }}" />
           <span class="help-block">{{ form.errors.password1 }}</span>
         </div>
       </div>
 
       {% if form.errors.password2 %}
-      <div class="control-group error">
+      <div class="form-group has-error">
       {% else %}
-      <div class="control-group">
+      <div class="form-group">
       {% endif %}
-        <lable class="control-label" for="password2">
+        <lable class="control-label col-sm-2" for="password2">
           {{ form.password2.label }}
         </lable>
-        <div class="controls">
-          <input type="password" class="span4" id="password2" name="password2" placeholder="{{ form.password2.label }}" value="{{ form.password2.value|default_if_none:'' }}" />
+        <div class="col-sm-4">
+          <input type="password" class="form-control" id="password2" name="password2" placeholder="{{ form.password2.label }}" value="{{ form.password2.value|default_if_none:'' }}" />
           <span class="help-block">{{ form.errors.password2 }}</span>
         </div>
       </div>
 
-      <div class="form-action">
-        <button type="submit" class="btn btn-primary">{% trans 'Register' %}</button> {% trans 'or' %} <a href="{% url 'django.contrib.auth.views.login' %}">{% trans 'Login' %}</a>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-primary">{% trans 'Register' %}</button> {% trans 'or' %} <a href="{% url 'django.contrib.auth.views.login' %}">{% trans 'Login' %}</a>
+        </div>
       </div>
     </fieldset>
   </form>
