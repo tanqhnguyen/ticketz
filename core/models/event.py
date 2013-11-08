@@ -9,7 +9,7 @@ class Event(models.Model):
     age_limit = models.IntegerField()
     live_date = models.DateTimeField()
     start_date = models.DateTimeField()
-    user_id = models.ForeignKey(User)
+    user = models.ForeignKey(User)
 
     class Meta:
         app_label = "core"
