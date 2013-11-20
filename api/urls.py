@@ -1,7 +1,5 @@
-from django.conf.urls import patterns, url
-
-from api import views
+from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('',
-    #url(r'^event/create$', views.event.CreateView.as_view(), name='api_event_create'),
+    url(r'^event/', include('api.event.urls')),
 )
