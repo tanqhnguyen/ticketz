@@ -1,5 +1,5 @@
 {
-  "run_list": ["role[app]","role[db]"],
+  "run_list": ["recipe[apt]", "recipe[git]", "role[app]","role[db]"],
   "app" : {
     "root_dir" : "/vagrant",
     "user" : "vagrant",

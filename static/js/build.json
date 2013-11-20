@@ -1,0 +1,33 @@
+{
+  "paths": {
+    "underscore": "libs/underscore.ticketz",
+    "backbone": "libs/backbone.ticketz",
+    "baseview": "views/base_view",
+    "basemodel": "models/base_model",
+    "basecollection": "collections/base_collection",
+    "text": "vendors/requirejs-text/text"
+  },
+
+  "waitSeconds": 30,
+  
+  "shim": {
+    "vendors/underscore/underscore": {
+      "exports": "_"
+    },
+    "vendors/backbone/backbone": {
+      "deps": ["vendors/underscore/underscore"],
+      "exports": "Backbone"
+    },
+    "libs/backbone.maze": {
+      "deps": ["vendors/backbone/backbone"],
+      "exports": "Maze"
+    },
+    "vendors/moment/moment": {
+      "exports": "moment"
+    }
+  },
+
+  "modules": [
+    
+  ]
+}
