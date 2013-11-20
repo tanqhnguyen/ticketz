@@ -106,6 +106,7 @@ TEMPLATE_LOADERS = (
 TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
     "django.core.context_processors.request",
     "core.template_processors.user",
+    "core.template_processors.js_config",
 )
 
 MIDDLEWARE_CLASSES = (
@@ -148,7 +149,9 @@ INSTALLED_APPS = (
     'social.apps.django_app.default',
     'djcelery',
     'kombu.transport.django',
-    'core'
+    'core',
+    'api',
+    'event'
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
