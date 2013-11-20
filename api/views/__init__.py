@@ -1,4 +1,3 @@
 import event
-import base
 
-__all__ = ['event', 'base']
+__all__ = ['event']

@@ -1,4 +1,4 @@
-from api.base import ApiView
+from base import ApiView
 
 class CreateView(ApiView):
     pass

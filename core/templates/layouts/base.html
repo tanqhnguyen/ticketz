@@ -8,8 +8,7 @@
   <meta name="language" content="en_US" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <script type="text/javascript" src="{% static 'js/vendors/jquery.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/vendors/bootstrap/dropdown.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/vendors/jquery/jquery.js' %}"></script>
 
   {% if less %}
   {% with "less/"|add:less|add:".less" as template %}
@@ -19,9 +18,7 @@
 
   {% block less %} {% endblock %}
 
-  <script type="text/javascript" src="{% static 'js/vendors/less.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/vendors/bootstrap/alert.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/vendors/bootstrap/collapse.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/vendors/less/dist/less-1.4.2.js' %}"></script>
 
   {% block javascript %}{% endblock %}
 
