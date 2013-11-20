@@ -7,6 +7,7 @@ from django.conf.urls import patterns, include, url
 urlpatterns = patterns('',
     url(r'', include('social.apps.django_app.urls', namespace='social')),
     url(r'', include('core.urls')),
+    url(r'^api/', include('api.urls')),
     # Examples:
     # url(r'^$', 'ticketz.views.home', name='home'),
     # url(r'^ticketz/', include('ticketz.foo.urls')),
