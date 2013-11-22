@@ -19,6 +19,9 @@
     "moment": "2.4.0",
     "requirejs": "~2.1.9",
     "requirejs-text": "~2.0.10",
-    "bootstrap": "~3.0.2"
+    "bootstrap": "~3.0.2",
+    "backbone.marionette": "~1.2.3",
+    "backbone.wreqr": "~0.2.0",
+    "backbone.babysitter": "~0.0.6"
   }
 }

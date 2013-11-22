@@ -1,0 +1,4 @@
+{
+  "predef": ["$", "ticketz", "global", "window"],
+  "laxcomma": true
+}
