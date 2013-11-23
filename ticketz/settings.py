@@ -107,6 +107,7 @@ TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
     "django.core.context_processors.request",
     "core.template_processors.user",
     "core.template_processors.js_config",
+    "core.template_processors.settings",
 )
 
 MIDDLEWARE_CLASSES = (
@@ -224,3 +225,6 @@ SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.social_auth.load_extra_data',
     'social.pipeline.user.user_details'
 )
+
+# GOOGLE MAP
+GOOGLE_MAP_KEY = config["google_map_key"]

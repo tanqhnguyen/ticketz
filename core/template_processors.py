@@ -1,5 +1,6 @@
 import os
 import json
+from django.conf import settings as django_settings
 
 current_path = os.path.dirname(__file__)
 js_build_path = os.path.join(current_path, '..', 'static', 'js', 'build.json')
@@ -14,4 +15,9 @@ def user(request):
 def js_config(request):
     return {
         "js_config": json.dumps(js_build_config)
+    }
+
+def settings(request):
+    return {
+        "GOOGLE_MAP_KEY": django_settings.GOOGLE_MAP_KEY
     }

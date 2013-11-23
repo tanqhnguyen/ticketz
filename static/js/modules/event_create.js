@@ -2,10 +2,8 @@ require([
   'underscore'
   , 'views/event_create/app'
   , 'views/event_create/layout'
-  , 'views/event_create/tabs'
-  , 'views/event_create/information'
   , 'models/event'
-], function(_, app, LayoutView, TabsView, InformationView, Event){
+], function(_, app, LayoutView, Event){
   window.ticketz = window.ticketz || {};
   window.ticketz.app = app;
 
@@ -13,7 +11,8 @@ require([
 
   app.addInitializer(function(){
     app.layout = new LayoutView({
-      el: $('#event-create')
+      el: $('#event-create'),
+      model: event
     });
     app.layout.render();
     // if (event.isNew()) {
@@ -24,23 +23,8 @@ require([
     //   renderTabs();
     // }
 
-    renderTabs();
+    //renderTabs();
   });
-
-  function renderTabs() {
-    var tabs = {};
-    tabs[_.t('Information')] = new InformationView({
-      model: event
-    });
-    tabs[_.t('Design')] = 'Design content';
-
-    var tabsView = new TabsView({
-      tabs: tabs,
-      toggle: 'pills'
-    });
-
-    window.ticketz.app.layout.tabs.show(tabsView);
-  };
 
   app.start();
 });
