@@ -106,6 +106,8 @@ TEMPLATE_LOADERS = (
 TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
     "django.core.context_processors.request",
     "core.template_processors.user",
+    "core.template_processors.js_config",
+    "core.template_processors.settings",
 )
 
 MIDDLEWARE_CLASSES = (
@@ -148,7 +150,9 @@ INSTALLED_APPS = (
     'social.apps.django_app.default',
     'djcelery',
     'kombu.transport.django',
-    'core'
+    'core',
+    'api',
+    'event'
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
@@ -221,3 +225,6 @@ SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.social_auth.load_extra_data',
     'social.pipeline.user.user_details'
 )
+
+# GOOGLE MAP
+GOOGLE_MAP_KEY = config["google_map_key"]

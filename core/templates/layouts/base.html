@@ -8,8 +8,7 @@
   <meta name="language" content="en_US" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/bootstrap/dropdown.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/vendors/jquery/jquery.js' %}"></script>
 
   {% if less %}
   {% with "less/"|add:less|add:".less" as template %}
@@ -19,11 +18,10 @@
 
   {% block less %} {% endblock %}
 
-  <script type="text/javascript" src="{% static 'js/less.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/bootstrap/alert.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/bootstrap/collapse.js' %}"></script>
-
+  <script type="text/javascript" src="{% static 'js/vendors/less/dist/less-1.4.2.js' %}"></script>
+  {% block javascript_data %}{% endblock %}
   {% block javascript %}{% endblock %}
+  {% block javascript_templates %}{% endblock %}
 
   <title>Ticketz</title>
 </head>
@@ -45,7 +43,10 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#">{% trans 'Home'%}</a></li>
+          <li><a href="/">{% trans 'Home'%}</a></li>
+          {% if user.is_authenticated %}
+          <li><a href="{% url 'event_create' %}">{% trans 'Create event'%}</a></li>
+          {% endif %}
         </ul>
         <ul class="nav navbar-nav navbar-right">
           {% if user.is_authenticated %}

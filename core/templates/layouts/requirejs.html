@@ -1,0 +1,20 @@
+{% extends 'layouts/base.html' %}
+
+{% load static %}
+{% load custom_tags %}
+
+{% block javascript %}
+  <script type="text/javascript">
+    var googleMapKey = '{{ GOOGLE_MAP_KEY }}';
+  </script>
+  <script type="text/javascript" src="{% static 'js/vendors/requirejs/require.js' %}"></script>
+  <script type="text/javascript">
+    $(function(){
+      var configs = {{ js_config|safe }};
+      delete configs['modules'];
+      configs['deps'] = ['modules/{{ requirejs }}'];
+      configs['baseUrl'] = "{% static 'js' %}";
+      require.config(configs);
+    });
+  </script>
+{% endblock %}

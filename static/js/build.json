@@ -1,0 +1,38 @@
+{
+  "paths": {
+    "underscore": "libs/underscore.ticketz",
+    "backbone": "libs/backbone.ticketz",
+    "baseview": "views/base_view",
+    "basemodel": "models/base_model",
+    "basecollection": "collections/base_collection",
+    "text": "vendors/requirejs-text/text",
+    "backbone.babysitter": "vendors/backbone.babysitter/lib/amd/backbone.babysitter",
+    "backbone.wreqr": "vendors/backbone.wreqr/lib/amd/backbone.wreqr",
+    "marionette": "vendors/backbone.marionette/lib/core/amd/backbone.marionette",
+    "backbone.maze.bootstrap.tab": "libs/backbone.maze.bootstrap.tab",
+    "bootstrap.tab": "vendors/bootstrap/js/tab"
+  },
+
+  "waitSeconds": 30,
+  
+  "shim": {
+    "vendors/underscore/underscore": {
+      "exports": "_"
+    },
+    "vendors/backbone/backbone": {
+      "deps": ["vendors/underscore/underscore"],
+      "exports": "Backbone"
+    },
+    "libs/backbone.maze": {
+      "deps": ["vendors/backbone/backbone"],
+      "exports": "Maze"
+    },
+    "vendors/moment/moment": {
+      "exports": "moment"
+    }
+  },
+
+  "modules": [
+    
+  ]
+}
