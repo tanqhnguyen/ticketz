@@ -16,15 +16,11 @@ class Event(models.Model):
     class Meta:
         app_label = "core"
 
-    def setParams(self, request):
-            json_data = request.read()
-            # json_data contains the data uploaded in request
-            data = json.loads(json_data)
-            # data is now a Python dict representing the uploaded JSON.
-            id = self._get_pk_val
-            name = self.name
+    def json_data(self, request):
+
             description = self.description
             age_limit = self.age_limit
+            name = self.name
             start_date = self.start_date
             end_date = self.end_date
             is_active = self.is_active
