@@ -13,7 +13,7 @@ class CreateView(ApiView):
         user_id = request.user.id
         event = Event.first_or_create(user_id)
         data = event.json_data()
-        return self.json(data)
+        return self.json({"data": data})
 
 
 class DeleteView(ApiView):
@@ -27,9 +27,9 @@ class DeleteView(ApiView):
             event = Event.objects.get(pk = id)
             data = event.json_data()
             if event.user == request.user:
-                return self.json(data)
+                return self.json({"data": data})
             else:
-                return self.json({"Permission Error":"Not enough permission to update event"})
+                return self.json({"error":"Not enough permission to update event"})
 
 
 
