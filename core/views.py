@@ -2,6 +2,7 @@ from django.views.generic.base import TemplateView
 from django.shortcuts import render, redirect
 from forms import RegistrationForm
 from django.contrib.auth import authenticate, login
+from core.models.event import Event
 
 class IndexView(TemplateView):
     template_name = 'core/index.html'
@@ -24,4 +25,8 @@ def register(request):
 
     context = {'form': form, 'less': 'core'}
     return render(request, 'core/register.html', context)
+    
+    
+
+
 
