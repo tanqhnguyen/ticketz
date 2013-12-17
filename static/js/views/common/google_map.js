@@ -9,7 +9,9 @@ define([
     defaults: {
       apiInitFunction: 'googleMapInit',
       width: '100%',
-      height: '100%'
+      height: '100%',
+      latitude: 60.4493248,
+      longtitude: 22.259231
     },
 
     autocompleteDefaults: {
@@ -82,7 +84,7 @@ define([
       this.map = new google.maps.Map(mapEl, {
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         zoom: 16,
-        center: new google.maps.LatLng(60.4493248, 22.259231)
+        center: new google.maps.LatLng(this.latitude, this.longtitude)
       });
 
       this.renderAutocomplete();
