@@ -1,18 +1,17 @@
 from api.views import ApiView
 from core.models.event import Event
 from django.contrib.auth.decorators import login_required
-import django.utils.json as json
+import json
 from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 
 
 class CreateView(ApiView):
 
-    @method_decorator(login_required)
+    # @method_decorator(login_required)
     def post(self, request):
-        event = Event()
-        event.user = request.user
-        event.is_active=False
+        user_id = request.user.id
+        event = Event.first_or_create(user_id)
         data = event.json_data()
         return self.json(data)
 
