@@ -7,7 +7,7 @@ class EventTestCase(ApiTestCase):
         response = self.post_json("api_event_create")
         print response
         self.assertFalse("error" in response)
-        count = Event.objects.get(user_id=self.user.id).count()
+        count = Event.objects.filter(user_id=self.user.id).count()
         self.assertEquals(count, 1)
         self.assertIsNotNone(response["data"])
 
@@ -15,5 +15,5 @@ class EventTestCase(ApiTestCase):
         self.post_json("api_event_create")
         response = self.post_json("api_event_create")
         self.assertFalse("error" in response)
-        count = Event.objects.get(user_id=self.user.id).count()
+        count = Event.objects.filter(user_id=self.user.id).count()
         self.assertEquals(count, 1)
