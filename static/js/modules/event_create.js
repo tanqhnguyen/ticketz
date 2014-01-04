@@ -1,30 +1,16 @@
 require([
   'underscore'
-  , 'views/event_create/app'
-  , 'views/event_create/layout'
+  , 'views/event_create/main'
   , 'models/event'
-], function(_, app, LayoutView, Event){
+], function(_, MainView, Event){
   window.ticketz = window.ticketz || {};
-  window.ticketz.app = app;
 
   var event = new Event();
 
-  app.addInitializer(function(){
-    app.layout = new LayoutView({
-      el: $('#event-create'),
-      model: event
-    });
-    app.layout.render();
-    // if (event.isNew()) {
-    //   event.save().done(function(response){
-    //     renderTabs();
-    //   });
-    // } else {
-    //   renderTabs();
-    // }
-
-    //renderTabs();
+  var view = new MainView({
+    el: $('#event-create'),
+    model: event    
   });
 
-  app.start();
+  view.render();
 });

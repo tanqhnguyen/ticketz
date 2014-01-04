@@ -23,9 +23,8 @@
     tabNavTemplate: '<li><a data-toggle="tab"></a></li>',
 
     initialize: function(options) {
-      _.each(this.defaults, function(value, key){
-        this[key] = _.isUndefined(options[key])? value: options[key];
-      }, this);
+      this.options = options || {};
+      this.options = _.defaults(this.options, this.defaults);
     },
 
     render: function() {
@@ -35,28 +34,28 @@
       this._processTabContent();
       var $target = this.$('ul').find('li:first a');
 
-      if (this.initial) {
-        $target = this.$('a[href=#'+this._slugify(this.initial));
+      if (this.options.initial) {
+        $target = this.$('a[href=#'+this._slugify(this.options.initial));
       }
 
       $target.tab('show');
       var $pane = this.$('.tab-content').find('.tab-pane:first');
-      if (this.initial) {
-        $pane = this.$('#'+this.initial);
+      if (this.options.initial) {
+        $pane = this.$('#'+this.options.initial);
       }
       $pane.addClass('active');
     },
 
     // private stuff
     _processTabLayout: function() {
-      var $layout = $(this._extractHtml(this.layout));
+      var $layout = $(this._extractHtml(this.options.layout));
       this.$el.html($layout);
       
       this.$('ul')
              .attr('id', 'tab-'+this.cid)
-             .addClass('nav-'+this.toggle);
+             .addClass('nav-'+this.options.toggle);
 
-      if (this.justified) {
+      if (this.options.justified) {
         this.$('ul').addClass('nav-justified');
       }
 
@@ -64,7 +63,7 @@
     },
 
     _processTabContent: function() {
-      _.each(this.tabs, function(content, title){
+      _.each(this.options.tabs, function(content, title){
         this.addTab(title, content);
       }, this);
     },

@@ -1,21 +1,9 @@
-@import 'bootstrap/bootstrap.less';
-
-body {
-  padding-top: 20px;
-  padding-bottom: 30px;
-}
-
-.form-horizontal {
-  .help-block {
-    display: none;
-  }
-
-  .has-error {
-    .help-block {
-      display: block;
-    }
-  }
-}
+@import 'bootstrap/datetimepicker.less';
+@import 'vendors/select2.less';
+@import 'bootstrap/select2.less';
+@import 'common/basic.less';
+@import 'common/mixins.less';
+@import 'vendors/summernote.less';
 
 #event-create {
   .location {
@@ -24,9 +12,17 @@ body {
       margin-top: 10px;
     }
 
-    .event-location-detail {
+    .event-address {
       [class*="col-sm-"] {
         margin-bottom: 10px;
+      }
+    }
+  }
+
+  .description {
+    .note-editor {
+      button {
+        min-height: 30px;
       }
     }
   }

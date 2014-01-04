@@ -80,7 +80,6 @@ define([
       });
 
       var mapEl = this.$el[0];
-
       this.map = new google.maps.Map(mapEl, {
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         zoom: 16,
