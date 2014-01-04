@@ -1,0 +1,16 @@
+{% load i18n %}
+
+<script type="text/template" id="event-ticket-type-template">
+<div class="col-sm-12 js-ticket-type-list">
+  
+</div>
+<div class="col-sm-12">
+  <button type="button" class="btn btn-default btn-sm js-add-ticket-type"><i class="fa fa-plus"></i></button>
+</div>
+</script>
+
+<script type="text/template" id="event-ticket-type-detail-template">
+<div class="col-sm-12 no-padding">
+<%= ticketType.get('name') %>
+</div>
+</script>

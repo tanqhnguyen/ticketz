@@ -5,7 +5,9 @@ require([
 ], function(_, MainView, Event){
   window.ticketz = window.ticketz || {};
 
-  var event = new Event();
+  var event = new Event({
+    ticketTypes: []
+  });
 
   var view = new MainView({
     el: $('#event-create'),

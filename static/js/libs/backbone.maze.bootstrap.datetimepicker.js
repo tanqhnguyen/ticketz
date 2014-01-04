@@ -1,6 +1,6 @@
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
-    define(['underscore', 'backbone', 'moment', 'bootstrap3.datetimepicker', 'bootstrap.collapse'], factory);
+    define(['underscore', 'backbone', 'moment', 'bootstrap3.datetimepicker'], factory);
   } else {
     Backbone.Maze = Backbone.Maze || {};
     Backbone.Maze.BootstrapDatetimepickerView = factory(_, Backbone);

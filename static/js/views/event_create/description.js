@@ -30,7 +30,7 @@ define([
           ['insert', ['link', 'picture', 'video']],
           ['help', ['help']]
         ],
-        height: '200px'
+        height: 200
       });
     }
   });

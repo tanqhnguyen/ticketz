@@ -1,5 +1,5 @@
 define([
-  'vendors/backbone/backbone'
+  'vendors/backbone'
   , 'libs/backbone.maze'
 ], function(Backbone, Maze){
   var methodMap = {

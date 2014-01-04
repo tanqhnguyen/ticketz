@@ -1,6 +1,6 @@
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
-    define(['underscore', 'backbone', 'bootstrap.tab'], factory);
+    define(['underscore', 'backbone'], factory);
   } else {
     Backbone.Maze = Backbone.Maze || {};
     Backbone.Maze.BootstrapTabView = factory(_, Backbone);

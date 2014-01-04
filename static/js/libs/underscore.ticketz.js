@@ -1,5 +1,5 @@
 define([
-  'vendors/underscore/underscore'
+  'vendors/underscore'
 ], function(_){
   _.mixin({
     t: function(text) {
