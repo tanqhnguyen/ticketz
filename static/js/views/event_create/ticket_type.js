@@ -22,8 +22,8 @@ define([
           name: 'Free for all',
           price: 0,
           type: 'free',
-          amount: -1
-        });
+          amount: 100
+        }, {validate: true});
       }
     },
 

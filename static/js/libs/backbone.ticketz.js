@@ -47,5 +47,6 @@ define([
     return xhr;
   };
   Backbone.Maze = Maze;
+
   return Backbone;
 });
