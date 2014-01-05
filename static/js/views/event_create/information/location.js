@@ -2,7 +2,7 @@ define([
   'underscore'
   , 'marionette'
   , 'views/common/google_map'
-  , 'views/event_create/address'
+  , 'views/event_create/information/address'
 ], function(_, Marionette, GoogleMapView, AddressView){
   var View = Marionette.Layout.extend({
     template: '#ec-location-layout-template',

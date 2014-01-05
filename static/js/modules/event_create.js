@@ -6,7 +6,9 @@ require([
   window.ticketz = window.ticketz || {};
 
   var event = new Event({
-    ticketTypes: []
+    ticketTypes: [],
+    title: 'My Event',
+    description: '<b>Test</b>'
   });
 
   var view = new MainView({

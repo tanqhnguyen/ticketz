@@ -1,5 +1,17 @@
-<script type="text/template" id="ec-layout-template">
-  <div id="tabs">
+{% load i18n %}
 
-  </div>
+<script type="text/template" id="ec-layout-template">
+<ul class="nav nav-pills">
+  <li class="active">
+    <a data-toggle="tab" href="#information">{% trans 'Information' %}</a>
+  </li>
+  <li>
+    <a data-toggle="tab" href="#design">{% trans 'Design' %}</a>
+  </li>
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane active" id="information"></div>
+  <div class="tab-pane" id="design"></div>
+</div>
 </script>

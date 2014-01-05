@@ -4,14 +4,20 @@
 
 {% block javascript_templates %}
 {% include 'event/_create/layout_template.html' %}
-{% include 'event/_create/location_layout_template.html' %}
-{% include 'event/_create/address_template.html' %}
-{% include 'event/_create/datetime_template.html' %}
-{% include 'event/_create/description_template.html' %}
-{% include 'event/_create/ticket_type_template.html' %}
-{% include 'event/_create/organizer_template.html' %}
-{% include 'event/_create/datetime_input_template.html' %}
-{% include 'event/_create/information_tab_template.html' %}
+
+{% include 'event/_create/information/information_tab_template.html' %}
+{% include 'event/_create/information/location_layout_template.html' %}
+{% include 'event/_create/information/address_template.html' %}
+{% include 'event/_create/information/datetime_template.html' %}
+{% include 'event/_create/information/description_template.html' %}
+{% include 'event/_create/information/ticket_type_template.html' %}
+{% include 'event/_create/information/organizer_template.html' %}
+{% include 'event/_create/information/datetime_input_template.html' %}
+
+{% include 'event/_create/design/design_tab_template.html' %}
+
+{% include 'event/_view/layout_template.html' %}
+
 {% endblock %}
 
 {% block content %}

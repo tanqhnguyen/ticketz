@@ -1,7 +1,7 @@
 define([
   'underscore'
   , 'marionette'
-  , 'views/event_create/ticket_type/collection'
+  , 'views/event_create/information/ticket_type/collection'
 ], function(_, Marionette, TicketTypeCollectionView){
   var View = Marionette.ItemView.extend({
     template: '#ec-ticket-type-template',

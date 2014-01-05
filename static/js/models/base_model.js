@@ -4,11 +4,13 @@ define([
   , 'models/validator'
   , 'models/controls/input'
   , 'models/controls/wysiwyg'
-], function(_, Backbone, Validator, InputControlView, WysiwygControlView){
+  , 'models/controls/html'
+], function(_, Backbone, Validator, InputControlView, WysiwygControlView, HtmlControlView){
   return Backbone.Maze.Model.extend({
     controls: {
       'input': InputControlView,
-      'wysiwyg': WysiwygControlView
+      'wysiwyg': WysiwygControlView,
+      'html': HtmlControlView
     },
 
     rules: [],

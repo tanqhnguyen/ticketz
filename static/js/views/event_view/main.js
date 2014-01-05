@@ -3,20 +3,35 @@ define([
   , 'marionette'
 ], function(_, Marionette){
   return Marionette.Layout.extend({
-    template: function(data) {
+    template: '#ev-layout-template',
+
+    regions: {
 
     },
 
-    regions: {
-      'detail': '.js-event-detail',
-      'map': '.js-event-map',
-      'address': '.js-event-address',
-      'ticketType': '.js-event-ticket-type',
-      'organizer': '.js-event-organizer'
+    ui: {
+      title: '.js-event-title',
+      description: '.js-event-description'
+    },
+
+    serializeData: function() {
+      return {
+        event: this.model
+      };
     },
 
     onRender: function() {
-      
+      this.model.buildControl({
+        attribute: 'title',
+        el: this.ui.title,
+        type: 'html'
+      });
+
+      this.model.buildControl({
+        attribute: 'description',
+        el: this.ui.description,
+        type: 'html'
+      });
     }
   });
 })

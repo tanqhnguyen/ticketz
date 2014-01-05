@@ -1,11 +1,11 @@
 define([
   'underscore'
   , 'marionette'
-  , 'views/event_create/location'
-  , 'views/event_create/datetime'
-  , 'views/event_create/description'
-  , 'views/event_create/ticket_type'
-  , 'views/event_create/organizer'
+  , 'views/event_create/information/location'
+  , 'views/event_create/information/datetime'
+  , 'views/event_create/information/description'
+  , 'views/event_create/information/ticket_type'
+  , 'views/event_create/information/organizer'
 ], function(_, Marionette, LocationView, DatetimeView, DescriptionView, TicketView, OrganizerView){
   var View = Marionette.Layout.extend({
     template: '#ec-information-tab-template',
@@ -23,6 +23,12 @@ define([
     },
 
     onRender: function() {
+      this.model.buildControl({
+        attribute: 'title',
+        type: 'input',
+        el: $('#event-title')
+      });
+
       this.location.show(new LocationView({
         model: this.model
       }));
@@ -42,7 +48,7 @@ define([
       this.organizer.show(new OrganizerView({
         model: this.model
       }));
-    },
+    }
   });
 
   return View;
