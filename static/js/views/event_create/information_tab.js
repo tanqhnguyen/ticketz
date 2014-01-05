@@ -5,7 +5,8 @@ define([
   , 'views/event_create/datetime'
   , 'views/event_create/description'
   , 'views/event_create/ticket_type'
-], function(_, Marionette, LocationView, DatetimeView, DescriptionView, TicketView){
+  , 'views/event_create/organizer'
+], function(_, Marionette, LocationView, DatetimeView, DescriptionView, TicketView, OrganizerView){
   var View = Marionette.Layout.extend({
     template: '#event-information-tab-template',
 
@@ -17,7 +18,8 @@ define([
       'location': '.js-location',
       'datetime': '.js-datetime',
       'description': '.js-description',
-      'ticket': '.js-ticket'
+      'ticket': '.js-ticket-type',
+      'organizer': '.js-organizer'
     },
 
     onRender: function() {
@@ -34,6 +36,10 @@ define([
       }));
 
       this.ticket.show(new TicketView({
+        model: this.model
+      }));
+
+      this.organizer.show(new OrganizerView({
         model: this.model
       }));
     },

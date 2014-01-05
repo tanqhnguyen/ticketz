@@ -18,7 +18,8 @@ define([
 
     ui: {
       price: '.js-ticket-type-price',
-      amount: '.js-ticket-type-amount'
+      amount: '.js-ticket-type-amount',
+      name: '.js-ticket-type-name'
     },
 
     initialize: function() {
@@ -26,8 +27,23 @@ define([
     },
 
     onRender: function() {
-      this.model.bindView('price', this.ui.price);
-      this.model.bindView('amount', this.ui.amount);
+      this.model.buildControl({
+        attribute: 'price',
+        type: 'input',
+        el: this.ui.price
+      });
+
+      this.ui.amount.html(this.model.buildControl({
+        attribute: 'amount',
+        type: 'input',
+        className: 'form-control'
+      }).$el);
+
+      this.ui.name.html(this.model.buildControl({
+        attribute: 'name',
+        type: 'input',
+        className: 'form-control'
+      }).$el);
     },
 
     onClickRemoveTicketType: function() {

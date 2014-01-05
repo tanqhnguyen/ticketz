@@ -2,9 +2,15 @@ define([
   'underscore'
   , 'backbone'
   , 'models/validator'
-  , 'vendors/jquery.typing'
-], function(_, Backbone, Validator){
+  , 'models/controls/input'
+  , 'models/controls/wysiwyg'
+], function(_, Backbone, Validator, InputControlView, WysiwygControlView){
   return Backbone.Maze.Model.extend({
+    controls: {
+      'input': InputControlView,
+      'wysiwyg': WysiwygControlView
+    },
+
     rules: [],
 
     attributeLabels: {
@@ -65,36 +71,12 @@ define([
       return errors;
     },
 
-    bindView: function(attribute, $el) {
-      if ($el.is('input')) {
-        this._bindinput(attribute, $el);  
-      }
+    buildControl: function(options) {
+      options.model = this;
+
+      var control = new this.controls[options.type](options);
+      control.render();
+      return control;
     },
-
-    _bindinput: function(attribute, $el) {
-      var self = this;
-
-      $el.val(self.get(attribute));
-
-      $el.typing({
-        start: function(e, el) {
-          var $target = $(e.currentTarget);
-        },
-        stop: function(e, el) {
-          var $target = $(e.currentTarget);
-          var val = $target.val();
-          if (!self.set(attribute, val, {validate: true})) {
-            $target.tooltip({
-              title: self.validationError[attribute][0],
-              trigger: 'manual'
-            });
-            $target.tooltip('show');
-          } else {
-            $target.tooltip('hide');
-            $target.tooltip('destroy');
-          }
-        }
-      });
-    }
   });
 })

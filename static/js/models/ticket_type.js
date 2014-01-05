@@ -11,6 +11,14 @@ define([
         {
           min: 0
         }
+      ],
+      [
+        'name',
+        'length',
+        {
+          min: 3,
+          max: 64
+        }
       ]
     ]
   });

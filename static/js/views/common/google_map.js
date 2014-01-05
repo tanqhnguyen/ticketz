@@ -152,6 +152,7 @@ define([
       }
 
       this.map.fitBounds(bounds);
+      this.map.setZoom(16);
     }
   });
 })

@@ -54,7 +54,11 @@ define([
 
       this.address.$el.removeClass('col-sm-4')
                       .addClass('col-sm-8');
-      this.map.$el.hide();
+
+      if (this.map && this.map.$el) {
+        this.map.$el.hide();  
+      }
+      
 
       return false;
     },
@@ -69,7 +73,9 @@ define([
                       .addClass('col-sm-4');
 
       this.renderMap();
-      this.map.$el.show();
+      if (this.map && this.map.$el) {
+        this.map.$el.show();  
+      }
 
       return false;
     },
@@ -82,7 +88,10 @@ define([
       this.address.currentView.ui.offlineEvent.show();
 
       this.address.currentView.$('input').attr('disabled', 'disabled');
-      this.map.$el.hide();
+
+      if (this.map && this.map.$el) {
+        this.map.$el.hide();  
+      }
 
       return false;
     },
@@ -94,7 +103,9 @@ define([
       this.address.currentView.ui.offlineEvent.hide();
 
       this.address.currentView.$('input').removeAttr('disabled');
-      this.map.$el.hide();
+      if (this.map && this.map.$el) {
+        this.map.$el.hide();  
+      }
 
       return false;
     }
