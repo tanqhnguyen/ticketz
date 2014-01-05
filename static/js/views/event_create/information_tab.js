@@ -8,7 +8,7 @@ define([
   , 'views/event_create/organizer'
 ], function(_, Marionette, LocationView, DatetimeView, DescriptionView, TicketView, OrganizerView){
   var View = Marionette.Layout.extend({
-    template: '#event-information-tab-template',
+    template: '#ec-information-tab-template',
 
     events: {
 

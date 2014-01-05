@@ -4,8 +4,7 @@ define([
   , 'views/event_create/ticket_type/collection'
 ], function(_, Marionette, TicketTypeCollectionView){
   var View = Marionette.ItemView.extend({
-    template: '#event-ticket-type-template',
-    ticketTemplate: _.template($('#event-ticket-type-detail-template').html()),
+    template: '#ec-ticket-type-template',
 
     ui: {
       ticketTypeList: '.js-ticket-type-list'

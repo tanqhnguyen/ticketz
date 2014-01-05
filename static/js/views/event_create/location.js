@@ -5,7 +5,7 @@ define([
   , 'views/event_create/address'
 ], function(_, Marionette, GoogleMapView, AddressView){
   var View = Marionette.Layout.extend({
-    template: '#event-location-layout-template',
+    template: '#ec-location-layout-template',
 
     regions: {
       map: '.js-event-map',

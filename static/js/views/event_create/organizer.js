@@ -4,7 +4,7 @@ define([
   , 'summernote'
 ], function(_, Marionette){
   var View = Marionette.ItemView.extend({
-    template: '#event-organizer-template',
+    template: '#ec-organizer-template',
     ui: {
       summernote: '.js-summernote'
     },

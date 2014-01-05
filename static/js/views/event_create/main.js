@@ -5,7 +5,7 @@ define([
   , 'views/event_create/information_tab'
 ], function(_, Marionette, TabsView, InformationTabView){
   return Marionette.Layout.extend({
-    template: '#layout-template',
+    template: '#ec-layout-template',
     regions: {
       'tabs': '#tabs'
     },

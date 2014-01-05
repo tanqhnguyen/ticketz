@@ -3,7 +3,7 @@ define([
   , 'marionette'
 ], function(_, Marionette){
   var View = Marionette.ItemView.extend({
-    template: '#event-address-template',
+    template: '#ec-address-template',
     className: 'form-group',
     ui: {
       hideMap: '.js-hide-map',

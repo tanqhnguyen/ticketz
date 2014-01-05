@@ -4,7 +4,7 @@ define([
   , 'views/event_create/datetime_input'
 ], function(_, Marionette, DatetimeInputView){
   var View = Marionette.ItemView.extend({
-    template: '#event-datetime-template',
+    template: '#ec-datetime-template',
     ui: {
       datetimeGroup: '.js-datetime-group'
     },
