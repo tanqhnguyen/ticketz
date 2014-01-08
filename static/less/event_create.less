@@ -4,10 +4,17 @@
 @import 'common/basic.less';
 @import 'common/mixins.less';
 @import 'vendors/summernote.less';
+@import 'vendors/colorpicker.less';
+@import 'event_view.less';
+@import 'common/dialogs.less';
 
 #event-create {
+  .tab-content {
+    margin-top: 20px;
+  }
+  
   .location {
-    .google-map-autocomplete {
+    #event-location {
       width: 60%;
       margin-top: 10px;
     }
@@ -24,4 +31,23 @@
       min-height: 30px;
     }
   }
+
+  .tooltip {
+    .tooltip-inner {
+      ul {
+        padding: 0px;
+        li {
+          list-style: none;
+          text-align: left;
+          a {
+            color: white;
+          }
+        }
+      }
+    }
+  }
+}
+
+#event-view {
+  margin-top: 20px;
 }

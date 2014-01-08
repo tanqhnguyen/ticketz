@@ -30,7 +30,10 @@
       "deps": ["vendors/backbone"],
       "exports": "Maze"
     },
-    "bootstrap3.datetimepicker": ["moment"]
+    "bootstrap3.datetimepicker": ["moment"],
+    "vendors/less": {
+      "exports": "less"
+    }
   },
 
   "modules": [

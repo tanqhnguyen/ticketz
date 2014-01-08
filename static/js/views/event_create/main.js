@@ -9,22 +9,32 @@ define([
     regions: {
       
     },
+
     onRender: function() {
-      this.renderTabs();
+      var self = this;
+      self.renderTab('information');
+
+      $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        var tabName = $(e.target).attr('href');
+        tabName = tabName.substr(1, tabName.length);
+        self.renderTab(tabName);
+      });
     },
 
-    renderTabs: function() {
-      var informationTabView = new InformationTabView({
-        el: '#information',
-        model: this.model
-      });
-      informationTabView.render();
+    tabs: {
+      'information': InformationTabView,
+      'design': DesignTabView
+    },
 
-      var designTabView = new DesignTabView({
-        el: '#design',
-        model: this.model
-      });
-      designTabView.render();
+    renderTab: function(tabName) {
+      if (!this[tabName]) {
+        var tabView = new this.tabs[tabName]({
+          el: '#'+tabName,
+          model: this.model
+        });
+        tabView.render();
+        this[tabName] = tabView;          
+      }
     }
   });
 })

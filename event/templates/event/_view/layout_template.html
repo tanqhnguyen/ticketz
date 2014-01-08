@@ -1,20 +1,27 @@
 <script type="text/template" id="ev-custom-style-template">
   #event-view {
-
+    .event-detail {
+      background-color: <%= model.get('json.detailBgColor') %>;
+      .event-title {
+        color: <%= model.get('json.titleColor') %>;
+      }
+    }
   }
 </script>
 
 <script type="text/template" id="ev-layout-template">
   <div id="event-view" class="col-sm-12 no-padding clearfix">
-    <div class="col-sm-10">
-      <h1 class="js-event-title"></h1>
+    <div class="col-sm-8 js-event-detail event-detail">
+      <h1 class="js-event-title event-title"></h1>
       <hr/>
-      <div class="col-sm-12 no-padding js-event-description">
+      <div class="col-sm-12 no-padding js-event-description event-description">
 
       </div>
     </div>
-    <div class="col-sm-2 no-padding">
+    <div class="col-sm-4 no-padding">
+      <div class="js-event-map">
 
+      </div>
     </div>
   </div>
 </script>

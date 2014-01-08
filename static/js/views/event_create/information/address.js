@@ -8,6 +8,13 @@ define([
 
     onRender: function() {
       
+    },
+
+    ui: {
+      hideMap: '.js-hide-map',
+      showMap: '.js-show-map',
+      onlineEvent: '.js-online-event',
+      offlineEvent: '.js-offline-event'
     }
   });
 

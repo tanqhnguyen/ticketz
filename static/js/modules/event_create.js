@@ -8,7 +8,10 @@ require([
   var event = new Event({
     ticketTypes: [],
     title: 'My Event',
-    description: '<b>Test</b>'
+    description: '<b>Test</b>',
+    json: {
+      titleColor: '#000000'
+    }
   });
 
   var view = new MainView({

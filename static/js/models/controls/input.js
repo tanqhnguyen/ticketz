@@ -25,15 +25,15 @@ define([
           var $target = $(e.currentTarget);
           var val = $target.val();
           if (!self.model.set(attribute, val, {validate: true})) {
-            $target.tooltip({
+            $target.bstooltip({
               title: self.model.validationError[attribute][0],
               trigger: 'manual',
               placement: 'auto left'
             });
-            $target.tooltip('show');
+            $target.bstooltip('show');
           } else {
-            $target.tooltip('hide');
-            $target.tooltip('destroy');
+            $target.bstooltip('hide');
+            $target.bstooltip('destroy');
           }
         }
       });
