@@ -6,13 +6,17 @@ define([
   , 'models/controls/wysiwyg'
   , 'models/controls/html'
   , 'models/controls/colorpicker'
-], function(_, Backbone, Validator, InputControlView, WysiwygControlView, HtmlControlView, ColorpickerControlView){
+  , 'models/controls/fontfamily'
+], function(_, Backbone, Validator, InputControlView, WysiwygControlView
+  , HtmlControlView, ColorpickerControlView
+  , FontfamilyControlView){
   return Backbone.Maze.Model.extend({
     controls: {
       'input': InputControlView,
       'wysiwyg': WysiwygControlView,
       'html': HtmlControlView,
-      'colorpicker': ColorpickerControlView
+      'colorpicker': ColorpickerControlView,
+      'fontfamily': FontfamilyControlView
     },
 
     rules: [],

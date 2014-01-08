@@ -10,7 +10,9 @@ require([
     title: 'My Event',
     description: '<b>Test</b>',
     json: {
-      titleColor: '#000000'
+      titleColor: '#000000',
+      titleFontfamily: 'Arial',
+      detailBgColor: '#ffffff'
     }
   });
 
