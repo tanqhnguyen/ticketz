@@ -12,4 +12,5 @@ class ApiTestCase(TestCase):
 
     def post_json(self, url, data = {}):
         response = self.client.post(reverse(url), json.dumps(data), content_type="application/json")
+        print response.content
         return json.loads(response.content)
