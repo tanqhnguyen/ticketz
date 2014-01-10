@@ -15,10 +15,7 @@ class Event(models.Model):
     is_active = models.BooleanField(default=False)
     user = models.ForeignKey(User)
 #    newly added
-    ticket_type=models.ForeignKey('core.models.ticket_type.TicketType')
-
-    class Meta:
-        app_label = "core"
+    ticket_type=models.ForeignKey('core.TicketType',null=False)
 
     def check_ticket_types(self,ticket_types):
         self.ticket_type=None
@@ -48,3 +45,7 @@ class Event(models.Model):
             event.user_id = user_id
             event.save()
         return event
+
+
+    class Meta:
+        app_label = "core"

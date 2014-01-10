@@ -36,8 +36,8 @@ class UpdateView(ApiView):
         # data is now a Python dict representing the uploaded JSON.
         id = data['id']
         event = Event.objects.get(pk = id)
-        ticket_type=data['ticket_type']
-        event.check_ticket_types(ticket_type)
+        tckt_type=data['ticket_type']
+        event.check_ticket_types(tckt_type)
         event.name=data['name']
         event.ticket_type=data['ticket_type']
         event.age_limit=data['age_limit']
