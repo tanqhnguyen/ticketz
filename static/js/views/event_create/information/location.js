@@ -2,8 +2,7 @@ define([
   'underscore'
   , 'marionette'
   , 'views/common/google_map'
-  , 'views/event_create/information/address'
-], function(_, Marionette, GoogleMapView, AddressView){
+], function(_, Marionette, GoogleMapView){
   var View = Marionette.Layout.extend({
     template: '#ec-location-layout-template',
 
@@ -19,7 +18,14 @@ define([
       'click .js-offline-event': 'onClickOfflineEvent'
     },
 
-    onRender: function() {
+    ui: {
+      hideMap: '.js-hide-map',
+      showMap: '.js-show-map',
+      onlineEvent: '.js-online-event',
+      offlineEvent: '.js-offline-event'
+    },
+
+    onShow: function() {
       this.renderAddress();
       this.renderMap();
     },
@@ -49,9 +55,35 @@ define([
     },
 
     renderAddress: function() {
-      this.address.show(new AddressView({
-        model: this.model
-      }));
+      this.model.buildControl({
+        attribute: 'address_name',
+        type: 'input',
+        el: $('#event-address-name')
+      });
+
+      this.model.buildControl({
+        attribute: 'address1',
+        type: 'input',
+        el: $('#event-address1')
+      });
+
+      this.model.buildControl({
+        attribute: 'address2',
+        type: 'input',
+        el: $('#event-address2')
+      });
+
+      this.model.buildControl({
+        attribute: 'city',
+        type: 'input',
+        el: $('#event-city')
+      });
+
+      this.model.buildControl({
+        attribute: 'zipcode',
+        type: 'input',
+        el: $('#event-zipcode')
+      });
     }
   });
 

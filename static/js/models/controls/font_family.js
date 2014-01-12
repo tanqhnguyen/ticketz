@@ -45,7 +45,6 @@ define([
 
     onChange: function() {
       var attribute = Marionette.getOption(this, 'attribute');
-      console.log(this.$('option:selected').val(), attribute);
       this.model.set(attribute, this.$('option:selected').val());
     }
   });

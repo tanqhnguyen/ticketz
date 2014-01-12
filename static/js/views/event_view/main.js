@@ -3,7 +3,8 @@ define([
   , 'marionette'
   , 'views/common/google_map'
   , 'views/event_view/custom_style'
-], function(_, Marionette, GoogleMapView, CustomStyleView){
+  , 'views/event_view/ticket_type_collection'
+], function(_, Marionette, GoogleMapView, CustomStyleView, TicketTypeCollectionView){
   return Marionette.ItemView.extend({
     template: '#ev-layout-template',
 
@@ -12,10 +13,18 @@ define([
     },
 
     ui: {
-      title: '.js-event-title',
-      description: '.js-event-description',
-      map: '.js-event-map',
-      detailContainer: '.js-event-detail'
+      title: '.js-title',
+      description: '.js-description',
+      map: '.js-map',
+      addressName: '.js-address-name',
+      detailContainer: '.js-detail',
+      locationContainer: '.js-location',
+      address1: '.js-address1',
+      address2: '.js-address2',
+      city: '.js-city',
+      zipcode: '.js-zipcode',
+      ticket: '.js-ticket',
+      ticketContainer: '.js-ticket-container'
     },
 
     initialize: function() {
@@ -28,19 +37,28 @@ define([
       };
     },
 
+    htmlControls: function() {
+      return {
+        'title': this.ui.title,
+        'description': this.ui.description,
+        'address_name': this.ui.addressName,
+        'address1': this.ui.address1,
+        'address2': this.ui.address2,
+        'city': this.ui.city,
+        'zipcode': this.ui.zipcode
+      };
+    },
+
     onRender: function() {
       var self = this;
-      this.model.buildControl({
-        attribute: 'title',
-        el: this.ui.title,
-        type: 'html'
-      });
 
-      this.model.buildControl({
-        attribute: 'description',
-        el: this.ui.description,
-        type: 'html'
-      });
+      _.each(this.htmlControls(), function(el, attribute){
+        this.model.buildControl({
+          attribute: attribute,
+          el: el,
+          type: 'html'
+        });
+      }, this);
 
       this.map = new GoogleMapView({
         height: '300px',
@@ -62,6 +80,12 @@ define([
       });
 
       this.style.render();
+
+      this.ticketType = new TicketTypeCollectionView({
+        collection: this.model.get('ticketTypes'),
+        el: this.ui.ticket
+      });
+      this.ticketType.render();
     },
 
     onPlacesChanged: function() {

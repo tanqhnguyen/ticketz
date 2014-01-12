@@ -4,22 +4,9 @@ define([
   , 'views/event_view/main'
   , 'views/event_view/custom_style'
   , 'views/common/dialogs/dialog_factory'
-  , 'text!templates/event_create/design/tooltip_menus/title.html'
-  , 'text!templates/event_create/design/tooltip_menus/detail.html'
-], function(_, Marionette, EventView, CustomStyleView, DialogFactory, titleEditToolTip, detailEditTooltip){
+], function(_, Marionette, EventView, CustomStyleView, DialogFactory){
   var View = Marionette.Layout.extend({
     template: '#ec-design-tab-template',
-    editTemplate: _.template('<i style="position: absolute; cursor: pointer; font-size: 14px;" class="fa fa-pencil-square-o"><%= content %></i>'),
-
-    constructEditIcon: function(options) {
-      var $edit = $(this.editTemplate(options)).css(options.position).addClass(options.className);
-      var data = options.data || [];
-      _.each(data, function(value, key){
-        $edit.attr('data-'+key, value);
-      });
-
-      return $edit;
-    },
 
     initialize: function() {
       this.dialogFactory = new DialogFactory({
@@ -29,7 +16,10 @@ define([
     },
 
     events: {
-      'click .js-trigger-dialog': 'onTriggerDialog'
+      'click .js-trigger-dialog': 'onTriggerDialog',
+      'click .js-edit-tooltip': function() {
+        return false;
+      }
     },
 
     regions: {
@@ -56,29 +46,38 @@ define([
         $('head').append(self.customStyleView.$el);
       });
 
-      this.renderEditIcons();
+      this.eventDemoView.ui.detailContainer
+                        .find('.widget-header')
+                        .append(this.createEditToolbar('ec-edit-detail-tooltip-template').render().$el);
+
+      this.eventDemoView.ui.locationContainer
+                        .find('.widget-header')
+                        .append(this.createEditToolbar('ec-edit-location-tooltip-template').render().$el);
+
+      this.eventDemoView.ui.ticketContainer
+                        .find('.widget-header')
+                        .append(this.createEditToolbar('ec-edit-ticket-tooltip-template').render().$el);
+
+
       this.initEditTooltips();
     },
 
-    renderEditIcons: function() {
-      this.eventDemoView.ui.title.append(this.constructEditIcon({
-        position: {top: 0},
-        content: _.template(titleEditToolTip, {})
-      }));
-
-      this.eventDemoView.ui.detailContainer.append(this.constructEditIcon({
-        position: {top: 0, right: 10},
-        content: _.template(detailEditTooltip, {})
-      }));
+    createEditToolbar: function(template) {
+      template = '#'+template;
+      return new Marionette.ItemView({
+        template: template,
+        className: 'widget-toolbar'
+      });
     },
 
     initEditTooltips: function() {
       var self = this;
-      var $tooltip = this.$('.fa-pencil-square-o');
+      var $tooltip = this.$('.js-edit-tooltip');
 
       $tooltip.each(function(){
-        var title = $(this).html();
-        $(this).html('');
+        var $tooltipContent = $('#'+$(this).data('title'));
+        var title = $tooltipContent.html();
+        $tooltipContent.remove();
 
         $(this).bstooltip({
           html: true,

@@ -2,13 +2,13 @@ define([
   'underscore'
   , 'backbone'
   , 'views/common/dialogs/colorpicker'
-  , 'views/common/dialogs/fontfamily'
-], function(_, Backbone, ColorpickerDialog, FontfamilyDialog){
+  , 'views/common/dialogs/font_family'
+], function(_, Backbone, ColorpickerDialog, FontFamilyDialog){
 
   var Factory = Backbone.Model.extend({
     mappings: {
       'colorpicker': ColorpickerDialog,
-      'fontfamily': FontfamilyDialog
+      'font_family': FontFamilyDialog
     },
 
     _dialogs: {},
