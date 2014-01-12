@@ -58,6 +58,10 @@ define([
                         .find('.widget-header')
                         .append(this.createEditToolbar('ec-edit-ticket-tooltip-template').render().$el);
 
+      this.eventDemoView.ui.organizer
+                        .find('.widget-header')
+                        .append(this.createEditToolbar('ec-edit-organizer-tooltip-template').render().$el);
+
 
       this.initEditTooltips();
     },

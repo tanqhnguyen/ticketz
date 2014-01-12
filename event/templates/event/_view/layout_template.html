@@ -54,6 +54,19 @@
         color: <%= model.get('json.ticketBodyColor') %>;
       }
     }
+
+    .organizer {
+      .widget-header {
+        background-color: <%= model.get('json.organizerTitleBgColor') %>;
+        border-color: <%= model.get('json.organizerTitleBgColor') %>;
+        color: <%= model.get('json.organizerTitleColor') %>;
+      }
+
+      .widget-body {
+        background-color: <%= model.get('json.organizerBodyBgColor') %>;
+        color: <%= model.get('json.organizerBodyColor') %>;
+      }
+    }
   }
 </script>
 
@@ -69,18 +82,6 @@
       </h1>
     </div>
     <div class="col-sm-8">
-      <div class="widget-box js-detail detail">
-        <div class="widget-header header-color-blue">
-          <h5 class="bigger lighter">
-            {% trans 'Event details' %}
-          </h5>
-        </div>
-        <div class="widget-body">
-          <div class="widget-main no-padding js-description description">
-            
-          </div>
-        </div>
-      </div>
       <div class="widget-box js-ticket-container ticket">
         <div class="widget-header header-color-blue">
           <h5 class="bigger lighter">
@@ -97,8 +98,23 @@
           </div>
         </div>
       </div>
+    
+      <div class="widget-box js-detail detail">
+        <div class="widget-header header-color-blue">
+          <h5 class="bigger lighter">
+            {% trans 'Event details' %}
+          </h5>
+        </div>
+        <div class="widget-body">
+          <div class="widget-main no-padding js-description description">
+            
+          </div>
+        </div>
+      </div>
+
     </div>
     <div class="col-sm-4 no-padding">
+
       <div class="widget-box location js-location">
         <div class="widget-header header-color-blue">
           <h5 class="bigger lighter">
@@ -121,6 +137,20 @@
               </div>
               <div class="datetime js-datetime"></div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="widget-box js-organizer organizer">
+        <div class="widget-header header-color-blue">
+          <h5 class="bigger lighter">
+            {% trans 'Organizer' %}
+          </h5>
+        </div>
+        <div class="widget-body">
+          <div class="widget-main no-padding">
+            <h6 class="js-organizer-name"></h6>
+            <div class="js-organizer-contact"></div>
           </div>
         </div>
       </div>

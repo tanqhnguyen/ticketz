@@ -25,7 +25,10 @@ define([
       city: '.js-city',
       zipcode: '.js-zipcode',
       ticket: '.js-ticket',
-      ticketContainer: '.js-ticket-container'
+      ticketContainer: '.js-ticket-container',
+      organizer: '.js-organizer',
+      organizerName: '.js-organizer-name',
+      organizerContact: '.js-organizer-contact'
     },
 
     initialize: function() {
@@ -47,7 +50,9 @@ define([
         'address2': this.ui.address2,
         'city': this.ui.city,
         'zipcode': this.ui.zipcode,
-        'datetime': this.ui.datetime
+        'datetime': this.ui.datetime,
+        'organizer_contact': this.ui.organizerContact,
+        'organizer_name': this.ui.organizerName
       };
     },
 
