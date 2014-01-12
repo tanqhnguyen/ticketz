@@ -1,9 +1,9 @@
 define([
   'underscore'
   , 'marionette'
-  , 'views/event_create/information/main'
+  , 'views/event_create/edit/main'
   , 'views/event_create/design/main'
-], function(_, Marionette, InformationTabView, DesignTabView){
+], function(_, Marionette, EditTabView, DesignTabView){
   return Marionette.Layout.extend({
     template: '#ec-layout-template',
     regions: {
@@ -12,7 +12,7 @@ define([
 
     onRender: function() {
       var self = this;
-      self.renderTab('information');
+      self.renderTab('edit');
 
       $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         var tabName = $(e.target).attr('href');
@@ -22,7 +22,7 @@ define([
     },
 
     tabs: {
-      'information': InformationTabView,
+      'edit': EditTabView,
       'design': DesignTabView
     },
 
