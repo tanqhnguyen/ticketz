@@ -7,22 +7,77 @@ define([
   , 'models/controls/html'
   , 'models/controls/colorpicker'
   , 'models/controls/font_family'
+  , 'models/controls/datetime'
 ], function(_, Backbone, Validator, InputControlView, WysiwygControlView
   , HtmlControlView, ColorpickerControlView
-  , FontFamilyControlView){
+  , FontFamilyControlView, DatetimeControlView){
   return Backbone.Maze.Model.extend({
     controls: {
       'input': InputControlView,
       'wysiwyg': WysiwygControlView,
       'html': HtmlControlView,
       'colorpicker': ColorpickerControlView,
-      'font_family': FontFamilyControlView
+      'font_family': FontFamilyControlView,
+      'datetime': DatetimeControlView
+    },
+
+    computedAttributes: {
+      
+    },
+
+    formattedAttributes: {
+    },
+
+    constructor: function() {
+      Backbone.Maze.Model.apply(this, Array.prototype.slice.apply(arguments));
+      this._setupFormattedAttributes();
+      this._setupComputedAttributes();
+    },
+
+    _setupFormattedAttributes: function() {
+      var formattedAttributes = _.result(this, 'formattedAttributes');
+      _.each(formattedAttributes, function(format, attribute){
+        this.set(attribute, format.apply(this, [this.get(attribute)]));
+        this.on('change:'+attribute, function(){
+          this.set(attribute, format.apply(this, [this.get(attribute)]), {silent: true});
+        }, this);
+      }, this);
+    },
+
+    _setupComputedAttributes: function() {
+      var computedAttributes = _.result(this, 'computedAttributes');
+      _.each(computedAttributes, function(dependencies, attribute){
+        var compute = _.last(dependencies);
+        if (!_.isFunction(compute)) {
+          // we have a missing computed function here
+          // use a default one instead
+          compute = function() {
+            throw "Missing compute function";
+          }
+        }
+        dependencies = dependencies.slice(0, dependencies.length-1);
+
+        _.each(dependencies, function(dep){
+          this.on('change:'+dep, function(){
+            this.set(attribute, compute.apply(this));
+          }, this);
+        }, this);
+
+        this.set(attribute, compute.apply(this));
+      }, this);
     },
 
     rules: [],
 
     attributeLabels: {
 
+    },
+
+    result: function(name) {
+      if (this[name]) {
+        return this[name];
+      }
+      return this.get(name);
     },
 
     getAttributeLabel: function(attr) {

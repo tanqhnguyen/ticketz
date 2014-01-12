@@ -14,6 +14,7 @@ define([
 
     ui: {
       title: '.js-title',
+      datetime: '.js-datetime',
       description: '.js-description',
       map: '.js-map',
       addressName: '.js-address-name',
@@ -45,7 +46,8 @@ define([
         'address1': this.ui.address1,
         'address2': this.ui.address2,
         'city': this.ui.city,
-        'zipcode': this.ui.zipcode
+        'zipcode': this.ui.zipcode,
+        'datetime': this.ui.datetime
       };
     },
 

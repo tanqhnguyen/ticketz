@@ -8,6 +8,11 @@ define([
       this.listenTo(this.model, 'change:'+attribute, function(){
         self.triggerMethod('changeModelValue');
       });
+    },
+
+    getModelValue: function() {
+      var attribute = Marionette.getOption(this, 'attribute');
+      return this.model.result(attribute);
     }
   });
 

@@ -9,8 +9,6 @@
     "backbone.babysitter": "vendors/backbone.babysitter",
     "backbone.wreqr": "vendors/backbone.wreqr",
     "marionette": "vendors/backbone.marionette",
-    "backbone.maze.bootstrap.tab": "libs/backbone.maze.bootstrap.tab",
-    "backbone.maze.bootstrap.datetimepicker": "libs/backbone.maze.bootstrap.datetimepicker",
     "bootstrap3.datetimepicker": "vendors/bootstrap3.datetimepicker",
     "moment": "vendors/moment",
     "summernote": "vendors/summernote"

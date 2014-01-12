@@ -1,49 +1,40 @@
 define([
   'underscore'
   , 'marionette'
-  , 'views/event_create/datetime_input'
-], function(_, Marionette, DatetimeInputView){
+  , 'models/event'
+], function(_, Marionette, Event){
   var View = Marionette.ItemView.extend({
     template: '#ec-datetime-template',
-    ui: {
-      datetimeGroup: '.js-datetime-group'
-    },
 
     events: {
 
     },
 
+    ui: {
+      startDate: '.js-start-date',
+      endDate: '.js-end-date'
+    },
+
     initialize: function(options) {
-      this._timepickers = [];
+      
     },
 
-    onRender: function() {
-      var startDateView = this.createDatetimeInputView('start_date', _.t('From'));
-      var endDateView = this.createDatetimeInputView('end_date', _.t('To'));
-
-      var $container = $('<div></div>');
-      $container.addClass('clearfix');
-      $container.append(startDateView.render().$el);
-      $container.append(endDateView.render().$el);
-
-      this.ui.datetimeGroup.append($container);
-      startDateView.initPicker();
-      endDateView.initPicker();
-    },
-
-    createDatetimeInputView: function(name, placeholder, index) {
-      if (typeof(index) === 'undefined') {
-        index = 0;
-      }
-
-      var datetimeInputView = new DatetimeInputView({
-        className: 'col-sm-3',
-        name: name + '_' + index,
-        placeholder: placeholder
+    onShow: function() {
+      this.model.buildControl({
+        attribute: 'start_date',
+        type: 'datetime',
+        el: this.ui.startDate,
+        format: Event.DATETIME_FORMAT,
+        placeholder: _.t('From')
       });
-      this._timepickers.push(datetimeInputView);
 
-      return datetimeInputView;
+      this.model.buildControl({
+        attribute: 'end_date',
+        type: 'datetime',
+        el: this.ui.endDate,
+        format: Event.DATETIME_FORMAT,
+        placeholder: _.t('To')
+      });
     }
   });
 

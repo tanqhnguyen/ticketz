@@ -1,12 +1,12 @@
 /**
- * Super simple wysiwyg editor on Bootstrap v0.5.0
+ * Super simple wysiwyg editor on Bootstrap v0.5.1
  * http://hackerwins.github.io/summernote/
  *
  * summernote.js
  * Copyright 2013 Alan Hong. and outher contributors
  * summernote may be freely distributed under the MIT license./
  *
- * Date: 2013-12-29T10:27Z
+ * Date: 2014-01-05T06:11Z
  */
 (function (factory) {
   factory(window.jQuery, window.CodeMirror);
@@ -175,12 +175,13 @@
       return node && /^DIV|^P|^LI|^H[1-7]/.test(node.nodeName);
     };
   
-    var emptyPara = '<p><br/></p>';
-  
     var isList = function (node) {
       return node && /^UL|^OL/.test(node.nodeName);
     };
   
+    /**
+     * returns whether node is `note-editable` or not.
+     */
     var isEditable = function (node) {
       return node && $(node).hasClass('note-editable');
     };
@@ -197,6 +198,8 @@
     var ancestor = function (node, pred) {
       while (node) {
         if (pred(node)) { return node; }
+        if (isEditable(node)) { break; }
+
         node = node.parentNode;
       }
       return null;
@@ -429,7 +432,8 @@
     };
   
     return {
-      emptyPara: emptyPara,
+      blank: agent.bMSIE ? '&nbsp;' : '<br/>',
+      emptyPara: '<p><br/></p>',
       isText: isText,
       isPara: isPara,
       isList: isList,
@@ -437,6 +441,7 @@
       isControlSizing: isControlSizing,
       isAnchor: makePredByNodeName('A'),
       isDiv: makePredByNodeName('DIV'),
+      isLi: makePredByNodeName('LI'),
       isSpan: makePredByNodeName('SPAN'),
       isB: makePredByNodeName('B'),
       isU: makePredByNodeName('U'),
@@ -695,28 +700,27 @@
      */
     var loadImage = function (sUrl) {
       return $.Deferred(function (deferred) {
-        var image = new Image();
-        image.onload = loaded;
-        image.onerror = errored; // URL returns 404, etc
-        image.onabort = errored; // IE may call this if user clicks "Stop"
-        image.src = sUrl;
-         
-        function loaded() {
-          unbindEvents();
+        var image = new Image();
+        image.onload = loaded;
+        image.onerror = errored; // URL returns 404, etc
+        image.onabort = errored; // IE may call this if user clicks "Stop"
+        image.src = sUrl;
+
+        function loaded() {
+          unbindEvents();
           deferred.resolve(image);
-        }
-        function errored() {
-          unbindEvents();
+        }
+        function errored() {
+          unbindEvents();
           deferred.reject(image);
-        }
-        function unbindEvents() {
-          image.onload = null;
-          image.onerror = null;
-          image.onabort = null;
-        }
+        }
+        function unbindEvents() {
+          image.onload = null;
+          image.onerror = null;
+          image.onabort = null;
+        }
       }).promise();
     };
-  
     return { readFile: readFile, loadImage: loadImage };
   })();
 
@@ -812,50 +816,84 @@
     };
   };
 
+  var Table = function () {
+    /**
+     * Create empty table element
+     * @param nRow {number}
+     * @param nCol {number}
+     */
+    this.createTable = function (nCol, nRow) {
+      var aTD = [], sTD;
+      for (var idxCol = 0; idxCol < nCol; idxCol++) {
+        aTD.push('<td>' + dom.blank + '</td>');
+      }
+      sTD = aTD.join('');
+
+      var aTR = [], sTR;
+      for (var idxRow = 0; idxRow < nRow; idxRow++) {
+        aTR.push('<tr>' + sTD + '</tr>');
+      }
+      sTR = aTR.join('');
+      var sTable = '<table class="table table-bordered">' + sTR + '</table>';
+
+      return $(sTable)[0];
+    };
+  };
+
   /**
    * Editor
    */
   var Editor = function () {
-    // save current range
+
+    var style = new Style();
+    var table = new Table();
+
+    /**
+     * save current range
+     * @param $editable {jQuery}
+     */
     this.saveRange = function ($editable) {
       $editable.data('range', range.create());
     };
 
-    // restore lately range
+    /**
+     * restore lately range
+     * @param $editable {jQuery}
+     */
     this.restoreRange = function ($editable) {
       var rng = $editable.data('range');
       if (rng) { rng.select(); }
     };
 
-    //currentStyle
-    var style = new Style();
+    /**
+     * currentStyle
+     * @param elTarget {element}
+     */
     this.currentStyle = function (elTarget) {
       var rng = range.create();
       return rng.isOnEditable() && style.current(rng, elTarget);
     };
 
-    this.tab = function ($editable) {
-      recordUndo($editable);
-      var rng = range.create();
-      var sNbsp = new Array($editable.data('tabsize') + 1).join('&nbsp;');
-      rng.insertNode($('<span id="noteTab">' + sNbsp + '</span>')[0]);
-      var $tab = $('#noteTab').removeAttr('id');
-      rng = range.create($tab[0], 1);
-      rng.select();
-      dom.remove($tab[0]);
-    };
-
-    // undo
+    /**
+     * undo
+     * @param $editable {jQuery}
+     */
     this.undo = function ($editable) {
       $editable.data('NoteHistory').undo($editable);
     };
 
-    // redo
+    /**
+     * redo
+     * @param $editable {jQuery}
+     */
     this.redo = function ($editable) {
       $editable.data('NoteHistory').redo($editable);
     };
 
-    // recordUndo
+    /**
+     * record Undo
+     * @param $editable {jQuery}
+     */
     var recordUndo = this.recordUndo = function ($editable) {
       $editable.data('NoteHistory').recordUndo($editable);
     };
@@ -878,6 +916,26 @@
     }
     /* jshint ignore:end */
 
+    /**
+     * handle tag key
+     * @param $editable {jQuery}
+     */
+    this.tab = function ($editable) {
+      recordUndo($editable);
+      var rng = range.create();
+      var sNbsp = new Array($editable.data('tabsize') + 1).join('&nbsp;');
+      rng.insertNode($('<span id="noteTab">' + sNbsp + '</span>')[0]);
+      var $tab = $('#noteTab').removeAttr('id');
+      rng = range.create($tab[0], 1);
+      rng.select();
+      dom.remove($tab[0]);
+    };
+
+    /**
+     * insert Image
+     * @param $editable {jQuery}
+     * @param sUrl {string}
+     */
     this.insertImage = function ($editable, sUrl) {
       async.loadImage(sUrl).done(function (image) {
         recordUndo($editable);
@@ -892,8 +950,13 @@
       });
     };
 
+    /**
+     * insert video
+     * @param $editable {jQuery}
+     * @param sUrl {string}
+     */
     this.insertVideo = function ($editable, sUrl) {
-      // video url patterns(youtube, instagram, vimeo, dailymotion)
+      // video url patterns(youtube, instagram, vimeo, dailymotion, youku)
       var ytRegExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
       var ytMatch = sUrl.match(ytRegExp);
 
@@ -908,6 +971,9 @@
 
       var dmRegExp = /.+dailymotion.com\/(video|hub)\/([^_]+)[^#]*(#video=([^_&]+))?/;
       var dmMatch = sUrl.match(dmRegExp);
+
+      var ykRegExp = /\/\/(v.youku.com)\/v_show\/id_(.+?).html/;
+      var ykMatch = sUrl.match(ykRegExp);
 
       var $video;
       if (ytMatch && ytMatch[2].length === 11) {
@@ -934,6 +1000,10 @@
         $video = $('<iframe>')
           .attr('src', 'http://www.dailymotion.com/embed/video/' + dmMatch[2])
           .attr('width', '640').attr('height', '360');
+      } else if (ykMatch && ykMatch[2].length > 0) {
+        $video = $('<iframe>')
+          .attr('src', 'http://player.youku.com/player.php/sid/' + ykMatch[2] + '/v.swf')
+          .attr('width', '600').attr('height', '360');
       } else {
         // this is not a known video link. Now what, Cat? Now what?
       }
@@ -944,12 +1014,22 @@
       }
     };
 
-    this.formatBlock = function ($editable, sValue) {
+    /**
+     * formatBlock
+     * @param $editable {jQuery}
+     * @param sTagName {string} - tag name
+     */
+    this.formatBlock = function ($editable, sTagName) {
       recordUndo($editable);
-      sValue = agent.bMSIE ? '<' + sValue + '>' : sValue;
-      document.execCommand('FormatBlock', false, sValue);
+      sTagName = agent.bMSIE ? '<' + sTagName + '>' : sTagName;
+      document.execCommand('FormatBlock', false, sTagName);
     };
 
+    /**
+     * fontsize
+     * @param $editable {jQuery}
+     * @param sValue {string} - fontsize (px)
+     */
     this.fontSize = function ($editable, sValue) {
       recordUndo($editable);
       document.execCommand('fontSize', false, 3);
@@ -964,11 +1044,20 @@
       }
     };
 
+    /**
+     * lineHeight
+     * @param $editable {jQuery}
+     * @param sValue {string} - lineHeight
+     */
     this.lineHeight = function ($editable, sValue) {
       recordUndo($editable);
       style.stylePara(range.create(), {lineHeight: sValue});
     };
 
+    /**
+     * unlink
+     * @param $editable {jQuery}
+     */
     this.unlink = function ($editable) {
       var rng = range.create();
       if (rng.isOnAnchor()) {
@@ -1045,22 +1134,7 @@
     this.insertTable = function ($editable, sDim) {
       recordUndo($editable);
       var aDim = sDim.split('x');
-      var nCol = aDim[0], nRow = aDim[1];
-
-      var aTD = [], sTD;
-      var sWhitespace = agent.bMSIE ? '&nbsp;' : '<br/>';
-      for (var idxCol = 0; idxCol < nCol; idxCol++) {
-        aTD.push('<td>' + sWhitespace + '</td>');
-      }
-      sTD = aTD.join('');
-
-      var aTR = [], sTR;
-      for (var idxRow = 0; idxRow < nRow; idxRow++) {
-        aTR.push('<tr>' + sTD + '</tr>');
-      }
-      sTR = aTR.join('');
-      var sTable = '<table class="table table-bordered">' + sTR + '</table>';
-      range.create().insertNode($(sTable)[0]);
+      range.create().insertNode(table.createTable(aDim[0], aDim[1]));
     };
 
     this.floatMe = function ($editable, sValue, elTarget) {
@@ -1068,6 +1142,12 @@
       elTarget.style.cssFloat = sValue;
     };
 
+    /**
+     * resize target
+     * @param $editable {jQuery}
+     * @param sValue {string}
+     * @param elTarget {element} - target element
+     */
     this.resize = function ($editable, sValue, elTarget) {
       recordUndo($editable);
       elTarget.style.width = $editable.width() * sValue + 'px';
@@ -2074,13 +2154,13 @@
                  '<div class="modal-dialog">' +
                    '<div class="modal-content">' +
                      '<div class="modal-header">' +
-                       '<button type="button" class="close" aria-hidden="true" tabindex="-1">×</button>' +
+                       '<button type="button" class="close" aria-hidden="true" tabindex="-1">&times;</button>' +
                        '<h4>' + lang.image.insert + '</h4>' +
                      '</div>' +
                      '<div class="modal-body">' +
                        '<div class="row-fluid">' +
-                         //'<h5>' + lang.image.selectFromFiles + '</h5>' +
-                         //'<input class="note-image-input" type="file" name="files" accept="image/*" />' +
+                         '<h5>' + lang.image.selectFromFiles + '</h5>' +
+                         '<input class="note-image-input" type="file" name="files" accept="image/*" />' +
                          '<h5>' + lang.image.url + '</h5>' +
                          '<input class="note-image-url form-control span12" type="text" />' +
                        '</div>' +
@@ -2095,7 +2175,7 @@
                  '<div class="modal-dialog">' +
                    '<div class="modal-content">' +
                      '<div class="modal-header">' +
-                       '<button type="button" class="close" aria-hidden="true" tabindex="-1">×</button>' +
+                       '<button type="button" class="close" aria-hidden="true" tabindex="-1">&times;</button>' +
                        '<h4>' + lang.link.insert + '</h4>' +
                      '</div>' +
                      '<div class="modal-body">' +
@@ -2121,7 +2201,7 @@
                      '<div class="modal-dialog">' +
                        '<div class="modal-content">' +
                          '<div class="modal-header">' +
-                           '<button type="button" class="close" aria-hidden="true" tabindex="-1">×</button>' +
+                           '<button type="button" class="close" aria-hidden="true" tabindex="-1">&times;</button>' +
                            '<h4>' + lang.video.insert + '</h4>' +
                          '</div>' +
                          '<div class="modal-body">' +
@@ -2147,7 +2227,7 @@
                        '<a class="modal-close pull-right" aria-hidden="true" tabindex="-1">' + lang.shortcut.close + '</a>' +
                        '<div class="title">' + lang.shortcut.shortcuts + '</div>' +
                        (agent.bMac ? tplShortcutTable(lang) : replaceMacKeys(tplShortcutTable(lang))) +
-                       '<p class="text-center"><a href="//hackerwins.github.io/summernote/" target="_blank">Summernote 0.5.0</a> · <a href="//github.com/HackerWins/summernote" target="_blank">Project</a> · <a href="//github.com/HackerWins/summernote/issues" target="_blank">Issues</a></p>' +
+                       '<p class="text-center"><a href="//hackerwins.github.io/summernote/" target="_blank">Summernote 0.5.1</a> · <a href="//github.com/HackerWins/summernote" target="_blank">Project</a> · <a href="//github.com/HackerWins/summernote/issues" target="_blank">Issues</a></p>' +
                      '</div>' +
                    '</div>' +
                  '</div>' +
@@ -2165,7 +2245,8 @@
         var tplShortcut = $btn.attr(agent.bMac ? 'data-mac-shortcut': 'data-shortcut');
         if (tplShortcut) { $btn.attr('title', function (i, v) { return v + ' (' + tplShortcut + ')'; }); }
       // bootstrap tooltip on btn-group bug: https://github.com/twitter/bootstrap/issues/5687
-      }).tooltip({container: 'body', placement: sPlacement || 'top'});
+      }).bstooltip({container: 'body', trigger: 'hover', placement: sPlacement || 'top'})
+        .on('click', function () {$(this).bstooltip('hide'); });
     };
 
     // pallete colors
@@ -2206,6 +2287,7 @@
     this.createLayout = function ($holder, options) {
       var nHeight = options.height,
           nTabsize = options.tabsize,
+          sDirection = options.direction,
           aToolbarSetting = options.toolbar,
           langInfo = $.summernote.lang[options.lang];
 
@@ -2229,6 +2311,9 @@
       }
       if (nTabsize) {
         $editable.data('tabsize', nTabsize);
+      }
+      if (sDirection) {
+        $editable.attr('dir', sDirection);
       }
 
       $editable.html(dom.html($holder) || dom.emptyPara);
@@ -2315,7 +2400,7 @@
   $.summernote = $.summernote || {};
 
   $.extend($.summernote, {
-    version: '0.5.0',
+    version: '0.5.1',
     lang: {
       'en-US': {
         font: {
