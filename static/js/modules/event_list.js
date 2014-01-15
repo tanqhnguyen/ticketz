@@ -1,15 +1,11 @@
 require([
   'underscore'
   , 'views/event_list/main'
-  , 'collections/events'
-], function(_, MainView, Events){
+], function(_, MainView){
   window.ticketz = window.ticketz || {};
 
-  var events = new Events();
-
   var view = new MainView({
-    el: $('#event-list'),
-    collection: events
+    el: $('#event-list')
   });
 
   view.render();

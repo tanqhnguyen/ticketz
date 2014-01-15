@@ -5,6 +5,7 @@ define([
 ], function(_, Backbone, Marionette){
   var View = Marionette.CompositeView.extend({
     pageRange: 10,
+    data: {},
 
     constructor: function() {
       Marionette.CompositeView.apply(this, arguments);
@@ -49,11 +50,13 @@ define([
       var pagination = this.collection.pagination;
       var offset = (page - 1)*pagination.limit;
 
+      var data = _.extend({
+        offset: offset,
+        limit: pagination.limit
+      }, Marionette.getOption(this, 'data'));
+
       this.collection.list({
-        data: {
-          offset: offset,
-          limit: pagination.limit
-        }
+        data: data
       }).success(function(){
         self._renderPagination();
       });

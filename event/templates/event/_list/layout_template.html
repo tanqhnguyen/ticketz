@@ -1,4 +1,24 @@
+{% load i18n %}
+
 <script type="text/template" id="em-layout-template">
-<div class="js-list">
+<div class="row">
+  <div class="col-sm-8">
+    <ul class="nav nav-pills">
+      <li>
+        <a data-toggle="tab" href="#live">{% trans 'Live Events' %}</a>
+      </li>
+      <li class="active">
+        <a data-toggle="tab" href="#draft">{% trans 'Draft' %}</a>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane" id="live"></div>
+      <div class="tab-pane active" id="draft"></div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+  Some useful stuff will be shown here
+  </div>
 </div>
 </script>

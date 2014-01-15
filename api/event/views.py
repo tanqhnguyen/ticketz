@@ -13,7 +13,9 @@ class ListView(ApiView):
         offset = int(request.GET.get('offset', 0))
         limit = int(request.GET.get('limit', 10))
 
-        events = [{"id": x, "title": "Event " + str(x)} for x in range(1, 1000)]
+        events = [{"id": x, "title": "Event " + str(x), "is_active": x%2==0} for x in range(1, 1000)]
+        check = request.GET.get('active') == 'true'
+        events = [e for e in events if e['is_active'] == check]
 
         return self.json({
             "data": events[offset:offset+limit],
