@@ -15,8 +15,19 @@ class CreateView(TemplateView):
         context['requirejs'] = 'event_create'
         context['less'] = 'event_create'
         return context
-        
-        
+
+class ManageView(TemplateView):
+    template_name = 'event/manage.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ManageView, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(ManageView, self).get_context_data(**kwargs)
+        context['requirejs'] = 'event_manage'
+        context['less'] = 'event_manage'
+        return context
         
 def event_view(request, event_id):
 

@@ -1,0 +1,14 @@
+{% extends 'layouts/requirejs.html' %}
+
+{% load i18n %}
+
+{% block javascript_templates %}
+{% include 'event/_manage/layout_template.html' %}
+{% include 'event/_manage/event_grid_item_template.html' %}
+{% endblock %}
+
+{% block content %}
+<div id="event-manage">
+
+</div>
+{% endblock %}
