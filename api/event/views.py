@@ -19,7 +19,7 @@ class ListView(ApiView):
             "data": events[offset:offset+limit],
             "pagination": {
                 "total": len(events),
-                "offset": offset+limit,
+                "offset": offset,
                 "limit": limit
             }
         })

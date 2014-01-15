@@ -138,7 +138,7 @@ define([
 
       var maxPage = minPage + pageRange;
 
-      if (maxPage >= totalPage) {
+      if (maxPage >= totalPage + 1) {
         maxPage = totalPage;
         minPage = maxPage - pageRange;
       }
