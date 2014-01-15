@@ -57,8 +57,8 @@
         <ul class="nav navbar-nav">
           <li><a href="/">{% trans 'Home'%}</a></li>
           {% if user.is_authenticated %}
-          <li><a href="{% url 'event_create' %}">{% trans 'Create event'%}</a></li>
-          <li><a href="{% url 'event_manage' %}">{% trans 'Manage events'%}</a></li>
+          <li><a href="{% url 'event_create' %}">{% trans 'Create Event'%}</a></li>
+          <li><a href="{% url 'event_list' %}">{% trans 'My Events'%}</a></li>
           {% endif %}
         </ul>
         <ul class="nav navbar-nav navbar-right">
