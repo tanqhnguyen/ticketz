@@ -14,5 +14,5 @@ class User(AbstractUser):
         app_label = "core"
 
     def json_data(self):
-        data = model_to_dict(self, fields=['username', 'first_name', 'last_name', 'email'])
+        data = model_to_dict(self, fields=['id', 'username', 'first_name', 'last_name', 'email'])
         return data
