@@ -12,6 +12,8 @@ class ListView(ApiView):
     def get(self, request):
         offset = int(request.GET.get('offset', 0))
         limit = int(request.GET.get('limit', 10))
+        print request.GET.get('sort[date_created]')
+        print request.GET.get('sort[title]')
 
         events = [{"id": x, "title": "Event " + str(x), "is_active": x%2==0} for x in range(1, 1000)]
         check = request.GET.get('active') == 'true'

@@ -28,7 +28,12 @@ define([
     loadDraftEvents: function() {
       var self = this;
       var data = {
-        active: false
+        active: false,
+        filters: [1,2,3],
+        sort: {
+          title: true,
+          date_created: false
+        }
       }
 
       this.draftEvents.list({
