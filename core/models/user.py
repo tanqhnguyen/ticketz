@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.forms.models import model_to_dict 
 
 class User(AbstractUser):
     is_external = models.BooleanField(default=True)
@@ -11,3 +12,7 @@ class User(AbstractUser):
 
     class Meta:
         app_label = "core"
+
+    def json_data(self):
+        data = model_to_dict(self, fields=['username', 'first_name', 'last_name', 'email'])
+        return data

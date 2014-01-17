@@ -29,7 +29,9 @@ class Event(models.Model):
         pass
 
     def json_data(self):
-        return model_to_dict(self)
+        data = model_to_dict(self)
+        data['user'] = self.user.json_data()
+        return data
 
     @classmethod
     def first_or_create(cls,user_id):
