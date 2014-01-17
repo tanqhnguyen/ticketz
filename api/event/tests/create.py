@@ -5,7 +5,6 @@ import json
 class EventTestCase(ApiTestCase):
     def test_success_create_api(self):
         response = self.post_json("api_event_create")
-        print response
         self.assertFalse("error" in response)
         count = Event.objects.filter(user_id=self.user.id).count()
         self.assertEquals(count, 1)

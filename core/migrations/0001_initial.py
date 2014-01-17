@@ -21,6 +21,7 @@ class Migration(SchemaMigration):
             ('is_staff', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('is_active', self.gf('django.db.models.fields.BooleanField')(default=True)),
             ('date_joined', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
+            ('is_external', self.gf('django.db.models.fields.BooleanField')(default=True)),
         ))
         db.send_create_signal('core', ['User'])
 
@@ -42,6 +43,43 @@ class Migration(SchemaMigration):
         ))
         db.create_unique(m2m_table_name, ['user_id', 'permission_id'])
 
+        # Adding model 'Event'
+        db.create_table(u'core_event', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('title', self.gf('django.db.models.fields.TextField')(default='New Event', max_length=128)),
+            ('description', self.gf('django.db.models.fields.TextField')(default='')),
+            ('type', self.gf('django.db.models.fields.TextField')(max_length=16)),
+            ('end_date', self.gf('django.db.models.fields.BigIntegerField')(default=1389978510776)),
+            ('start_date', self.gf('django.db.models.fields.BigIntegerField')(default=1389978510776)),
+            ('organizer_name', self.gf('django.db.models.fields.TextField')()),
+            ('organizer_contact', self.gf('django.db.models.fields.TextField')()),
+            ('is_active', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('json', self.gf('jsonfield.fields.JSONField')()),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.User'])),
+        ))
+        db.send_create_signal('core', ['Event'])
+
+        # Adding model 'TicketType'
+        db.create_table(u'core_tickettype', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=45)),
+            ('price', self.gf('django.db.models.fields.DecimalField')(max_length=2, max_digits=2, decimal_places=2)),
+            ('type', self.gf('django.db.models.fields.CharField')(max_length=45)),
+            ('amount', self.gf('django.db.models.fields.IntegerField')()),
+            ('event', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.Event'])),
+        ))
+        db.send_create_signal('core', ['TicketType'])
+
+        # Adding model 'SoldTicket'
+        db.create_table(u'core_soldticket', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('seat', self.gf('django.db.models.fields.CharField')(max_length=45)),
+            ('event', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.Event'])),
+            ('ticket_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.TicketType'])),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.User'])),
+        ))
+        db.send_create_signal('core', ['SoldTicket'])
+
 
     def backwards(self, orm):
         # Deleting model 'User'
@@ -52,6 +90,15 @@ class Migration(SchemaMigration):
 
         # Removing M2M table for field user_permissions on 'User'
         db.delete_table(db.shorten_name(u'core_user_user_permissions'))
+
+        # Deleting model 'Event'
+        db.delete_table(u'core_event')
+
+        # Deleting model 'TicketType'
+        db.delete_table(u'core_tickettype')
+
+        # Deleting model 'SoldTicket'
+        db.delete_table(u'core_soldticket')
 
 
     models = {
@@ -75,6 +122,37 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
+        'core.event': {
+            'Meta': {'object_name': 'Event'},
+            'description': ('django.db.models.fields.TextField', [], {'default': "''"}),
+            'end_date': ('django.db.models.fields.BigIntegerField', [], {'default': '1389978510776'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'json': ('jsonfield.fields.JSONField', [], {}),
+            'organizer_contact': ('django.db.models.fields.TextField', [], {}),
+            'organizer_name': ('django.db.models.fields.TextField', [], {}),
+            'start_date': ('django.db.models.fields.BigIntegerField', [], {'default': '1389978510776'}),
+            'title': ('django.db.models.fields.TextField', [], {'default': "'New Event'", 'max_length': '128'}),
+            'type': ('django.db.models.fields.TextField', [], {'max_length': '16'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['core.User']"})
+        },
+        'core.soldticket': {
+            'Meta': {'object_name': 'SoldTicket'},
+            'event': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['core.Event']"}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'seat': ('django.db.models.fields.CharField', [], {'max_length': '45'}),
+            'ticket_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['core.TicketType']"}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['core.User']"})
+        },
+        'core.tickettype': {
+            'Meta': {'object_name': 'TicketType'},
+            'amount': ('django.db.models.fields.IntegerField', [], {}),
+            'event': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['core.Event']"}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '45'}),
+            'price': ('django.db.models.fields.DecimalField', [], {'max_length': '2', 'max_digits': '2', 'decimal_places': '2'}),
+            'type': ('django.db.models.fields.CharField', [], {'max_length': '45'})
+        },
         'core.user': {
             'Meta': {'object_name': 'User'},
             'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
@@ -83,6 +161,7 @@ class Migration(SchemaMigration):
             'groups': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['auth.Group']", 'symmetrical': 'False', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'is_external': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'is_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'is_superuser': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),

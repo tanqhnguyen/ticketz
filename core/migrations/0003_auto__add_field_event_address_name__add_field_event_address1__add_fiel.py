@@ -8,31 +8,39 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Deleting field 'Event.live_date'
-        db.delete_column(u'core_event', 'live_date')
-
-        # Adding field 'Event.end_date'
-        db.add_column(u'core_event', 'end_date',
-                      self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime(2013, 12, 16, 0, 0)),
+        # Adding field 'Event.address_name'
+        db.add_column(u'core_event', 'address_name',
+                      self.gf('django.db.models.fields.TextField')(default='', max_length=128),
                       keep_default=False)
 
-        # Adding field 'Event.is_active'
-        db.add_column(u'core_event', 'is_active',
-                      self.gf('django.db.models.fields.BooleanField')(default=False),
+        # Adding field 'Event.address1'
+        db.add_column(u'core_event', 'address1',
+                      self.gf('django.db.models.fields.TextField')(default=''),
+                      keep_default=False)
+
+        # Adding field 'Event.address2'
+        db.add_column(u'core_event', 'address2',
+                      self.gf('django.db.models.fields.TextField')(default=''),
+                      keep_default=False)
+
+        # Adding field 'Event.city'
+        db.add_column(u'core_event', 'city',
+                      self.gf('django.db.models.fields.TextField')(default=''),
                       keep_default=False)
 
 
     def backwards(self, orm):
-        # Adding field 'Event.live_date'
-        db.add_column(u'core_event', 'live_date',
-                      self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime(2013, 12, 16, 0, 0)),
-                      keep_default=False)
+        # Deleting field 'Event.address_name'
+        db.delete_column(u'core_event', 'address_name')
 
-        # Deleting field 'Event.end_date'
-        db.delete_column(u'core_event', 'end_date')
+        # Deleting field 'Event.address1'
+        db.delete_column(u'core_event', 'address1')
 
-        # Deleting field 'Event.is_active'
-        db.delete_column(u'core_event', 'is_active')
+        # Deleting field 'Event.address2'
+        db.delete_column(u'core_event', 'address2')
+
+        # Deleting field 'Event.city'
+        db.delete_column(u'core_event', 'city')
 
 
     models = {
@@ -58,15 +66,19 @@ class Migration(SchemaMigration):
         },
         'core.event': {
             'Meta': {'object_name': 'Event'},
-            'age_limit': ('django.db.models.fields.IntegerField', [], {'default': 'None'}),
+            'address1': ('django.db.models.fields.TextField', [], {}),
+            'address2': ('django.db.models.fields.TextField', [], {}),
+            'address_name': ('django.db.models.fields.TextField', [], {'max_length': '128'}),
+            'city': ('django.db.models.fields.TextField', [], {}),
             'description': ('django.db.models.fields.TextField', [], {'default': "''"}),
-            'end_date': ('django.db.models.fields.DateTimeField', [], {'default': 'None'}),
+            'end_date': ('django.db.models.fields.BigIntegerField', [], {'default': '1389978662972'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'name': ('django.db.models.fields.TextField', [], {'default': "'New Event'", 'max_length': '128'}),
-            'page_attribute': ('django.db.models.fields.TextField', [], {}),
-            'start_date': ('django.db.models.fields.DateTimeField', [], {'default': 'None'}),
-            'type': ('django.db.models.fields.TextField', [], {'max_length': '16'}),
+            'json': ('jsonfield.fields.JSONField', [], {}),
+            'organizer_contact': ('django.db.models.fields.TextField', [], {}),
+            'organizer_name': ('django.db.models.fields.TextField', [], {}),
+            'start_date': ('django.db.models.fields.BigIntegerField', [], {'default': '1389978662972'}),
+            'title': ('django.db.models.fields.TextField', [], {'default': "'New Event'", 'max_length': '128'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['core.User']"})
         },
         'core.soldticket': {

@@ -1,43 +1,35 @@
-import datetime
-from django.core.serializers import json
+import time
 from django.db import models
 from core.models import User
+from jsonfield import JSONField
+from django.forms.models import model_to_dict 
 
 
 class Event(models.Model):
-    page_attribute = models.TextField()
-    name = models.TextField(max_length=128 , default="New Event")
+    title = models.TextField(max_length=128 , default="New Event")
+    address_name = models.TextField(max_length=128, blank=True)
+    address1 = models.TextField(blank=True)
+    address2 = models.TextField(blank=True)
+    city = models.TextField(blank=True)
+    zipcode = models.TextField(max_length=5, blank=True),
     description = models.TextField(default="")
-    type = models.TextField(max_length=16)
-    age_limit = models.IntegerField(default=0)
-    end_date = models.DateTimeField(default=datetime.datetime.now())
-    start_date = models.DateTimeField(default=datetime.datetime.now())
+    end_date = models.BigIntegerField(default=int(round(time.time() * 1000)))
+    start_date = models.BigIntegerField(default=int(round(time.time() * 1000)))
+    organizer_name = models.TextField(blank=True)
+    organizer_contact = models.TextField(blank=True)
     is_active = models.BooleanField(default=False)
+    json = JSONField()
+
     user = models.ForeignKey(User)
-#    newly added
-    ticket_type=models.ForeignKey('core.models.ticket_type.TicketType')
 
     class Meta:
         app_label = "core"
 
     def check_ticket_types(self,ticket_types):
-        self.ticket_type=None
-        self.save()
-        self.ticket_type=ticket_types
-        self.save()
+        pass
 
     def json_data(self):
-
-            description = self.description
-            age_limit = self.age_limit
-            name = self.name
-            start_date = self.start_date.strftime('%Y-%m-%d %H:%M:%S')
-            end_date = self.end_date.strftime('%Y-%m-%d %H:%M:%S')
-            is_active = self.is_active
-            ticket_type = self.ticket_type
-            data = {"id":self.id,"name":name,"ticket_type":ticket_type,"description":description,"age_limit":age_limit,
-                    "start_date":start_date,"end_date":end_date,"is_active":is_active}
-            return data
+        return model_to_dict(self)
 
     @classmethod
     def first_or_create(cls,user_id):
@@ -46,5 +38,25 @@ class Event(models.Model):
         except Exception:
             event = cls()
             event.user_id = user_id
+            event.title = 'My Event'
+            event.description = 'Describe your event'
+            event.json = {
+                'detailBodyBgColor': '#ffffff',
+                'detailTitleBgColor': '#307ecc',
+                'detailTitleColor': '#ffffff',
+                'locationTitleBgColor': '#307ecc',
+                'locationTitleColor': '#ffffff',
+                'locationBodyBgColor': '#ffffff',
+                'locationBodyColor': '#000000',
+                'ticketTitleBgColor': '#307ecc',
+                'ticketTitleColor': '#ffffff',
+                'ticketBodyBgColor': '#ffffff',
+                'ticketBodyColor': '#000000',
+                'organizerTitleBgColor': '#307ecc',
+                'organizerTitleColor': '#ffffff',
+                'organizerBodyBgColor': '#ffffff',
+                'organizerBodyColor': '#000000'
+            }
+
             event.save()
         return event

@@ -8,51 +8,15 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'SoldTicket'
-        db.create_table(u'core_soldticket', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('seat', self.gf('django.db.models.fields.CharField')(max_length=45)),
-            ('event_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.Event'])),
-            ('ticket_type_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.TicketType'])),
-            ('user_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.User'])),
-        ))
-        db.send_create_signal('core', ['SoldTicket'])
-
-        # Adding model 'Event'
-        db.create_table(u'core_event', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('page_attribute', self.gf('django.db.models.fields.TextField')()),
-            ('name', self.gf('django.db.models.fields.TextField')(max_length=128)),
-            ('description', self.gf('django.db.models.fields.TextField')()),
-            ('type', self.gf('django.db.models.fields.TextField')(max_length=16)),
-            ('age_limit', self.gf('django.db.models.fields.IntegerField')()),
-            ('live_date', self.gf('django.db.models.fields.DateTimeField')()),
-            ('start_date', self.gf('django.db.models.fields.DateTimeField')()),
-            ('user_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.User'])),
-        ))
-        db.send_create_signal('core', ['Event'])
-
-        # Adding model 'TicketType'
-        db.create_table(u'core_tickettype', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=45)),
-            ('price', self.gf('django.db.models.fields.DecimalField')(max_length=2, max_digits=2, decimal_places=2)),
-            ('type', self.gf('django.db.models.fields.CharField')(max_length=45)),
-            ('amount', self.gf('django.db.models.fields.IntegerField')()),
-            ('event_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.Event'])),
-        ))
-        db.send_create_signal('core', ['TicketType'])
+        # Deleting field 'Event.type'
+        db.delete_column(u'core_event', 'type')
 
 
     def backwards(self, orm):
-        # Deleting model 'SoldTicket'
-        db.delete_table(u'core_soldticket')
-
-        # Deleting model 'Event'
-        db.delete_table(u'core_event')
-
-        # Deleting model 'TicketType'
-        db.delete_table(u'core_tickettype')
+        # Adding field 'Event.type'
+        db.add_column(u'core_event', 'type',
+                      self.gf('django.db.models.fields.TextField')(default=1, max_length=16),
+                      keep_default=False)
 
 
     models = {
@@ -78,28 +42,29 @@ class Migration(SchemaMigration):
         },
         'core.event': {
             'Meta': {'object_name': 'Event'},
-            'age_limit': ('django.db.models.fields.IntegerField', [], {}),
-            'description': ('django.db.models.fields.TextField', [], {}),
+            'description': ('django.db.models.fields.TextField', [], {'default': "''"}),
+            'end_date': ('django.db.models.fields.BigIntegerField', [], {'default': '1389978603969'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'live_date': ('django.db.models.fields.DateTimeField', [], {}),
-            'name': ('django.db.models.fields.TextField', [], {'max_length': '128'}),
-            'page_attribute': ('django.db.models.fields.TextField', [], {}),
-            'start_date': ('django.db.models.fields.DateTimeField', [], {}),
-            'type': ('django.db.models.fields.TextField', [], {'max_length': '16'}),
-            'user_id': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['core.User']"})
+            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'json': ('jsonfield.fields.JSONField', [], {}),
+            'organizer_contact': ('django.db.models.fields.TextField', [], {}),
+            'organizer_name': ('django.db.models.fields.TextField', [], {}),
+            'start_date': ('django.db.models.fields.BigIntegerField', [], {'default': '1389978603969'}),
+            'title': ('django.db.models.fields.TextField', [], {'default': "'New Event'", 'max_length': '128'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['core.User']"})
         },
         'core.soldticket': {
             'Meta': {'object_name': 'SoldTicket'},
-            'event_id': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['core.Event']"}),
+            'event': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['core.Event']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'seat': ('django.db.models.fields.CharField', [], {'max_length': '45'}),
-            'ticket_type_id': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['core.TicketType']"}),
-            'user_id': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['core.User']"})
+            'ticket_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['core.TicketType']"}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['core.User']"})
         },
         'core.tickettype': {
             'Meta': {'object_name': 'TicketType'},
             'amount': ('django.db.models.fields.IntegerField', [], {}),
-            'event_id': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['core.Event']"}),
+            'event': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['core.Event']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '45'}),
             'price': ('django.db.models.fields.DecimalField', [], {'max_length': '2', 'max_digits': '2', 'decimal_places': '2'}),
