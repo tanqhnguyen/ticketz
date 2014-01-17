@@ -2,7 +2,7 @@ from core.tests import ApiTestCase
 from core.models import User, Event
 import json
 
-class EventTestCase(ApiTestCase):
+class CreateEventTestCase(ApiTestCase):
     def test_success_create_api(self):
         response = self.post_json("api_event_create")
         self.assertFalse("error" in response)
