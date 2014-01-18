@@ -3,6 +3,7 @@ from django.db import models
 from core.models import AbstractModel, User
 from jsonfield import JSONField
 from django.forms.models import model_to_dict 
+from django.core.urlresolvers import reverse
 
 
 class Event(AbstractModel):
@@ -39,6 +40,9 @@ class Event(AbstractModel):
         data['json'] = self.json
         data['ticket_types'] = [ticket_type.json_data() for ticket_type in self.ticket_types.all()]
         return data
+
+    def get_absolute_url(self):
+        return reverse('event_update', kwargs={'event_id': self.id})
 
     @classmethod
     def first_or_create(cls,user_id):

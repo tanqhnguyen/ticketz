@@ -1,19 +1,33 @@
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.views.generic.base import TemplateView
+from django.views.generic.base import View, TemplateView
 from core.models import Event
+from django.shortcuts import render, redirect
+from core.decorators import event_owner
 
-class CreateView(TemplateView):
-    template_name = 'event/create.html'
-
+class CreateView(View):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(CreateView, self).dispatch(*args, **kwargs)
 
+    def get(self, request):
+        user_id = request.user.id
+        event = Event.first_or_create(user_id)
+        return redirect(event)
+
+class UpdateView(TemplateView):
+    template_name = 'event/update.html'
+
+    @method_decorator(login_required)
+    @method_decorator(event_owner(json_response=False))
+    def dispatch(self, *args, **kwargs):
+        return super(UpdateView, self).dispatch(*args, **kwargs)
+
     def get_context_data(self, **kwargs):
-        context = super(CreateView, self).get_context_data(**kwargs)
-        context['requirejs'] = 'event_create'
-        context['less'] = 'event_create'
+        context = super(UpdateView, self).get_context_data(**kwargs)
+        context['requirejs'] = 'event_update'
+        context['less'] = 'event_update'
+        context['event'] = Event.objects.get(pk=kwargs.get('event_id'))
         return context
 
 class ListView(TemplateView):

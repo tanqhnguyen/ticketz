@@ -7,8 +7,12 @@ from django.http import Http404
 def event_owner(json_response = True):
     def decorator(function):
         def inner(request,*args,**kwargs):
-            data = json.loads(request.body)
-            req_event_id = data["id"]
+            if request.method == 'POST':
+                data = json.loads(request.body)
+            else:
+                data = request.GET
+
+            req_event_id = kwargs.get('event_id', data.get('id'))
             event = Event.objects.get(id = req_event_id)
             owner = event.user
             if owner.id is request.user.id:
