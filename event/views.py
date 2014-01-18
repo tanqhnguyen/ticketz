@@ -25,8 +25,8 @@ class UpdateView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(UpdateView, self).get_context_data(**kwargs)
-        context['requirejs'] = 'event_update'
-        context['less'] = 'event_update'
+        context['requirejs'] = 'event_create'
+        context['less'] = 'event_create'
         context['event'] = Event.objects.get(pk=kwargs.get('event_id'))
         return context
 
