@@ -17,33 +17,36 @@ class DeleteView(ApiView):
     @method_decorator(login_required)
     @method_decorator(event_owner())
     def post(self, request):
-        # data is now a Python dict representing the uploaded JSON.
         id = self.json_data['id']
         event = Event.objects.get(pk = id)
-        event.delete()
         data = event.json_data()
+        event.delete()
         return self.json({"data": data})
 
 class UpdateView(ApiView):
     @method_decorator(login_required)
     @method_decorator(event_owner())
     def post(self, request):
-        pass
-        # data = json.loads(request.raw_post_data)
-        # # data is now a Python dict representing the uploaded JSON.
-        # id = data['id']
-        # event = Event.objects.get(pk = id)
-        # ticket_type=data['ticket_type']
-        # event.check_ticket_types(ticket_type)
-        # event.name=data['name']
-        # event.ticket_type=data['ticket_type']
-        # event.age_limit=data['age_limit']
-        # event.description=data['description']
-        # event.end_date=data['end_date']
-        # event.start_date=data['start_date']
-        # event.save()
-        # data = event.json_data()
-        # return self.json({"data": data})
+        data = self.json_data
+        event = Event.objects.get(pk = data['id'])
+        ticket_types = data.get('ticket_types')
+        json = data.get('json')
+
+        if ticket_types:
+            event.create_event_types(ticket_types)
+
+        if json:
+            for key, value in json.iteritems():
+                event.json[key] = value
+        
+        unsafe_attributes = ['id', 'user_id', 'ticket_types', 'json']
+        for attr in unsafe_attributes:
+            if data.get(attr):
+                del data[attr]
+
+        event.set_attributes(**data)
+        event.save()
+        return self.json({'data': event.json_data()})
 
 class ListView(ApiView):
     def get(self, request):

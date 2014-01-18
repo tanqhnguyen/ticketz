@@ -1,6 +1,6 @@
 from django.test import TestCase
 from core.models import User
-import json
+import simplejson as json
 from django.core.urlresolvers import reverse
 
 class ApiTestCase(TestCase):

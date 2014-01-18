@@ -2,7 +2,7 @@ from core.tests import ApiTestCase
 from core.models import User, Event
 import json
 
-class DeleteEventTestCase(ApiTestCase):
+class EventDeleteTest(ApiTestCase):
     def test_success_delete_api(self):
         response = self.post_json("api_event_create")
         event_id = response["data"]["id"]

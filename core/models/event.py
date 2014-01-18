@@ -1,11 +1,11 @@
 import time
 from django.db import models
-from core.models import User
+from core.models import AbstractModel, User
 from jsonfield import JSONField
 from django.forms.models import model_to_dict 
 
 
-class Event(models.Model):
+class Event(AbstractModel):
     title = models.TextField(max_length=128 , default="New Event")
     address_name = models.TextField(max_length=128, blank=True)
     address1 = models.TextField(blank=True)
@@ -15,6 +15,7 @@ class Event(models.Model):
     description = models.TextField(default="")
     end_date = models.BigIntegerField(default=int(round(time.time() * 1000)))
     start_date = models.BigIntegerField(default=int(round(time.time() * 1000)))
+    created_date = models.BigIntegerField(default=int(round(time.time() * 1000)))
     organizer_name = models.TextField(blank=True)
     organizer_contact = models.TextField(blank=True)
     is_active = models.BooleanField(default=False)
@@ -25,12 +26,18 @@ class Event(models.Model):
     class Meta:
         app_label = "core"
 
-    def check_ticket_types(self,ticket_types):
-        pass
+    def create_event_types(self,ticket_types):
+        self.ticket_types.all().delete()
+        for ticket_type in ticket_types:
+            self.ticket_types.create(**ticket_type)
+
+        return self
 
     def json_data(self):
-        data = model_to_dict(self)
-        data['user'] = self.user.json_data()
+        data = model_to_dict(self, exclude=['user', 'json'])
+        data['user_id'] = self.user.id
+        data['json'] = self.json
+        data['ticket_types'] = [ticket_type.json_data() for ticket_type in self.ticket_types.all()]
         return data
 
     @classmethod
@@ -59,6 +66,7 @@ class Event(models.Model):
                 'organizerBodyBgColor': '#ffffff',
                 'organizerBodyColor': '#000000'
             }
+            event.created_date = int(round(time.time() * 1000))
 
             event.save()
         return event

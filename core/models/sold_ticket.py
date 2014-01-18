@@ -1,9 +1,7 @@
 from django.db import models
-from core.models.user import User
-from core.models import TicketType
-from core.models import Event
+from core.models import AbstractModel, User, TicketType, Event
 
-class SoldTicket(models.Model):
+class SoldTicket(AbstractModel):
     seat = models.CharField(max_length=45)
     event = models.ForeignKey(Event)
     ticket_type = models.ForeignKey(TicketType)

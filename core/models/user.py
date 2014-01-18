@@ -1,8 +1,9 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.forms.models import model_to_dict 
+from core.models import AbstractModel
 
-class User(AbstractUser):
+class User(AbstractUser, AbstractModel):
     is_external = models.BooleanField(default=True)
 
     def get_social_user(self):
