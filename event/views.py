@@ -16,7 +16,7 @@ class CreateView(View):
         return redirect(event)
 
 class UpdateView(TemplateView):
-    template_name = 'event/update.html'
+    template_name = 'event/create.html'
 
     @method_decorator(login_required)
     @method_decorator(event_owner(json_response=False))

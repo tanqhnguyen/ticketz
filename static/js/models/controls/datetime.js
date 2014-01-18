@@ -32,17 +32,17 @@ define([
 
       var self = this;
 
-      this.$el.datetimepicker({
-        defaultDate: this.model.get(attribute) || Marionette.getOption(this, 'defaultDate') || moment(),
-        format: moment.langData().longDateFormat(format)
-      });
+      // this.$el.datetimepicker({
+      //   defaultDate: this.model.get(attribute) || Marionette.getOption(this, 'defaultDate') || moment(),
+      //   format: moment.langData().longDateFormat(format)
+      // });
 
-      this.$el.on('change.dp', function(e){
-        // weird shit with input-group
-        if (e.date) {
-          self.model.set(attribute, e.date.format(format));
-        }
-      });
+      // this.$el.on('change.dp', function(e){
+      //   // weird shit with input-group
+      //   if (e.date) {
+      //     self.model.set(attribute, e.date.format(format));
+      //   }
+      // });
     }
   });
 
