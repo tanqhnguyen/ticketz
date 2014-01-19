@@ -29,7 +29,7 @@ define([
     onRender: function() {
       var self = this;
       this.eventDemoView = new EventView({
-        el: this.$el,
+        el: this.$('.js-preview'),
         model: this.model
       }).render();
 
@@ -48,19 +48,27 @@ define([
 
       this.eventDemoView.ui.detailContainer
                         .find('.widget-header')
-                        .append(this.createEditToolbar('ec-edit-detail-tooltip-template').render().$el);
+                        .append(this.createEditToolbar('eu-edit-detail-tooltip-template').render().$el);
 
       this.eventDemoView.ui.locationContainer
                         .find('.widget-header')
-                        .append(this.createEditToolbar('ec-edit-location-tooltip-template').render().$el);
+                        .append(this.createEditToolbar('eu-edit-location-tooltip-template').render().$el);
 
       this.eventDemoView.ui.ticketContainer
                         .find('.widget-header')
-                        .append(this.createEditToolbar('ec-edit-ticket-tooltip-template').render().$el);
+                        .append(this.createEditToolbar('eu-edit-ticket-tooltip-template').render().$el);
 
       this.eventDemoView.ui.organizer
                         .find('.widget-header')
-                        .append(this.createEditToolbar('ec-edit-organizer-tooltip-template').render().$el);
+                        .append(this.createEditToolbar('eu-edit-organizer-tooltip-template').render().$el);
+
+      this.$('.js-common-style').each(function(){
+        self.model.buildControl({
+          attribute: $(this).data('attribute'),
+          el: $(this),
+          type: 'colorpicker'
+        });
+      });
 
 
       this.initEditTooltips();
@@ -107,7 +115,27 @@ define([
       return false;
     },
 
-    onChangeStyle: function() {
+    commonStyle: {
+      'commonBodyBgColor': ['detailBodyBgColor', 'locationBodyBgColor', 'ticketBodyBgColor', 'organizerBodyBgColor'],
+      'commonBodyColor': ['locationBodyColor', 'ticketBodyColor', 'organizerBodyColor'],
+      'commonTitleBgColor': ['detailTitleBgColor', 'locationTitleBgColor', 'ticketTitleBgColor', 'organizerTitleBgColor'],
+      'commonTitleColor': ['detailTitleColor', 'locationTitleColor', 'ticketTitleColor', 'organizerTitleColor']
+    },
+
+    onChangeStyle: function(model) {
+      var changedAttributes = model.changedAttributes();
+
+      _.each(changedAttributes, function(value, key){
+        if (this.commonStyle[key]) {
+          var related = {};
+          _.each(this.commonStyle[key], function(key){
+            related[key] = value;
+          });
+
+          model.set(related, {silent: true});
+        }
+      }, this);
+
       this.customStyleView.render();
     }
   });

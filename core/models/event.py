@@ -51,10 +51,33 @@ class Event(AbstractModel):
     def json_data(self):
         data = model_to_dict(self, exclude=['user', 'json'])
         data['user_id'] = self.user.id
-        data['json'] = self.json
+        data['json'] = Event.default_json
+        data['json'].update(self.json)
         data['ticket_types'] = [ticket_type.json_data() for ticket_type in self.ticket_types.all()]
         data['url'] = self.get_urls()
         return data
+
+    default_json = {
+        'detailBodyBgColor': '#ffffff',
+        'detailTitleBgColor': '#307ecc',
+        'detailTitleColor': '#ffffff',
+        'locationTitleBgColor': '#307ecc',
+        'locationTitleColor': '#ffffff',
+        'locationBodyBgColor': '#ffffff',
+        'locationBodyColor': '#000000',
+        'ticketTitleBgColor': '#307ecc',
+        'ticketTitleColor': '#ffffff',
+        'ticketBodyBgColor': '#ffffff',
+        'ticketBodyColor': '#000000',
+        'organizerTitleBgColor': '#307ecc',
+        'organizerTitleColor': '#ffffff',
+        'organizerBodyBgColor': '#ffffff',
+        'organizerBodyColor': '#000000',
+        'commonBodyBgColor': '#ffffff',
+        'commonBodyColor': '#000000',
+        'commonTitleBgColor': '#307ecc',
+        'commonTitleColor': '#ffffff'
+    }
 
     @classmethod
     def first_or_create(cls,user_id):
@@ -65,23 +88,7 @@ class Event(AbstractModel):
             event.user_id = user_id
             event.title = 'My Event'
             event.description = 'Describe your event'
-            event.json = {
-                'detailBodyBgColor': '#ffffff',
-                'detailTitleBgColor': '#307ecc',
-                'detailTitleColor': '#ffffff',
-                'locationTitleBgColor': '#307ecc',
-                'locationTitleColor': '#ffffff',
-                'locationBodyBgColor': '#ffffff',
-                'locationBodyColor': '#000000',
-                'ticketTitleBgColor': '#307ecc',
-                'ticketTitleColor': '#ffffff',
-                'ticketBodyBgColor': '#ffffff',
-                'ticketBodyColor': '#000000',
-                'organizerTitleBgColor': '#307ecc',
-                'organizerTitleColor': '#ffffff',
-                'organizerBodyBgColor': '#ffffff',
-                'organizerBodyColor': '#000000'
-            }
+            event.json = cls.default_json
             event.created_date = int(round(time.time() * 1000))
 
             event.save()

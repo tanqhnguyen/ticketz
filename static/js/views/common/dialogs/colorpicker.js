@@ -13,7 +13,8 @@ define([
     dialogContent: function() {
       return this.model.buildControl({
         attribute: Marionette.getOption(this, 'attribute'),
-        type: 'colorpicker'
+        type: 'colorpicker',
+        inline: true
       }).$el;
     }
   });

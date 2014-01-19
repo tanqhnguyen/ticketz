@@ -1,7 +1,49 @@
 {% load i18n %}
 
 <script type="text/template" id="eu-design-tab-template">
+  <div class="js-customization">
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="widget-box">
 
+          <div class="widget-header header-color-blue">
+            <h5 class="bigger lighter">
+              {% trans 'Common Style' %}
+            </h5>
+          </div>
+
+          <div class="widget-body clearfix">
+            <div class="col-sm-12">
+              <table>
+                <tbody>
+                  <tr>
+                    <td><label>{% trans 'Body background color' %}</label></td>
+                    <td class="js-common-style" data-attribute="json.commonBodyBgColor"></td>
+                  </tr>
+                  <tr>
+                    <td><label>{% trans 'Body color' %}</label></td>
+                    <td class="js-common-style" data-attribute="json.commonBodyColor"></td>
+                  </tr>
+                  <tr>
+                    <td><label>{% trans 'Title background color' %}</label></td>
+                    <td class="js-common-style" data-attribute="json.commonTitleBgColor"></td>
+                  </tr>
+                  <tr>
+                    <td><label>{% trans 'Title color' %}</label></td>
+                    <td class="js-common-style" data-attribute="json.commonTitleColor"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="js-preview">
+
+  </div>
 </script>
 
 <script type="text/template" id="eu-edit-detail-tooltip-template">

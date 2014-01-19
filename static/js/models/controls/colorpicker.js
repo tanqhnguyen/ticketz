@@ -6,6 +6,8 @@ define([
     tagName: 'div',
     className: 'input-group',
 
+    inline: false,
+
     template: function(data) {
       return '<input type="text" value="" class="form-control" />';
     },
@@ -27,13 +29,21 @@ define([
         padding: '3px'
       }).val(val);
 
-      this.$el.colorpicker({
-        container: this.$el,
-        inline: true
-      });
+      var options = {
+        inline: Marionette.getOption(self, 'inline')
+      };
 
-      this.$el.colorpicker().on('changeColor', function(e){
-        self.model.set(attribute, e.color.toHex());
+      if (options.inline) {
+        options.container = this.$el;
+      }
+
+      this.$('input').colorpicker(options);
+
+      this.$('input').colorpicker().on('changeColor', function(e){
+        clearTimeout(self.$el.data('changeColor'));
+        self.$el.data('changeColor', setTimeout(function() {
+          self.model.set(attribute, e.color.toHex());
+        }, 200));
       });
     }
   });
