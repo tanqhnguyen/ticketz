@@ -31,7 +31,9 @@
   {% block less %} {% endblock %}
 
   <script type="text/javascript" src="{% static 'js/vendors/less.js' %}"></script>
-  {% block javascript_data %}{% endblock %}
+  <script type="text/javascript">
+    window.ticketz = {};
+  </script>
   {% block javascript %}{% endblock %}
   {% block javascript_templates %}{% endblock %}
 

@@ -4,6 +4,7 @@ from django.views.generic.base import View, TemplateView
 from core.models import Event
 from django.shortcuts import render, redirect
 from core.decorators import event_owner
+import simplejson
 
 class CreateView(View):
     @method_decorator(login_required)
@@ -27,7 +28,7 @@ class UpdateView(TemplateView):
         context = super(UpdateView, self).get_context_data(**kwargs)
         context['requirejs'] = 'event_create'
         context['less'] = 'event_create'
-        context['event'] = Event.objects.get(pk=kwargs.get('event_id'))
+        context['event'] = Event.objects.get(pk=kwargs.get('event_id')).json_data()
         return context
 
 class ListView(TemplateView):

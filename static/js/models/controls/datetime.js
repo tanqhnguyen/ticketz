@@ -2,7 +2,7 @@ define([
   'marionette'
   , 'models/controls/abstract'
   , 'moment'
-  , 'bootstrap3.datetimepicker'
+  , 'vendors/jquery.ui.timepicker'
 ], function(Marionette, AbstractView, moment){
   var View = AbstractView.extend({
     template: function(data) {
@@ -10,8 +10,9 @@ define([
     },
 
     defaultDate: '',
-    format: 'LL',
     placeholder: null,
+    dateFormat: 'yy-mm-dd',
+    timeFormat: 'HH:mm',
 
     onRender: function() {
       this.$el.addClass('input-group');
@@ -28,21 +29,26 @@ define([
 
     initDatetimePicker: function() {
       var attribute = Marionette.getOption(this, 'attribute');
-      var format = Marionette.getOption(this, 'format');
+      var dateFormat = Marionette.getOption(this, 'dateFormat');
+      var timeFormat = Marionette.getOption(this, 'timeFormat');
 
       var self = this;
+      var initialDate = this.model.get(attribute) || Marionette.getOption(this, 'defaultDate') || new Date().getTime();
+      initialDate = new Date(initialDate);
 
-      // this.$el.datetimepicker({
-      //   defaultDate: this.model.get(attribute) || Marionette.getOption(this, 'defaultDate') || moment(),
-      //   format: moment.langData().longDateFormat(format)
-      // });
+      var $input = this.$('input');
 
-      // this.$el.on('change.dp', function(e){
-      //   // weird shit with input-group
-      //   if (e.date) {
-      //     self.model.set(attribute, e.date.format(format));
-      //   }
-      // });
+      $input.datetimepicker({
+        dateFormat: dateFormat,
+        timeFormat: timeFormat,
+        defaultDate: initialDate,
+        onSelect: function(dateTime) {
+          var date = $(this).datetimepicker('getDate').getTime();
+          self.model.set(attribute, date);
+        }
+      });
+
+      $input.datetimepicker('setDate', initialDate);
     }
   });
 

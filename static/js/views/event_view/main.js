@@ -89,7 +89,7 @@ define([
       this.style.render();
 
       this.ticketType = new TicketTypeCollectionView({
-        collection: this.model.get('ticketTypes'),
+        collection: this.model.get('ticket_types'),
         el: this.ui.ticket
       });
       this.ticketType.render();

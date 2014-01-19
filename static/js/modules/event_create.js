@@ -5,7 +5,7 @@ require([
 ], function(_, MainView, Event){
   window.ticketz = window.ticketz || {};
 
-  var event = new Event({
+  var data  = {
     ticketTypes: [],
     title: 'My Event',
     address_name: 'My House',
@@ -35,7 +35,9 @@ require([
       organizerBodyBgColor: '#ffffff',
       organizerBodyColor: '#000000'
     }
-  });
+  };
+
+  var event = new Event(ticketz.event);
 
   var view = new MainView({
     el: $('#event-create'),

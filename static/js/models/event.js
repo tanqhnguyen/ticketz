@@ -9,26 +9,21 @@ define([
 
     computedAttributes: {
       'datetime': ['start_date', 'end_date', function(){
-        return _.t('From') + ' ' + this.get('start_date') + ' ' + _.t('To') + ' ' + this.get('end_date');
+        var startDate = moment(this.get('start_date')).format(Model.MOMENT_DATETIME_FORMAT);
+        var endDate = moment(this.get('end_date')).format(Model.MOMENT_DATETIME_FORMAT);
+        return _.t('From') + ' ' + startDate + ' ' + _.t('To') + ' ' + endDate;
       }]
-    },
-
-    formattedAttributes: {
-      'start_date': function(value) {
-        return moment(value).format(Model.DATETIME_FORMAT);
-      },
-      'end_date': function(value) {
-        return moment(value).format(Model.DATETIME_FORMAT);
-      }
     },
 
     relations: function() {
       return {
-        'ticketTypes': [TicketTypes]
+        'ticket_types': [TicketTypes]
       }
     },
   }, {
-    DATETIME_FORMAT: 'LLL'
+    MOMENT_DATETIME_FORMAT: 'ddd DD.MM.YYYY HH:mm',
+    JQUERYUI_DATE_FORMAT: 'D dd.mm.yy',
+    JQUERYUI_TIME_FORMAT: 'HH:mm'
   });
 
   return Model;

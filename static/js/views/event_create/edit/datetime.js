@@ -24,7 +24,8 @@ define([
         attribute: 'start_date',
         type: 'datetime',
         el: this.ui.startDate,
-        format: Event.DATETIME_FORMAT,
+        dateFormat: Event.JQUERYUI_DATE_FORMAT,
+        timeFormat: Event.JQUERYUI_TIME_FORMAT,
         placeholder: _.t('From')
       });
 
@@ -32,7 +33,8 @@ define([
         attribute: 'end_date',
         type: 'datetime',
         el: this.ui.endDate,
-        format: Event.DATETIME_FORMAT,
+        dateFormat: Event.JQUERYUI_DATE_FORMAT,
+        timeFormat: Event.JQUERYUI_TIME_FORMAT,
         placeholder: _.t('To')
       });
     }

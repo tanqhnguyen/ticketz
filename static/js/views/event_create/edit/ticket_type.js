@@ -15,20 +15,12 @@ define([
     },
 
     initialize: function(options) {
-      var ticketTypes = this.model.get('ticketTypes');
-      if (ticketTypes.size() == 0) {
-        ticketTypes.add({
-          name: 'Free for all',
-          price: 0,
-          type: 'free',
-          amount: 100
-        }, {validate: true});
-      }
+      var ticketTypes = this.model.get('ticket_types');
     },
 
     onRender: function() {
       this.collectionView = new TicketTypeCollectionView({
-        collection: this.model.get('ticketTypes'),
+        collection: this.model.get('ticket_types'),
         el: this.ui.ticketTypeList
       });
 
@@ -36,7 +28,7 @@ define([
     },
 
     onClickAddTicketType: function() {
-      var ticketTypes = this.model.get('ticketTypes');
+      var ticketTypes = this.model.get('ticket_types');
         ticketTypes.add({
           name: 'Free for all',
           price: 0,

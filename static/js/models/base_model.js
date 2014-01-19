@@ -30,18 +30,7 @@ define([
 
     constructor: function() {
       Backbone.Maze.Model.apply(this, Array.prototype.slice.apply(arguments));
-      this._setupFormattedAttributes();
       this._setupComputedAttributes();
-    },
-
-    _setupFormattedAttributes: function() {
-      var formattedAttributes = _.result(this, 'formattedAttributes');
-      _.each(formattedAttributes, function(format, attribute){
-        this.set(attribute, format.apply(this, [this.get(attribute)]));
-        this.on('change:'+attribute, function(){
-          this.set(attribute, format.apply(this, [this.get(attribute)]), {silent: true});
-        }, this);
-      }, this);
     },
 
     _setupComputedAttributes: function() {

@@ -1,8 +1,14 @@
 {% extends 'layouts/requirejs.html' %}
 
 {% load i18n %}
+{% load custom_filters %}
 
 {% block javascript_templates %}
+<script type="text/javascript">
+  window.ticketz = window.ticketz || {};
+  window.ticketz.event = {{ event|json_dumps|safe }}
+</script>
+
 {% include 'event/_create/layout_template.html' %}
 
 {% include 'event/_create/edit/layout.html' %}
