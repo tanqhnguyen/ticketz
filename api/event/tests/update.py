@@ -74,22 +74,17 @@ class EventUpdateTest(ApiTestCase):
 
         response = self.post_json("api_event_update", update_data)
 
-        update_data = {
-            'id': event_id,
-            'ticket_types': [
-                {
-                    'name': 'Free',
-                    'type': 'free',
-                    'price': 0,
-                    'amount': 100
-                }
-            ]
-        }
+        new_name = 'Free for all'
+        update_data = response['data']
+        update_data.get('ticket_types').pop()
+        update_data.get('ticket_types')[0]['name'] = new_name
 
         response = self.post_json("api_event_update", update_data)
         self.assertFalse("error" in response)
         self.assertIsNotNone(response["data"])
         self.assertEquals(len(response["data"]["ticket_types"]), 1)
+        self.assertEquals(response["data"]["ticket_types"][0]['name'], new_name)
 
         event = Event.objects.get(pk=event_id)
         self.assertEquals(event.ticket_types.count(), 1)
+        self.assertEquals(event.ticket_types.all()[0].name, new_name)

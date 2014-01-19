@@ -5,7 +5,7 @@ define([
   , 'moment'
 ], function(_, BaseModel, TicketTypes, moment){
   var Model = BaseModel.extend({
-    urlRoot: 'event',
+    url: 'event',
 
     computedAttributes: {
       'datetime': ['start_date', 'end_date', function(){

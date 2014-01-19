@@ -5,6 +5,7 @@ from core.models import Event
 from django.shortcuts import render, redirect
 from core.decorators import event_owner
 import simplejson
+from django.core.urlresolvers import reverse
 
 class CreateView(View):
     @method_decorator(login_required)
@@ -14,7 +15,7 @@ class CreateView(View):
     def get(self, request):
         user_id = request.user.id
         event = Event.first_or_create(user_id)
-        return redirect(event)
+        return redirect(reverse('event_update', kwargs={'event_id': event.id}))
 
 class UpdateView(TemplateView):
     template_name = 'event/update.html'

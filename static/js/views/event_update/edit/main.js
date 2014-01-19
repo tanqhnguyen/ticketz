@@ -11,7 +11,7 @@ define([
     template: '#eu-edit-tab-layout-template',
 
     events: {
-
+      'submit .js-edit-form': 'onSubmitForm'
     },
 
     regions: {
@@ -48,6 +48,18 @@ define([
       this.organizer.show(new OrganizerView({
         model: this.model
       }));
+    },
+
+    onSubmitForm: function(e) {
+      var $currentTarget = $(e.currentTarget);
+
+      $currentTarget.find('button[type=submit]').bsbutton('loading');
+
+      this.model.save().success(function(){
+
+      });
+
+      return false;
     }
   });
 
