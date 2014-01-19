@@ -3,6 +3,7 @@ from core.models import Event
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from core.decorators import event_owner
+import re
 
 class CreateView(ApiView):
     @method_decorator(login_required)
@@ -52,17 +53,21 @@ class ListView(ApiView):
     def get(self, request):
         offset = int(request.GET.get('offset', 0))
         limit = int(request.GET.get('limit', 10))
-        print request.GET.get('sort[date_created]')
-        print request.GET.get('sort[title]')
+        user_id = int(request.GET.get('user_id', request.user.id))
 
-        events = [{"id": x, "title": "Event " + str(x), "is_active": x%2==0} for x in range(1, 1000)]
-        check = request.GET.get('active') == 'true'
-        events = [e for e in events if e['is_active'] == check]
+        conditions = {
+            'user_id': user_id,
+            'is_active': request.GET.get('active') == 'true'
+        }
+        
+        events = Event.objects.filter(**conditions).all()[offset:limit]
+        count = Event.objects.filter(user_id=user_id).count()
+
 
         return self.json({
-            "data": events[offset:offset+limit],
+            "data": [event.json_data() for event in events],
             "pagination": {
-                "total": len(events),
+                "total": count,
                 "offset": offset,
                 "limit": limit
             }

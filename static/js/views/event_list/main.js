@@ -28,12 +28,7 @@ define([
     loadDraftEvents: function() {
       var self = this;
       var data = {
-        active: false,
-        filters: [1,2,3],
-        sort: {
-          title: true,
-          date_created: false
-        }
+        active: false
       }
 
       this.draftEvents.list({
@@ -44,7 +39,8 @@ define([
           itemView: EventGridItemView,
           collection: self.draftEvents,
           pageRange: 9,
-          data: data
+          data: data,
+          className: 'table table-hover'
         });
 
         self.draft.show(gridView);
@@ -65,7 +61,8 @@ define([
           itemView: EventGridItemView,
           collection: self.liveEvents,
           pageRange: 9,
-          data: data
+          data: data,
+          className: 'table table-hover'
         });
 
         self.live.show(gridView);

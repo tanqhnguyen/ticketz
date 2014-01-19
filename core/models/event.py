@@ -42,9 +42,10 @@ class Event(AbstractModel):
                 self.ticket_types.create(**data)
         return self
 
-    def get_api_urls(self):
+    def get_urls(self):
         return {
-            'update': reverse('api_event_update')
+            'view': reverse('event_view', kwargs={'event_id': self.id}),
+            'update': reverse('event_update', kwargs={'event_id': self.id})
         }
 
     def json_data(self):
@@ -52,7 +53,7 @@ class Event(AbstractModel):
         data['user_id'] = self.user.id
         data['json'] = self.json
         data['ticket_types'] = [ticket_type.json_data() for ticket_type in self.ticket_types.all()]
-        data['api'] = self.get_api_urls()
+        data['url'] = self.get_urls()
         return data
 
     @classmethod

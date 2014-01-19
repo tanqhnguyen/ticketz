@@ -8,8 +8,8 @@
 <%= event.get('title') %>
 </td>
 <td>
-<button class="btn btn-xs btn-primary">{% trans 'Manage' %}</button>
-<button class="btn btn-xs btn-primary">{% trans 'Edit' %}</button>
-<button class="btn btn-xs btn-primary">{% trans 'View' %}</button>
+<a style="margin-right: 5px" href="<%= event.get('url.manage') %>" class="btn btn-xs btn-primary">{% trans 'Manage' %}</button>
+<a style="margin-right: 5px" href="<%= event.get('url.update') %>" class="btn btn-xs btn-primary">{% trans 'Edit' %}</button>
+<a href="<%= event.get('url.view') %>" class="btn btn-xs btn-primary">{% trans 'View' %}</button>
 </td>
 </script>
