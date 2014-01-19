@@ -4,7 +4,7 @@ define([
   , 'views/common/google_map'
 ], function(_, Marionette, GoogleMapView){
   var View = Marionette.Layout.extend({
-    template: '#ec-location-layout-template',
+    template: '#eu-location-layout-template',
 
     regions: {
       map: '.js-event-pick-map',

@@ -3,7 +3,7 @@ define([
   , 'marionette'
 ], function(_, Marionette){
   var View = Marionette.ItemView.extend({
-    template: '#ec-ticket-type-detail-template',
+    template: '#eu-ticket-type-detail-template',
     tagName: 'tr',
 
     events: {

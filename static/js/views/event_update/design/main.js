@@ -6,7 +6,7 @@ define([
   , 'views/common/dialogs/dialog_factory'
 ], function(_, Marionette, EventView, CustomStyleView, DialogFactory){
   var View = Marionette.Layout.extend({
-    template: '#ec-design-tab-template',
+    template: '#eu-design-tab-template',
 
     initialize: function() {
       this.dialogFactory = new DialogFactory({

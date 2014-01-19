@@ -1,6 +1,6 @@
 {% load i18n %}
 
-<script type="text/template" id="ec-location-layout-template">
+<script type="text/template" id="eu-location-layout-template">
 <label for="event-location" class="col-sm-2 control-label">{% trans 'Location' %}</label>
 <div class="col-sm-6 js-event-address event-address">
   <div class="form-group">
@@ -20,6 +20,9 @@
       <div class="col-sm-3 no-padding">
         <input type="text" class="form-control" id="event-zipcode" placeholder="{% trans 'Zipcode' %}">
       </div>
+    </div>
+    <div class="col-sm-12">
+      <button type="submit" class="btn btn-primary">Save</button>
     </div>
   </div>
 </div>

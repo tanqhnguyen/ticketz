@@ -1,6 +1,6 @@
 require([
   'underscore'
-  , 'views/event_create/main'
+  , 'views/event_update/main'
   , 'models/event'
 ], function(_, MainView, Event){
   window.ticketz = window.ticketz || {};
@@ -40,7 +40,7 @@ require([
   var event = new Event(ticketz.event);
 
   var view = new MainView({
-    el: $('#event-create'),
+    el: $('#event-update'),
     model: event    
   });
 

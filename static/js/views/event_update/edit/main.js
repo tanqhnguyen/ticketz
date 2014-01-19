@@ -1,14 +1,14 @@
 define([
   'underscore'
   , 'marionette'
-  , 'views/event_create/edit/location'
-  , 'views/event_create/edit/datetime'
-  , 'views/event_create/edit/description'
-  , 'views/event_create/edit/ticket_type'
-  , 'views/event_create/edit/organizer'
+  , 'views/event_update/edit/location'
+  , 'views/event_update/edit/datetime'
+  , 'views/event_update/edit/description'
+  , 'views/event_update/edit/ticket_type'
+  , 'views/event_update/edit/organizer'
 ], function(_, Marionette, LocationView, DatetimeView, DescriptionView, TicketView, OrganizerView){
   var View = Marionette.Layout.extend({
-    template: '#ec-edit-tab-layout-template',
+    template: '#eu-edit-tab-layout-template',
 
     events: {
 

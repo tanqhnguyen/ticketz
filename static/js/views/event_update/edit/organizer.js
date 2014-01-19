@@ -4,9 +4,10 @@ define([
   , 'summernote'
 ], function(_, Marionette){
   var View = Marionette.ItemView.extend({
-    template: '#ec-description-template',
+    template: '#eu-organizer-template',
     ui: {
-      summernote: '.js-summernote'
+      summernote: '.js-summernote',
+      name: '.js-name'
     },
 
     events: {
@@ -19,7 +20,14 @@ define([
 
     onRender: function() {
       this.model.buildControl({
-        attribute: 'description',
+        attribute: 'organizer_name',
+        type: 'input',
+        el: this.ui.name
+      });
+
+
+      this.model.buildControl({
+        attribute: 'organizer_contact',
         type: 'wysiwyg',
         el: this.ui.summernote,
         toolbar: [
@@ -30,7 +38,6 @@ define([
           ['para', ['ul', 'ol', 'paragraph']],
           ['height', ['height']],
           ['table', ['table']],
-          ['insert', ['link', 'picture', 'video']],
           ['help', ['help']]
         ],
         height: 200

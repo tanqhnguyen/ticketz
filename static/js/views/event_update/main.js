@@ -1,11 +1,11 @@
 define([
   'underscore'
   , 'marionette'
-  , 'views/event_create/edit/main'
-  , 'views/event_create/design/main'
+  , 'views/event_update/edit/main'
+  , 'views/event_update/design/main'
 ], function(_, Marionette, EditTabView, DesignTabView){
   return Marionette.Layout.extend({
-    template: '#ec-layout-template',
+    template: '#eu-layout-template',
     regions: {
       
     },

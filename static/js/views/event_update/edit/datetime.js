@@ -4,7 +4,7 @@ define([
   , 'models/event'
 ], function(_, Marionette, Event){
   var View = Marionette.ItemView.extend({
-    template: '#ec-datetime-template',
+    template: '#eu-datetime-template',
 
     events: {
 

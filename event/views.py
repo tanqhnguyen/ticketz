@@ -17,7 +17,7 @@ class CreateView(View):
         return redirect(event)
 
 class UpdateView(TemplateView):
-    template_name = 'event/create.html'
+    template_name = 'event/update.html'
 
     @method_decorator(login_required)
     @method_decorator(event_owner(json_response=False))
@@ -26,8 +26,8 @@ class UpdateView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(UpdateView, self).get_context_data(**kwargs)
-        context['requirejs'] = 'event_create'
-        context['less'] = 'event_create'
+        context['requirejs'] = 'event_update'
+        context['less'] = 'event_update'
         context['event'] = Event.objects.get(pk=kwargs.get('event_id')).json_data()
         return context
 
