@@ -8,5 +8,5 @@ urlpatterns = patterns('',
     url(r'^logout$', logout, {'next_page': '/'}),
     url(r'^profile$', views.ProfileView.as_view(), name='profile'),
     url(r'', views.IndexView.as_view()),
-    url(r'^$', views.IndexView.as_view()),
+    #url(r'^$', views.IndexView.as_view()),
 )

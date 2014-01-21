@@ -15,7 +15,7 @@ class Event(AbstractModel):
     address1 = models.TextField(blank=True)
     address2 = models.TextField(blank=True)
     city = models.TextField(blank=True)
-    zipcode = models.TextField(max_length=5, blank=True),
+    zipcode = models.TextField(max_length=5, blank=True)
     description = models.TextField(default="")
     end_date = models.BigIntegerField(default=int(round(time.time() * 1000)))
     start_date = models.BigIntegerField(default=int(round(time.time() * 1000)))
