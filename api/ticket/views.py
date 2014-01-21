@@ -1,5 +1,5 @@
 from api.views import ApiView
-from core.models.User import UserException
+from core.models.user import UserException
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
