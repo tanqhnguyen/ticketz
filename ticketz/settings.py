@@ -121,7 +121,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 AUTH_USER_MODEL = 'core.User'
-LOGIN_REDIRECT_URL = '/account/profile'
+LOGIN_REDIRECT_URL = '/profile'
 LOGIN_URL = '/login'
 
 ROOT_URLCONF = 'ticketz.urls'
