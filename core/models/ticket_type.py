@@ -1,5 +1,5 @@
 from django.db import models
-from core.models import AbstractModel, Event
+from core.models import AbstractModel
 from django.forms.models import model_to_dict 
 
 class TicketType(AbstractModel):
@@ -7,7 +7,7 @@ class TicketType(AbstractModel):
     price = models.DecimalField(decimal_places=2, max_digits=5)
     type = models.CharField(max_length=45)
     amount = models.IntegerField()
-    event = models.ForeignKey(Event, related_name="ticket_types")
+    event = models.ForeignKey('Event', related_name="ticket_types")
 
     class Meta:
         app_label = "core"

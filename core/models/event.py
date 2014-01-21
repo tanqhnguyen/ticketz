@@ -1,6 +1,6 @@
 import time
 from django.db import models
-from core.models import AbstractModel, User
+from core.models import AbstractModel
 from jsonfield import JSONField
 from django.forms.models import model_to_dict 
 from django.core.urlresolvers import reverse
@@ -23,7 +23,7 @@ class Event(AbstractModel):
     is_active = models.BooleanField(default=False)
     json = JSONField()
 
-    user = models.ForeignKey(User)
+    user = models.ForeignKey('User')
 
     class Meta:
         app_label = "core"
