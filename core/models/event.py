@@ -6,6 +6,7 @@ from django.forms.models import model_to_dict
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from slugify import slugify
+import uuid
 
 
 class Event(AbstractModel):
@@ -87,6 +88,41 @@ class Event(AbstractModel):
         'commonTitleColor': '#ffffff',
         'banner': None
     }
+
+    def generate_banner_path(name=None):
+        if name is None:
+            name = self.generate_logo_name()
+
+        prefix = 'static/uploads/%s'
+        return prefix % name
+
+    def generate_banner_name():
+        return "%s.%s" % (str(uuid.uuid4()), 'jpg')
+
+    def remove_old_banner(self):
+        # TODO: implement this
+
+        # delete file at {self.generate_banner_path(self.json['banner'])}
+
+        # set event['json']['banner'] to None
+        pass
+
+    def store_banner(self, file):
+        # TODO: implement this
+
+        # if the width of uploaded file > 1140px, resize it to 1140px
+        # if the width of uploaded file < 1140px, keep it
+
+        # compress the size of the image to 80% and change to .jpg
+
+        # store the file to {self.generate_logo_path()}
+
+        # set the file path {self.generate_logo_path()} to event['json']['banner']
+        # set the width of the banner to event['json']['banner_width']
+        # set the height of the banner to event['json']['banner_height']
+
+        # save the event and {return self}
+        pass
 
     @classmethod
     def first_or_create(cls,user_id):

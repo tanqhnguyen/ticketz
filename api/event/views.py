@@ -79,22 +79,18 @@ class UploadBannerView(ApiView):
     def post(self, request):
         event = request.event
         banner = request.FILES['banner']
+        event.remove_old_banner()
+        event.store_banner(banner)
 
-        # if the width of uploaded file > 1140px, resize it to 1140px
-        # if the width of uploaded file < 1140px, keep it
-
-        # compress the size of the image to 80% and change to .jpg
-
-        # store the file to static/uploads/{uuid}.jpg
-        # uuid can be generated using uuid module
-
-        # set the file name ({uuid}.jpg) to event['json']['banner']
-        # set the width of the banner to event['json']['banner_width']
-        # set the height of the banner to event['json']['banner_height']
-
-        # save the event and return the same format as the above APIs
         return self.json({'data': 'nothing'})
 
+class RemoveBannerView(ApiView):
+    @method_decorator(login_required)
+    @method_decorator(event_owner())
+    def post(self, request):
+        event = request.event
+
+        event.remove_old_banner()
 
 
 
