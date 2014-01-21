@@ -99,7 +99,7 @@ class Event(AbstractModel):
     def generate_banner_name():
         return "%s.%s" % (str(uuid.uuid4()), 'jpg')
 
-    def remove_old_banner(self):
+    def delete_old_banner(self):
         # TODO: implement this
 
         # delete file at {self.generate_banner_path(self.json['banner'])}

@@ -79,7 +79,7 @@ class UploadBannerView(ApiView):
     def post(self, request):
         event = request.event
         banner = request.FILES['banner']
-        event.remove_old_banner()
+        event.delete_old_banner()
         event.store_banner(banner)
 
         return self.json({'data': 'nothing'})
@@ -90,7 +90,7 @@ class RemoveBannerView(ApiView):
     def post(self, request):
         event = request.event
 
-        event.remove_old_banner()
+        event.delete_old_banner()
 
 
 
