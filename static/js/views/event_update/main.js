@@ -10,6 +10,12 @@ define([
       
     },
 
+    serializeData: function() {
+      return {
+        model: this.model
+      }
+    },
+
     onRender: function() {
       var self = this;
       self.renderTab('edit');
