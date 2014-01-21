@@ -7,4 +7,5 @@ urlpatterns = patterns('',
     url(r'^list$', views.ListView.as_view(), name="api_event_list"),
     url(r'^delete$', views.DeleteView.as_view(), name="api_event_delete"),
     url(r'^update$', views.UpdateView.as_view(), name="api_event_update"),
+    url(r'^upload-banner$', views.UploadBannerView.as_view(), name="api_event_upload_banner"),
 )

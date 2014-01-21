@@ -52,7 +52,8 @@ class Event(AbstractModel):
     def get_urls(self):
         return {
             'view': self.get_absolute_url(),
-            'update': reverse('event_update', kwargs={'event_id': self.id})
+            'update': reverse('event_update', kwargs={'event_id': self.id}),
+            'uploadBanner': reverse('api_event_upload_banner'),
         }
 
     def json_data(self):
@@ -83,7 +84,8 @@ class Event(AbstractModel):
         'commonBodyBgColor': '#ffffff',
         'commonBodyColor': '#000000',
         'commonTitleBgColor': '#307ecc',
-        'commonTitleColor': '#ffffff'
+        'commonTitleColor': '#ffffff',
+        'banner': None
     }
 
     @classmethod

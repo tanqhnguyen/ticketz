@@ -18,7 +18,7 @@ class DeleteView(ApiView):
     @method_decorator(login_required)
     @method_decorator(event_owner())
     def post(self, request):
-        id = self.json_data['id']
+        id = self.request.json_data['id']
         event = Event.objects.get(pk = id)
         data = event.json_data()
         event.delete()
@@ -28,7 +28,7 @@ class UpdateView(ApiView):
     @method_decorator(login_required)
     @method_decorator(event_owner())
     def post(self, request):
-        data = self.json_data
+        data = self.request.json_data
         event = Event.objects.get(pk = data['id'])
         ticket_types = data.get('ticket_types')
         json = data.get('json')
@@ -73,9 +73,27 @@ class ListView(ApiView):
             }
         })
 
+class UploadBannerView(ApiView):
+    @method_decorator(login_required)
+    @method_decorator(event_owner())
+    def post(self, request):
+        event = request.event
+        banner = request.FILES['banner']
 
+        # if the width of uploaded file > 1140px, resize it to 1140px
+        # if the width of uploaded file < 1140px, keep it
 
+        # compress the size of the image to 80% and change to .jpg
 
+        # store the file to static/uploads/{uuid}.jpg
+        # uuid can be generated using uuid module
+
+        # set the file name ({uuid}.jpg) to event['json']['banner']
+        # set the width of the banner to event['json']['banner_width']
+        # set the height of the banner to event['json']['banner_height']
+
+        # save the event and return the same format as the above APIs
+        return self.json({'data': 'nothing'})
 
 
 

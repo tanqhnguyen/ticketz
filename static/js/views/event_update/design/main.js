@@ -4,9 +4,16 @@ define([
   , 'views/event_view/main'
   , 'views/event_view/custom_style'
   , 'views/common/dialogs/dialog_factory'
-], function(_, Marionette, EventView, CustomStyleView, DialogFactory){
+  , 'views/common/fileupload'
+], function(_, Marionette, EventView, CustomStyleView, DialogFactory, FileuploadView){
   var View = Marionette.Layout.extend({
     template: '#eu-design-tab-template',
+
+    serializeData: function() {
+      return {
+        model: this.model
+      }
+    },
 
     initialize: function() {
       this.dialogFactory = new DialogFactory({
@@ -72,6 +79,21 @@ define([
 
 
       this.initEditTooltips();
+      this.renderFileUpload();
+    },
+
+    renderFileUpload: function() {
+      this.fileupload = new FileuploadView({
+        el: this.$('.js-fileupload'),
+        name: 'banner',
+        url: this.model.get('url.uploadBanner'),
+        formData: {
+          event_id: this.model.id
+        },
+        buttonTitle: this.model.get('json.banner') ? _.t('Change') : _.t('Upload')
+      });
+
+      this.fileupload.render();
     },
 
     createEditToolbar: function(template) {

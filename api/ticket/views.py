@@ -9,7 +9,7 @@ class PurchaseView(ApiView):
     @method_decorator(login_required)
     def post(self, request):
         user = request.user
-        data = self.json_data
+        data = self.request.json_data
 
         try:
             sold_ticket = user.purchase_ticket(data.ticket_type_id)
@@ -40,7 +40,7 @@ class VerifyView(ApiView):
     @method_decorator(event_owner())
     @method_decorator(login_required)
     def post(self, request):
-        data = self.json_data
+        data = self.request.json_data
 
         try:
             ticket = SoldTicket.objects.get(code=data.get('code'))

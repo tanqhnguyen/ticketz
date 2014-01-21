@@ -1,7 +1,7 @@
 {% load i18n %}
 
 <script type="text/template" id="eu-design-tab-template">
-  <div class="js-customization">
+  <div class="js-customization common-customization">
     <div class="row">
       <div class="col-sm-4">
         <div class="widget-box">
@@ -56,7 +56,7 @@
         </div>
       </div>
 
-      <div class="col-sm-4">
+      <div class="col-sm-4 banner">
         <div class="widget-box">
 
           <div class="widget-header header-color-blue">
@@ -65,8 +65,20 @@
             </h5>
           </div>
 
-          <div class="widget-body">
-            Coming Soon....
+          <div class="widget-body clearfix">
+            <div class="col-sm-4 js-fileupload">
+
+            </div>
+
+            <div class="col-sm-4">
+              <button class="btn btn-danger">
+                {% trans 'Remove' %}
+              </button>
+              <% if (model.get('json.banner')) { %>
+
+              <% } %>
+            </div>
+            
           </div>
 
         </div>
