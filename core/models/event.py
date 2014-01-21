@@ -55,6 +55,7 @@ class Event(AbstractModel):
             'view': self.get_absolute_url(),
             'update': reverse('event_update', kwargs={'event_id': self.id}),
             'uploadBanner': reverse('api_event_upload_banner'),
+            'deleteBanner': reverse('api_event_delete_banner'),
         }
 
     def json_data(self):

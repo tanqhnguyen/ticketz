@@ -8,5 +8,5 @@ urlpatterns = patterns('',
     url(r'^delete$', views.DeleteView.as_view(), name="api_event_delete"),
     url(r'^update$', views.UpdateView.as_view(), name="api_event_update"),
     url(r'^upload-banner$', views.UploadBannerView.as_view(), name="api_event_upload_banner"),
-    url(r'^remove-banner$', views.RemoveBannerView.as_view(), name="api_event_remove_banner"),
+    url(r'^delete-banner$', views.DeleteBannerView.as_view(), name="api_event_delete_banner"),
 )
