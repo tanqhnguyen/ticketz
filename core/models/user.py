@@ -3,6 +3,7 @@ from django.db import models
 from django.forms.models import model_to_dict 
 from core.models import AbstractModel, TicketType
 import time
+import uuid
 
 class UserException(Exception):
     pass
@@ -31,4 +32,17 @@ class User(AbstractUser, AbstractModel):
         if current_time > event.end_date:
             raise UserException("The event has been ended")
 
-        return self.sold_tickets.create(ticket_type_id=ticket_type_id)
+        current_ticket_count = ticket_type.sold_tickets.count()
+        if current_ticket_count > ticket_type.amount:
+            raise UserException("No ticket left to buy")
+
+        data = {
+            'ticket_type_id': ticket_type_id,
+            'code': str(uuid.uuid4())
+        }
+        sold_ticket = self.sold_tickets.create(**data)
+
+        if sold_ticket:
+            sold_ticket.generate_qr_code()
+
+        return sold_ticket
