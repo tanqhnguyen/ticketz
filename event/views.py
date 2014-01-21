@@ -45,14 +45,13 @@ class ListView(TemplateView):
         context['less'] = 'event_list'
         return context
         
-def event_view(request, event_id):
+class DetailView(TemplateView):
+    template_name = 'event/view.html'
 
-    event = Event.objects.get(pk=event_id)
-    
-    name = event.name
-    description = event.description
-    age_limit = event.age_limit
-    live_date = event.live_date
-    start_date = event.start_date 
-
-    return render_to_response("event/view.html", {"event_id":event_id, "page_attribute":page_attribute, "name": name, "description": description,"live_date": live_date,"start_date": start_date},context_instance = RequestContext(request))
+    def get_context_data(self, **kwargs):
+        event = Event.objects.get(pk=kwargs.get('id'))
+        context = super(DetailView, self).get_context_data(**kwargs)
+        context['requirejs'] = 'event_view'
+        context['less'] = 'event_view'
+        context['event'] = event.json_data()
+        return context

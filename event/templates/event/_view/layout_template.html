@@ -26,6 +26,7 @@
 
       .widget-body {
         background-color: <%= model.get('json.detailBodyBgColor') %>;
+        border-color: <%= model.get('json.detailTitleBgColor') %>;
       }
     }
 
@@ -39,6 +40,7 @@
       .widget-body {
         background-color: <%= model.get('json.locationBodyBgColor') %>;
         color: <%= model.get('json.locationBodyColor') %>;
+        border-color: <%= model.get('json.locationTitleBgColor') %>;
       }
     }
 
@@ -52,6 +54,7 @@
       .widget-body {
         background-color: <%= model.get('json.ticketBodyBgColor') %>;
         color: <%= model.get('json.ticketBodyColor') %>;
+        border-color: <%= model.get('json.ticketTitleBgColor') %>;
       }
     }
 
@@ -65,6 +68,7 @@
       .widget-body {
         background-color: <%= model.get('json.organizerBodyBgColor') %>;
         color: <%= model.get('json.organizerBodyColor') %>;
+        border-color: <%= model.get('json.organizerTitleBgColor') %>;
       }
     }
   }

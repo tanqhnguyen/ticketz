@@ -5,6 +5,7 @@ from jsonfield import JSONField
 from django.forms.models import model_to_dict 
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
+from slugify import slugify
 
 
 class Event(AbstractModel):
@@ -42,9 +43,15 @@ class Event(AbstractModel):
                 self.ticket_types.create(**data)
         return self
 
+    def slugify(self):
+        return slugify(self.title)
+
+    def get_absolute_url(self):
+        return reverse('event_view', kwargs={'id': self.id, 'slug': self.slugify()})
+
     def get_urls(self):
         return {
-            'view': reverse('event_view', kwargs={'event_id': self.id}),
+            'view': self.get_absolute_url(),
             'update': reverse('event_update', kwargs={'event_id': self.id})
         }
 
