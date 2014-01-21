@@ -1,0 +1,42 @@
+@import '../bootstrap/variables.less';
+@import '../bootstrap/mixins.less';
+
+.ui-dialog {
+  z-index: (@zindex-modal-background + 10);
+  .border-radius(0px);
+
+  .ui-dialog-titlebar {
+    padding: 0px 5px;
+    border: none;
+    border-bottom: 1px solid @modal-header-border-color;
+    .border-radius(0px);
+    background: none;
+
+    .ui-dialog-title {
+      font-size: 12px;
+    }
+
+    .ui-button {
+      border: none;
+      background: none;
+    }
+  }
+}
+
+// datetime picker
+/* css for timepicker */
+.ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+.ui-timepicker-div dl { text-align: left; }
+.ui-timepicker-div dl dt { float: left; clear:left; padding: 0 0 0 5px; }
+.ui-timepicker-div dl dd { margin: 0 10px 10px 45%; }
+.ui-timepicker-div td { font-size: 90%; }
+.ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
+
+.ui-timepicker-rtl{ direction: rtl; }
+.ui-timepicker-rtl dl { text-align: right; padding: 0 5px 0 0; }
+.ui-timepicker-rtl dl dt{ float: right; clear: right; }
+.ui-timepicker-rtl dl dd { margin: 0 45% 10px 10px; }
+
+.ui-corner-all {
+  .border-radius(0px);
+}

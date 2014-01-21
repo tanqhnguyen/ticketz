@@ -1,0 +1,163 @@
+{% load i18n %}
+
+<script type="text/template" id="ev-ticket-type-detail-template">
+<td class="js-name" style="width: 50%">
+
+</td>
+<td style="width: 20%">
+  €<span class="js-price"></span>
+</td>
+<td>
+  <span class="js-amount"></span>
+</td>
+<td>
+  <button class="btn btn-xs btn-primary">{% trans 'Select' %}</button>
+</td>
+</script>
+
+<script type="text/template" id="ev-custom-style-template">
+  #event-view {
+    .detail {
+      .widget-header {
+        background-color: <%= model.get('json.detailTitleBgColor') %>;
+        border-color: <%= model.get('json.detailTitleBgColor') %>;
+        color: <%= model.get('json.detailTitleColor') %>;
+      }
+
+      .widget-body {
+        background-color: <%= model.get('json.detailBodyBgColor') %>;
+        border-color: <%= model.get('json.detailTitleBgColor') %>;
+      }
+    }
+
+    .location {
+      .widget-header {
+        background-color: <%= model.get('json.locationTitleBgColor') %>;
+        border-color: <%= model.get('json.locationTitleBgColor') %>;
+        color: <%= model.get('json.locationTitleColor') %>;
+      }
+
+      .widget-body {
+        background-color: <%= model.get('json.locationBodyBgColor') %>;
+        color: <%= model.get('json.locationBodyColor') %>;
+        border-color: <%= model.get('json.locationTitleBgColor') %>;
+      }
+    }
+
+    .ticket {
+      .widget-header {
+        background-color: <%= model.get('json.ticketTitleBgColor') %>;
+        border-color: <%= model.get('json.ticketTitleBgColor') %>;
+        color: <%= model.get('json.ticketTitleColor') %>;
+      }
+
+      .widget-body {
+        background-color: <%= model.get('json.ticketBodyBgColor') %>;
+        color: <%= model.get('json.ticketBodyColor') %>;
+        border-color: <%= model.get('json.ticketTitleBgColor') %>;
+      }
+    }
+
+    .organizer {
+      .widget-header {
+        background-color: <%= model.get('json.organizerTitleBgColor') %>;
+        border-color: <%= model.get('json.organizerTitleBgColor') %>;
+        color: <%= model.get('json.organizerTitleColor') %>;
+      }
+
+      .widget-body {
+        background-color: <%= model.get('json.organizerBodyBgColor') %>;
+        color: <%= model.get('json.organizerBodyColor') %>;
+        border-color: <%= model.get('json.organizerTitleBgColor') %>;
+      }
+    }
+  }
+</script>
+
+<script type="text/template" id="ev-layout-template">
+  <div id="event-view" class="col-sm-12 no-padding clearfix">
+    <div class="page-header">
+      <h1>
+      <span class="js-title title bold"></span>
+      <small>
+        <i class="fa fa-angle-double-right"></i>
+        <span class="js-datetime"></span>
+      </small>
+      </h1>
+    </div>
+    <div class="col-sm-8">
+      <div class="widget-box js-ticket-container ticket">
+        <div class="widget-header header-color-blue">
+          <h5 class="bigger lighter">
+            {% trans 'Tickets' %}
+          </h5>
+        </div>
+        <div class="widget-body">
+          <div class="widget-main no-padding">
+            <table class="table">
+              <tbody class="js-ticket">
+
+              </tbody>
+            </table> 
+          </div>
+        </div>
+      </div>
+    
+      <div class="widget-box js-detail detail">
+        <div class="widget-header header-color-blue">
+          <h5 class="bigger lighter">
+            {% trans 'Event details' %}
+          </h5>
+        </div>
+        <div class="widget-body">
+          <div class="widget-main no-padding js-description description">
+            
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-sm-4 no-padding">
+
+      <div class="widget-box location js-location">
+        <div class="widget-header header-color-blue">
+          <h5 class="bigger lighter">
+            {% trans 'Where & When' %}
+          </h5>
+        </div>
+        <div class="widget-body">
+          <div class="widget-main no-padding">
+            <div class="js-map"></div>
+            <div class="address">
+              <div class="address-name">
+                <h6 class="js-address-name"></h6>
+              </div>
+              <div class="address1 js-address1">
+              </div>
+              <div class="address2 js-address2">
+              </div>
+              <div>
+              <span class="zipcode js-zipcode"></span>, <span class="city js-city"></span>
+              </div>
+              <div class="datetime js-datetime"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="widget-box js-organizer organizer">
+        <div class="widget-header header-color-blue">
+          <h5 class="bigger lighter">
+            {% trans 'Organizer' %}
+          </h5>
+        </div>
+        <div class="widget-body">
+          <div class="widget-main no-padding">
+            <h6 class="js-organizer-name"></h6>
+            <div class="js-organizer-contact"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>

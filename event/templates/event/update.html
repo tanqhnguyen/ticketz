@@ -1,0 +1,31 @@
+{% extends 'layouts/requirejs.html' %}
+
+{% load i18n %}
+{% load custom_filters %}
+
+{% block javascript_templates %}
+<script type="text/javascript">
+  window.ticketz = window.ticketz || {};
+  window.ticketz.event = {{ event|json_dumps|safe }}
+</script>
+
+{% include 'event/_update/layout_template.html' %}
+
+{% include 'event/_update/edit/layout.html' %}
+{% include 'event/_update/edit/location_layout_template.html' %}
+{% include 'event/_update/edit/datetime_template.html' %}
+{% include 'event/_update/edit/description_template.html' %}
+{% include 'event/_update/edit/ticket_type_template.html' %}
+{% include 'event/_update/edit/organizer_template.html' %}
+
+{% include 'event/_update/design/design_tab_template.html' %}
+
+{% include 'event/_view/layout_template.html' %}
+
+{% endblock %}
+
+{% block content %}
+<div id="event-update">
+
+</div>
+{% endblock %}

@@ -10,7 +10,7 @@ include_recipe "apt"
 include_recipe "build-essential"
 include_recipe "python"
 
-packages = "sqlite3 gettext libpq-dev"
+packages = "sqlite3 gettext libpq-dev python-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.5-dev tk8.5-dev libtiff4-dev libjpeg8-dev zlib1g-dev"
 packages.split(" ").each do |p|
   package p
 end

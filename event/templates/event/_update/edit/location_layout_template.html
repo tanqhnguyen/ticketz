@@ -1,0 +1,31 @@
+{% load i18n %}
+
+<script type="text/template" id="eu-location-layout-template">
+<label for="event-location" class="col-sm-2 control-label">{% trans 'Location' %}</label>
+<div class="col-sm-6 js-event-address event-address">
+  <div class="form-group">
+    <div class="col-sm-12">
+      <input type="text" class="form-control" id="event-address-name" placeholder="{% trans 'Name' %}">
+    </div>
+    <div class="col-sm-12">
+      <input type="text" class="form-control" id="event-address1" placeholder="{% trans 'Address 1' %}">
+    </div>
+    <div class="col-sm-12">
+      <input type="text" class="form-control" id="event-address2" placeholder="{% trans 'Address 2' %}">
+    </div>
+    <div class="col-sm-12 clearfix" style="padding:0px;">
+      <div class="col-sm-6">
+        <input type="text" class="form-control" id="event-city" placeholder="{% trans 'City' %}">
+      </div>
+      <div class="col-sm-3 no-padding">
+        <input type="text" class="form-control" id="event-zipcode" placeholder="{% trans 'Zipcode' %}">
+      </div>
+    </div>
+    <div class="col-sm-12">
+      <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+  </div>
+</div>
+<div class="col-sm-4 js-event-pick-map">
+</div>
+</script>

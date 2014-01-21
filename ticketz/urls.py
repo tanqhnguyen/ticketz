@@ -8,7 +8,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/', include('api.urls')),
-    url(r'^event/', include('event.urls')),    
+    url(r'^event/', include('event.urls')),
     url(r'', include('social.apps.django_app.urls', namespace='social')),
     url(r'', include('core.urls')),
 

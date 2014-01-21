@@ -1,0 +1,86 @@
+@import 'bootstrap/buttons.less';
+@import 'core.less';
+@import 'vendors/select2.less';
+@import 'bootstrap/select2.less';
+@import 'vendors/summernote.less';
+@import 'vendors/colorpicker.less';
+@import 'event_view.less';
+@import 'common/jquery.fileupload.less';
+
+#event-update {
+  .nav {
+    .btn-primary {
+      .btn-primary;
+      margin-left: 5px;
+    }
+  }
+
+  .location {
+    #event-location {
+      width: 60%;
+      margin-top: 10px;
+    }
+
+    .event-address {
+      [class*="col-sm-"] {
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  .note-editor {
+    button {
+      min-height: 30px;
+    }
+  }
+
+  .tooltip {
+    .tooltip-inner {
+      min-width: 150px;
+      max-width: 400px;
+      ul {
+        padding: 0px;
+        li {
+          list-style: none;
+          text-align: left;
+          a {
+            color: white;
+          }
+        }
+      }
+    }
+  }
+
+  .common-customization {
+    .widget-body {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }    
+
+    .banner {
+      .btn {
+        i {
+          margin-right: 5px;
+        }
+        width: 100%;
+      }
+    }
+  }
+}
+
+#event-view {
+  margin-top: 20px;
+
+  .page-header { 
+    margin-top: 0px;
+  }
+
+  .widget-box {
+    .widget-toolbar {
+      .fa {
+        line-height: 37px;
+        color: #ffffff;
+      }
+    }
+  }
+}

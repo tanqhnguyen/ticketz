@@ -1,12 +1,14 @@
 define([
-  'vendors/backbone/backbone'
+  'vendors/backbone'
   , 'libs/backbone.maze'
-], function(Backbone, Maze){
+  , 'libs/arrg'
+], function(Backbone, Maze, arrg){
   var methodMap = {
     'create': 'POST',
     'update': 'POST',
     'delete': 'POST',
-    'read':   'GET'
+    'read':   'GET',
+    'list': 'GET'
   };
 
   var apiPrefix = '/api';
@@ -25,7 +27,11 @@ define([
 
     // Ensure that we have a URL.
     if (!options.url) {
-      params.url = _.result(model, 'url') || urlError();
+      params.url = _.result(model, 'url') || model.model.prototype.url;
+    }
+
+    if (!params.url) {
+      throw "URL is not defined";
     }
 
     params.url = apiPrefix + '/' + params.url + '/' + method;
@@ -47,5 +53,8 @@ define([
     return xhr;
   };
   Backbone.Maze = Maze;
+
+  Backbone.extractMethodArgs = arrg;
+
   return Backbone;
 });

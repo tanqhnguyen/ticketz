@@ -1,0 +1,63 @@
+{% load i18n %}
+
+<script type="text/template" id="eu-edit-tab-layout-template">
+  <form class="form-horizontal js-edit-form" role="form">
+    <legend>
+      {% trans 'Event information' %}
+    </legend>
+    <fieldset>
+      <div class="form-group">
+        <label for="event-title" class="col-sm-2 control-label">{% trans 'Title' %}</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="event-title" placeholder="{% trans 'Your event title' %}">
+        </div>
+      </div>
+
+      <div class="form-group js-location location">
+
+      </div>
+
+      <div class="form-group js-datetime datetime">
+
+      </div>
+
+      <div class="form-group js-description description">
+
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-primary">{% trans 'Save' %}</button>
+        </div>
+      </div>
+    </fieldset>
+
+    <legend>
+      {% trans 'Ticket' %}
+    </legend>
+    <fieldset>
+      <div class="form-group js-ticket-type ticket-type">
+
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-primary">{% trans 'Save' %}</button>
+        </div>
+      </div>
+    </fieldset>
+
+    <legend>
+      {% trans 'Event organizer' %}
+    </legend>
+    <fieldset>
+      <div class="form-group js-organizer">
+
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-primary">{% trans 'Save' %}</button>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</script>

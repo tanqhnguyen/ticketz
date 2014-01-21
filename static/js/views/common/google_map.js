@@ -1,90 +1,93 @@
 define([
   'underscore'
   , 'backbone'
-], function(_, Backbone){
-  return Backbone.View.extend({
-    mapTemplate: _.template('<div class="google-map"></div>'),
-    autocompleteTemplate: _.template('<input id="<%= id %>" type="text" class="google-map-autocomplete <%= className %>" placeholder="<%= placeholder %>" />'),
+  , 'marionette'
+], function(_, Backbone, Marionette){
+  return Marionette.View.extend({
+    autocompleteTemplate: _.template('<input id="<%= id %>" type="text" class="<%= cid %>-google-map-autocomplete <%= className %>" placeholder="<%= placeholder %>" />'),
 
-    defaults: {
-      apiInitFunction: 'googleMapInit',
-      width: '100%',
-      height: '100%',
-      latitude: 60.4493248,
-      longtitude: 22.259231
-    },
+    apiInitFunction: 'googleMapInit',
+    width: '100%',
+    height: '100%',
+    latitude: 60.4493248,
+    longitude: 22.259231,
+    zoom: 16,
 
-    autocompleteDefaults: {
-      placeholder: 'Enter location',
-      className: '',
-      id: 'google-map-autocomplete'
-    },
+    autoCompletePlaceholder: 'Enter location',
+    autoCompleteClassName: '',
+    autoCompleteId: 'google-map-autocomplete',
+    autoComplete: true,
 
     initialize: function(options) {
-      options = options || {};
       var self = this;
-      this.apiKey = options.key || window.googleMapKey;
+      this.options.apiKey = this.options.apiKey || window.googleMapKey;
 
-      if (!this.apiKey) {
+      if (!this.options.apiKey) {
         throw "Must supply google map API key";
-      }
-
-      options = _.defaults(options, this.defaults);
-      _.each(options, function(value, key){
-        this[key] = value;
-      }, this);
-
-      if (options.autocomplete) {
-        if (_.isObject(options.autocomplete)) {
-          this.autocomplete = _.defaults(options.autocomplete, this.autocompleteDefaults);  
-        } else {
-          this.autocomplete = this.autocompleteDefaults;
-        }
-      }
-
-      this.listenTo(this, 'onPlacesChanged', this.onPlacesChanged);
-
-      window[this.apiInitFunction] = window[this.apiInitFunction] || function() {
-        self.trigger('map:init');
-        self.renderMap();
       }
     },
 
-    render: function() {
-      // render template
-      this.$el.html(this.mapTemplate());
-      this.mapEl = this.$('.google-map')[0];
-      if (this.autocomplete) {
-        this.$el.append(this.autocompleteTemplate(this.autocomplete));
-        this.autocompleteEl = this.$('.google-map-autocomplete')[0];
-        this.autocompleteEl.style['display'] = 'none';
-      }
+    onInitMap: function() {
+      this.renderMap();
+    },
 
+    initMap: function() {
+      var self = this;
       // load the script
       var scriptId = 'google-map-javascript';
       var $script = $('#'+scriptId);
       if ($script.length == 0) {
-        $script = $('<script></script>');
+        var apiInitFunction = Marionette.getOption(this, 'apiInitFunction');
+        var apiKey = Marionette.getOption(this, 'apiKey');
+        window[apiInitFunction] = window[apiInitFunction] || function() {
+          self.triggerMethod('initMap');
+        } 
+
+        var $script = $('<script></script>');
         $script.attr('id', scriptId);
         $script.attr('type', 'text/javascript');
-        var src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&key='+ this.apiKey +'&sensor=false&callback='+ this.apiInitFunction+'&libraries=places';
+        var src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&key='+ apiKey +'&sensor=false&callback='+apiInitFunction+'&libraries=places';
         $script.attr('src', src);
         $('head').append($script);
+      } else {
+        this.triggerMethod('initMap');
       }
     },
 
-    renderMap: function() {
+    _autoCompleteOptions: function() {
+      return {
+        id: Marionette.getOption(this, 'autoCompleteId'),
+        placeholder: Marionette.getOption(this, 'autoCompletePlaceholder'),
+        className: Marionette.getOption(this, 'autoCompleteClassName'),
+        cid: this.cid
+      };
+    },
+
+    render: function() {
+      var self = this;
+      // render template
+      var autoComplete = Marionette.getOption(this, 'autoComplete');
+
+      if (autoComplete) {
+        this.$el.append(this.autocompleteTemplate(this._autoCompleteOptions()));
+        this.autocompleteEl = this.$('.'+this.cid+'-google-map-autocomplete')[0];
+        this.autocompleteEl.style['display'] = 'none';
+      }
+
       this.$el.css({
-        'width': this.width,
-        'height': this.height
+        'width': Marionette.getOption(this, 'width'),
+        'height': Marionette.getOption(this, 'height')
       });
+    },
 
-      var mapEl = this.$el[0];
+    renderMap: function() {
+      var latitude = Marionette.getOption(this, 'latitude');
+      var longitude = Marionette.getOption(this, 'longitude');
 
-      this.map = new google.maps.Map(mapEl, {
+      this.map = new google.maps.Map(this.$el[0], {
         mapTypeId: google.maps.MapTypeId.ROADMAP,
-        zoom: 16,
-        center: new google.maps.LatLng(this.latitude, this.longtitude)
+        zoom: Marionette.getOption(this, 'zoom'),
+        center: new google.maps.LatLng(latitude, longitude)
       });
 
       this.renderAutocomplete();
@@ -108,7 +111,7 @@ define([
       // Listen for the event fired when the user selects an item from the
       // pick list. Retrieve the matching places for that item.
       google.maps.event.addListener(searchBox, 'places_changed', function(){
-        self.trigger('onPlacesChanged');
+        self.triggerMethod('placesChanged', searchBox.getPlaces());
       });
 
       // Bias the SearchBox results towards places that are within the bounds of the
@@ -120,15 +123,17 @@ define([
       });
     },
 
-    onPlacesChanged: function() {
-      var places = this.searchBox.getPlaces();
+    onPlacesChanged: function(places) {
+      if (!_.isArray(places)) {
+        places = [places];
+      }
 
+      this.markers = this.markers || [];
       for (var i = 0, marker; marker = this.markers[i]; i++) {
         marker.setMap(null);
       }
 
       // For each place, get the icon, place name, and location.
-      this.markers = [];
       var bounds = new google.maps.LatLngBounds();
       for (var i = 0, place; place = places[i]; i++) {
         var image = {
@@ -153,6 +158,7 @@ define([
       }
 
       this.map.fitBounds(bounds);
+      this.map.setZoom(Marionette.getOption(this, 'zoom'));
     }
   });
 })

@@ -1,18 +1,23 @@
-@import 'bootstrap/bootstrap.less';
+// Google font
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
 
-body {
-  padding-top: 20px;
-  padding-bottom: 30px;
+@import 'common/variables.less';
+@import 'common/basic.less';
+@import 'common/general.less';
+@import 'common/mixins.less';
+@import 'common/widgets.less';
+@import 'common/dropdown.less';
+@import 'common/tabs.less';
+@import 'common/form.less';
+@import 'common/button.less';
+@import 'common/jquery.ui.less';
+
+.navbar {
+  .border-radius(0px);
 }
 
-.form-horizontal {
-  .help-block {
-    display: none;
-  }
-
-  .has-error {
-    .help-block {
-      display: block;
-    }
+.tooltip {
+  .tooltip-inner {
+    .border-radius(0px);  
   }
 }

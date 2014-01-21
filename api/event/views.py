@@ -1,11 +1,9 @@
 from api.views import ApiView
-from core.models.event import Event
-from django.contrib.auth.decorators import login_required
-import json
-from django.http import HttpResponse
+from core.models import Event
 from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 from core.decorators import event_owner
-
+import re
 
 class CreateView(ApiView):
     @method_decorator(login_required)
@@ -20,38 +18,79 @@ class DeleteView(ApiView):
     @method_decorator(login_required)
     @method_decorator(event_owner())
     def post(self, request):
-            data = json.loads(request.raw_post_data)
-            # data is now a Python dict representing the uploaded JSON.
-            id = data['id']
-            event = Event.objects.get(pk = id)
-            event.delete()
-            data = event.json_data()
-            return self.json({"data": data})
+        id = self.request.json_data['id']
+        event = Event.objects.get(pk = id)
+        data = event.json_data()
+        event.delete()
+        return self.json({"data": data})
 
 class UpdateView(ApiView):
     @method_decorator(login_required)
     @method_decorator(event_owner())
     def post(self, request):
-        data = json.loads(request.raw_post_data)
-        # data is now a Python dict representing the uploaded JSON.
-        id = data['id']
-        event = Event.objects.get(pk = id)
-        tckt_type=data['ticket_type']
-        event.check_ticket_types(tckt_type)
-        event.name=data['name']
-        event.ticket_type=data['ticket_type']
-        event.age_limit=data['age_limit']
-        event.description=data['description']
-        event.end_date=data['end_date']
-        event.start_date=data['start_date']
+        data = self.request.json_data
+        event = Event.objects.get(pk = data['id'])
+        ticket_types = data.get('ticket_types')
+        json = data.get('json')
+
+        if ticket_types:
+            event.create_event_types(ticket_types)
+
+        if json:
+            for key, value in json.iteritems():
+                event.json[key] = value
+        
+        unsafe_attributes = ['id', 'user_id', 'ticket_types', 'json']
+        for attr in unsafe_attributes:
+            if data.get(attr):
+                del data[attr]
+
+        event.set_attributes(**data)
         event.save()
-        data = event.json_data()
-        return self.json({"data": data})
+        return self.json({'data': event.json_data()})
+
+class ListView(ApiView):
+    def get(self, request):
+        offset = int(request.GET.get('offset', 0))
+        limit = int(request.GET.get('limit', 10))
+        user_id = int(request.GET.get('user_id', request.user.id))
+
+        conditions = {
+            'user_id': user_id,
+            'is_active': request.GET.get('active') == 'true'
+        }
+        
+        events = Event.objects.filter(**conditions).all()[offset:limit]
+        count = Event.objects.filter(user_id=user_id).count()
 
 
+        return self.json({
+            "data": [event.json_data() for event in events],
+            "pagination": {
+                "total": count,
+                "offset": offset,
+                "limit": limit
+            }
+        })
 
+class UploadBannerView(ApiView):
+    @method_decorator(login_required)
+    @method_decorator(event_owner())
+    def post(self, request):
+        event = request.event
+        banner = request.FILES['banner']
+        event.delete_old_banner()
+        event.store_banner(banner)
 
+        return self.json({'data': 'nothing'})
 
+class RemoveBannerView(ApiView):
+    @method_decorator(login_required)
+    @method_decorator(event_owner())
+    def post(self, request):
+        event = request.event
+
+        event.delete_old_banner()
 
 
 

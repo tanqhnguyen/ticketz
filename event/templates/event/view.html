@@ -1,26 +1,20 @@
-<html>
+{% extends 'layouts/requirejs.html' %}
 
- <head>
+{% load i18n %}
+{% load custom_filters %}
 
-<title>{{page_name}}</title>
-</head>
-<body>
-<h1>Page Name :{{page_name}}</h1>
+{% block javascript_templates %}
+<script type="text/javascript">
+  window.ticketz = window.ticketz || {};
+  window.ticketz.event = {{ event|json_dumps|safe }}
+</script>
 
+{% include 'event/_view/layout_template.html' %}
 
-<h3>Post Content : {{content}}</h3>
+{% endblock %}
 
-<h3> Post Title :{{post_title}}</h3>
+{% block content %}
+<div id="event-view">
 
-<h2>Last edited :{{ pub_date}}</h2>
-<hr/>
-
-<a href="/edit/{{page_name}}">Edit this page?</a>
-<hr/>
-<a href="/delete/{{page_name}}">DELETE this page?</a>
-
-<hr/>
-
-<a href="/myblog/">Back to <b>HOME</b></a>
-</body>
-</html>
+</div>
+{% endblock %}

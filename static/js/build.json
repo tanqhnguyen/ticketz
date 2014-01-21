@@ -5,30 +5,32 @@
     "baseview": "views/base_view",
     "basemodel": "models/base_model",
     "basecollection": "collections/base_collection",
-    "text": "vendors/requirejs-text/text",
-    "backbone.babysitter": "vendors/backbone.babysitter/lib/amd/backbone.babysitter",
-    "backbone.wreqr": "vendors/backbone.wreqr/lib/amd/backbone.wreqr",
-    "marionette": "vendors/backbone.marionette/lib/core/amd/backbone.marionette",
-    "backbone.maze.bootstrap.tab": "libs/backbone.maze.bootstrap.tab",
-    "bootstrap.tab": "vendors/bootstrap/js/tab"
+    "text": "vendors/requirejs-text",
+    "backbone.babysitter": "vendors/backbone.babysitter",
+    "backbone.wreqr": "vendors/backbone.wreqr",
+    "marionette": "vendors/backbone.marionette",
+    "bootstrap3.datetimepicker": "vendors/bootstrap3.datetimepicker",
+    "moment": "vendors/moment",
+    "summernote": "vendors/summernote"
   },
 
   "waitSeconds": 30,
   
   "shim": {
-    "vendors/underscore/underscore": {
+    "vendors/underscore": {
       "exports": "_"
     },
-    "vendors/backbone/backbone": {
-      "deps": ["vendors/underscore/underscore"],
+    "vendors/backbone": {
+      "deps": ["vendors/underscore"],
       "exports": "Backbone"
     },
     "libs/backbone.maze": {
-      "deps": ["vendors/backbone/backbone"],
+      "deps": ["vendors/backbone"],
       "exports": "Maze"
     },
-    "vendors/moment/moment": {
-      "exports": "moment"
+    "bootstrap3.datetimepicker": ["moment"],
+    "vendors/less": {
+      "exports": "less"
     }
   },
 
