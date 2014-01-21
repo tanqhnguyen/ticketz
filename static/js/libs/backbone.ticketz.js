@@ -1,7 +1,8 @@
 define([
   'vendors/backbone'
   , 'libs/backbone.maze'
-], function(Backbone, Maze){
+  , 'libs/arrg'
+], function(Backbone, Maze, arrg){
   var methodMap = {
     'create': 'POST',
     'update': 'POST',
@@ -52,6 +53,8 @@ define([
     return xhr;
   };
   Backbone.Maze = Maze;
+
+  Backbone.extractMethodArgs = arrg;
 
   return Backbone;
 });

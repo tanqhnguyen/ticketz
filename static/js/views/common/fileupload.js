@@ -38,7 +38,6 @@ define([
     },
 
     onRender: function() {
-      console.log("onRender");
       var self = this;
       this.$el.addClass('fileupload');
       this.ui.fileupload.fileupload({
