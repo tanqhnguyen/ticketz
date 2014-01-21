@@ -84,7 +84,7 @@ class UploadBannerView(ApiView):
 
         return self.json({'data': 'nothing'})
 
-class RemoveBannerView(ApiView):
+class DeleteBannerView(ApiView):
     @method_decorator(login_required)
     @method_decorator(event_owner())
     def post(self, request):

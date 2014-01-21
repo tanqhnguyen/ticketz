@@ -10,6 +10,10 @@ define([
       
     },
 
+    events: {
+      'click .js-save': 'onSave'
+    },
+
     serializeData: function() {
       return {
         model: this.model
@@ -41,6 +45,20 @@ define([
         tabView.render();
         this[tabName] = tabView;          
       }
+    },
+
+    onSave: function(e) {
+      var $currentTarget = $(e.currentTarget);
+
+      $currentTarget.bsbutton('loading');
+
+      this.model.save().success(function(){
+
+      }).complete(function(){
+        $currentTarget.bsbutton('reset');
+      });
+
+      return false;
     }
   });
 })
