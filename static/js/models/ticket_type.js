@@ -2,7 +2,7 @@ define([
   'basemodel'
 ], function(BaseModel){
   var Model = BaseModel.extend({
-    urlRoot: 'ticket-type',
+    url: 'ticket-type',
 
     rules: [
       [

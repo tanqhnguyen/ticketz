@@ -69,7 +69,6 @@ class TicketView(TemplateView):
         ticket = self.request.user.tickets.get(code=code)
         event = ticket.ticket_type.event
         context = super(TicketView, self).get_context_data(**kwargs)
-        print event
         context['event'] = event
         context['start_date'] = event.format_date('start_date')
         context['end_date'] = event.format_date('end_date')

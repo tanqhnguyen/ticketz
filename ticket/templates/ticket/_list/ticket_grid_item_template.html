@@ -1,0 +1,13 @@
+{% load i18n %}
+
+<script type="script/template" id="tv-ticket-grid-item-template">
+<td>
+<%= model.get('code') %>
+</td>
+<td>
+<a href="<%= model.get('event.url.view') %>"><%= model.get('event.title') %></a>
+</td>
+<td>
+<a class="btn btn-primary btn-xs" href='<%= model.get('url.view') %>'>{% trans 'View' %}</a>
+</td>
+</script>

@@ -2,14 +2,14 @@
 
 <script type="script/template" id="em-event-grid-item-template">
 <td>
-<%= event.get('id') %>
+<%= model.get('id') %>
 </td>
 <td>
-<%= event.get('title') %>
+<%= model.get('title') %>
 </td>
 <td>
-<a style="margin-right: 5px" href="<%= event.get('url.manage') %>" class="btn btn-xs btn-primary">{% trans 'Manage' %}</button>
-<a style="margin-right: 5px" href="<%= event.get('url.update') %>" class="btn btn-xs btn-primary">{% trans 'Edit' %}</button>
-<a href="<%= event.get('url.view') %>" class="btn btn-xs btn-primary">{% trans 'View' %}</button>
+<a style="margin-right: 5px" href="<%= model.get('url.manage') %>" class="btn btn-xs btn-primary">{% trans 'Manage' %}</button>
+<a style="margin-right: 5px" href="<%= model.get('url.update') %>" class="btn btn-xs btn-primary">{% trans 'Edit' %}</button>
+<a href="<%= model.get('url.view') %>" class="btn btn-xs btn-primary">{% trans 'View' %}</button>
 </td>
 </script>

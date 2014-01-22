@@ -24,6 +24,7 @@ class ListView(ApiView):
         offset = int(request.GET.get('offset', 0))
         limit = int(request.GET.get('limit', 10))
         event_id = request.GET.get('event_id', None)
+        pagination = {}
 
         if event_id:
             try:
@@ -32,14 +33,19 @@ class ListView(ApiView):
                 if event.user.id != request.user.id:
                     return self.json({'error': _("Invalid request")})
 
+                pagination['total'] = event.tickets.count()
                 sold_tickets = event.tickets.all()[offset:limit]
             except Event.DoesNotExist:
                 return self.json({'error': _("Invalid request")})
         else:
+            pagination['total'] = request.user.tickets.count()
             sold_tickets = request.user.tickets.all()[offset:limit]
 
+        pagination['limit'] = limit
+        pagination['offset'] = offset
         return self.json({
-            'data': [sold_ticket.json_data() for sold_ticket in sold_tickets]    
+            'data': [sold_ticket.json_data() for sold_ticket in sold_tickets],
+            'pagination': pagination
         })
 
 class VerifyView(ApiView):

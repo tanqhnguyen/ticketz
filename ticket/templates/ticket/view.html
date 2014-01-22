@@ -23,10 +23,10 @@
             <tr>
               <td bgcolor="#698291" height="115" align="center">
             <h1 style="color: #fff; font: normal 33px Georgia, serif; margin: 0; padding: 0; line-height: 33px;">
-              {{ event.title }}
+              <a style="color: #fff; text-decoration: none;" href="{{ event.get_absolute_url }}">{{ event.title }}</a>
             </h1>
             <p style="color: #dfa575; font: normal 11px Georgia, serif; margin: 0; padding: 0; line-height: 11px;">
-
+              {{ ticket.ticket_type.name }}
             </p>
               </td>
             </tr>
@@ -41,7 +41,7 @@
             <table cellpadding="0" cellspacing="0" border="0"  style="color: #717171; font: normal 11px Georgia, serif; margin: 0; padding: 0;" width="620" class="content">
             <tr>
               <td colspan="2" style="padding: 25px 0 5px; border-bottom: 2px solid #d2b49b;font-family: Georgia, serif; "  valign="top" align="center">
-                <h3 style="color:#767676; font-weight: normal; margin: 0; padding: 0; font-style: italic; line-height: 13px; font-size: 13px;">~ something here, maybe? ~</h3>
+                <h3 style="color:#767676; font-weight: normal; margin: 0; padding: 0; font-style: italic; line-height: 13px; font-size: 13px;">~ {{ ticket.ticket_type.description }} ~</h3>
               </td>
             </tr>
             <tr>

@@ -152,7 +152,8 @@ INSTALLED_APPS = (
     'kombu.transport.django',
     'core',
     'api',
-    'event'
+    'event',
+    'ticket'
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'

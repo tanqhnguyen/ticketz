@@ -50,8 +50,8 @@ class Event(AbstractModel):
     def get_absolute_url(self):
         return reverse('event_view', kwargs={'id': self.id, 'slug': self.slugify()})
 
-    def get_urls(self):
-        return {
+    def generate_url(self, name=None):
+        urls = {
             'view': self.get_absolute_url(),
             'update': reverse('event_update', kwargs={'event_id': self.id}),
             'uploadBanner': reverse('api_event_upload_banner'),
@@ -59,13 +59,20 @@ class Event(AbstractModel):
             'purchaseTicket': reverse('api_ticket_purchase')
         }
 
-    def json_data(self):
+        if name is None:
+            return urls
+
+        return urls.get(name)
+
+    def json_data(self, exclude=[]):
         data = model_to_dict(self, exclude=['user', 'json'])
         data['user_id'] = self.user.id
         data['json'] = Event.default_json
         data['json'].update(self.json)
         data['ticket_types'] = [ticket_type.json_data() for ticket_type in self.ticket_types.all()]
-        data['url'] = self.get_urls()
+        data['url'] = self.generate_url()
+
+        data = {key: value for key, value in data.iteritems() if key not in exclude}
         return data
 
     default_json = {

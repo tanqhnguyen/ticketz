@@ -4,7 +4,7 @@ define([
   , 'marionette'
 ], function(_, Backbone, Marionette){
   var View = Marionette.ItemView.extend({
-    template: '#em-event-grid-item-template',
+    template: '#tv-ticket-grid-item-template',
     tagName: 'tr',
 
     serializeData: function(){
