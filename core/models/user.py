@@ -32,8 +32,7 @@ class User(AbstractUser, AbstractModel):
         if current_time > event.end_date:
             raise UserException("The event has been ended")
 
-        current_ticket_count = ticket_type.tickets.count()
-        if current_ticket_count > ticket_type.amount:
+        if ticket_type.get_amount_left() <= 0:
             raise UserException("No ticket left to buy")
 
         data = {

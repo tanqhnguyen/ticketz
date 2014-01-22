@@ -14,5 +14,9 @@ class TicketType(AbstractModel):
 
     def json_data(self):
         data = model_to_dict(self, exclude=['event'])
+        data['amount_left'] = self.get_amount_left()
         data['event_id'] = self.event.id
         return data
+
+    def get_amount_left(self):
+        return self.amount - self.tickets.count()

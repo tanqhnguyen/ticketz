@@ -92,87 +92,90 @@
   </div>
 </script>
 
-<script type="text/template" id="eu-edit-detail-tooltip-template">
-<a href="#" class="js-edit-tooltip" data-title="edit-detail-tooltip-content">
-  <i class="fa fa-pencil-square-o"></i>
-</a>
-<div class="hide" id="edit-detail-tooltip-content">
-  <ul>
-    <li>
-      <a href="#" class="js-trigger-dialog" data-dialog="colorpicker" data-attribute="json.detailBodyBgColor">{% trans 'Body background color' %}</a>
-    </li>
-    <li>
-      <a href="#" class="js-trigger-dialog" data-dialog="colorpicker" data-attribute="json.detailTitleBgColor">{% trans 'Title background color' %}</a>
-    </li>
-    <li>
-      <a href="#" class="js-trigger-dialog" data-dialog="colorpicker" data-attribute="json.detailTitleColor">{% trans 'Title color' %}</a>
-    </li>
-  </ul>
-</div>
+<script type="text/template" id="eu-edit-detail-template">
+<table class="table-fixed table-hover">
+  <tbody>
+    <tr>
+      <td><label>{% trans 'Body background color' %}</label></td>
+      <td class="js-control" data-type="colorpicker" data-attribute="json.detailBodyBgColor"></td>
+    </tr>
+    <tr>
+      <td><label>{% trans 'Title background color' %}</label></td>
+      <td class="js-control" data-type="colorpicker" data-attribute="json.detailTitleBgColor"></td>
+    </tr>
+    <tr>
+      <td><label>{% trans 'Title color' %}</label></td>
+      <td class="js-control" data-type="colorpicker" data-attribute="json.detailTitleColor"></td>
+    </tr>
+  </tbody>
+</table>
 </script>
 
-<script type="text/template" id="eu-edit-location-tooltip-template">
-<a href="#" class="js-edit-tooltip" data-title="edit-location-tooltip-content">
-  <i class="fa fa-pencil-square-o"></i>
-</a>
-<div class="hide" id="edit-location-tooltip-content">
-  <ul>
-    <li>
-      <a href="#" class="js-trigger-dialog" data-dialog="colorpicker" data-attribute="json.locationBodyBgColor">{% trans 'Body background color' %}</a>
-    </li>
-    <li>
-      <a href="#" class="js-trigger-dialog" data-dialog="colorpicker" data-attribute="json.locationBodyColor">{% trans 'Body color' %}</a>
-    </li>
-    <li>
-      <a href="#" class="js-trigger-dialog" data-dialog="colorpicker" data-attribute="json.locationTitleBgColor">{% trans 'Title background color' %}</a>
-    </li>
-    <li>
-      <a href="#" class="js-trigger-dialog" data-dialog="colorpicker" data-attribute="json.locationTitleColor">{% trans 'Title color' %}</a>
-    </li>
-  </ul>
-</div>
+<script type="text/template" id="eu-edit-location-template">
+<table class="table-fixed table-hover">
+  <tbody>
+    <tr>
+      <td><label>{% trans 'Body background color' %}</label></td>
+      <td class="js-control" data-type="colorpicker" data-attribute="json.locationBodyBgColor"></td>
+    </tr>
+    <tr>
+      <td><label>{% trans 'Body color' %}</label></td>
+      <td class="js-control" data-type="colorpicker" data-attribute="json.locationBodyColor"></td>
+    </tr>
+    <tr>
+      <td><label>{% trans 'Title background color' %}</label></td>
+      <td class="js-control" data-type="colorpicker" data-attribute="json.locationTitleBgColor"></td>
+    </tr>
+    <tr>
+      <td><label>{% trans 'Title color' %}</label></td>
+      <td class="js-control" data-type="colorpicker" data-attribute="json.locationTitleColor"></td>
+    </tr>
+  </tbody>
+</table>
 </script>
 
-<script type="text/template" id="eu-edit-ticket-tooltip-template">
-<a href="#" class="js-edit-tooltip" data-title="edit-ticket-tooltip-content">
-  <i class="fa fa-pencil-square-o"></i>
-</a>
-<div class="hide" id="edit-ticket-tooltip-content">
-  <ul>
-    <li>
-      <a href="#" class="js-trigger-dialog" data-dialog="colorpicker" data-attribute="json.ticketBodyBgColor">{% trans 'Body background color' %}</a>
-    </li>
-    <li>
-      <a href="#" class="js-trigger-dialog" data-dialog="colorpicker" data-attribute="json.ticketBodyColor">{% trans 'Body color' %}</a>
-    </li>
-    <li>
-      <a href="#" class="js-trigger-dialog" data-dialog="colorpicker" data-attribute="json.ticketTitleBgColor">{% trans 'Title background color' %}</a>
-    </li>
-    <li>
-      <a href="#" class="js-trigger-dialog" data-dialog="colorpicker" data-attribute="json.ticketTitleColor">{% trans 'Title color' %}</a>
-    </li>
-  </ul>
-</div>
+<script type="text/template" id="eu-edit-ticket-template">
+<table class="table-fixed table-hover">
+  <tbody>
+    <tr>
+      <td><label>{% trans 'Body background color' %}</label></td>
+      <td class="js-control" data-type="colorpicker" data-attribute="json.ticketBodyBgColor"></td>
+    </tr>
+    <tr>
+      <td><label>{% trans 'Body color' %}</label></td>
+      <td class="js-control" data-type="colorpicker" data-attribute="json.ticketBodyColor"></td>
+    </tr>
+    <tr>
+      <td><label>{% trans 'Title background color' %}</label></td>
+      <td class="js-control" data-type="colorpicker" data-attribute="json.ticketTitleBgColor"></td>
+    </tr>
+    <tr>
+      <td><label>{% trans 'Title color' %}</label></td>
+      <td class="js-control" data-type="colorpicker" data-attribute="json.ticketTitleColor"></td>
+    </tr>
+  </tbody>
+</table>
 </script>
 
-<script type="text/template" id="eu-edit-organizer-tooltip-template">
-<a href="#" class="js-edit-tooltip" data-title="edit-organizer-tooltip-content">
-  <i class="fa fa-pencil-square-o"></i>
-</a>
-<div class="hide" id="edit-organizer-tooltip-content">
-  <ul>
-    <li>
-      <a href="#" class="js-trigger-dialog" data-dialog="colorpicker" data-attribute="json.organizerBodyBgColor">{% trans 'Body background color' %}</a>
-    </li>
-    <li>
-      <a href="#" class="js-trigger-dialog" data-dialog="colorpicker" data-attribute="json.organizerBodyColor">{% trans 'Body color' %}</a>
-    </li>
-    <li>
-      <a href="#" class="js-trigger-dialog" data-dialog="colorpicker" data-attribute="json.organizerTitleBgColor">{% trans 'Title background color' %}</a>
-    </li>
-    <li>
-      <a href="#" class="js-trigger-dialog" data-dialog="colorpicker" data-attribute="json.organizerTitleColor">{% trans 'Title color' %}</a>
-    </li>
-  </ul>
-</div>
+<script type="text/template" id="eu-edit-organizer-template">
+<table class="table-fixed table-hover">
+  <tbody>
+    <tr>
+      <td><label>{% trans 'Body background color' %}</label></td>
+      <td class="js-control" data-type="colorpicker" data-attribute="json.organizerBodyBgColor"></td>
+    </tr>
+    <tr>
+      <td><label>{% trans 'Body color' %}</label></td>
+      <td class="js-control" data-type="colorpicker" data-attribute="json.organizerBodyColor"></td>
+    </tr>
+    <tr>
+      <td><label>{% trans 'Title background color' %}</label></td>
+      <td class="js-control" data-type="colorpicker" data-attribute="json.organizerTitleBgColor"></td>
+    </tr>
+    <tr>
+      <td><label>{% trans 'Title color' %}</label></td>
+      <td class="js-control" data-type="colorpicker" data-attribute="json.organizerTitleColor"></td>
+    </tr>
+  </tbody>
+</table>
 </script>

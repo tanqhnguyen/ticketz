@@ -1,11 +1,13 @@
 define([
   'underscore'
   , 'marionette'
+  , 'views/event_update/design/tooltip_content'
   , 'views/event_view/main'
   , 'views/event_view/custom_style'
   , 'views/common/dialogs/dialog_factory'
   , 'views/common/fileupload'
-], function(_, Marionette, EventView, CustomStyleView, DialogFactory, FileuploadView){
+  , 'vendors/jquery.qtip2'
+], function(_, Marionette, TooltipContentView, EventView, CustomStyleView, DialogFactory, FileuploadView){
   var View = Marionette.Layout.extend({
     template: '#eu-design-tab-template',
 
@@ -14,6 +16,8 @@ define([
         model: this.model
       }
     },
+
+    editIcon: _.template('<div class="widget-toolbar"><a href="#" class="js-edit" data-my="<%= my %>" data-at="<%= at %>" data-content="<%= content %>"><i class="fa fa-pencil-square-o"></i></a></div>'),
 
     initialize: function() {
       this.dialogFactory = new DialogFactory({
@@ -25,6 +29,9 @@ define([
     events: {
       'click .js-trigger-dialog': 'onTriggerDialog',
       'click .js-edit-tooltip': function() {
+        return false;
+      },
+      'click .js-edit': function() {
         return false;
       }
     },
@@ -53,22 +60,6 @@ define([
         $('head').append(self.customStyleView.$el);
       });
 
-      this.eventDemoView.ui.detailContainer
-                        .find('.widget-header')
-                        .append(this.createEditToolbar('eu-edit-detail-tooltip-template').render().$el);
-
-      this.eventDemoView.ui.locationContainer
-                        .find('.widget-header')
-                        .append(this.createEditToolbar('eu-edit-location-tooltip-template').render().$el);
-
-      this.eventDemoView.ui.ticketContainer
-                        .find('.widget-header')
-                        .append(this.createEditToolbar('eu-edit-ticket-tooltip-template').render().$el);
-
-      this.eventDemoView.ui.organizer
-                        .find('.widget-header')
-                        .append(this.createEditToolbar('eu-edit-organizer-tooltip-template').render().$el);
-
       this.$('.js-common-style').each(function(){
         self.model.buildControl({
           attribute: $(this).data('attribute'),
@@ -77,10 +68,17 @@ define([
         });
       });
 
-
+      this.createEditIcons();
       this.initEditTooltips();
       this.renderFileUpload();
     },
+
+    // createEditPanel: function(id) {
+    //   id = '#eu-'+id+'-template';
+    //   return new Marionette.ItemView({
+    //     template: id
+    //   });
+    // },
 
     renderFileUpload: function() {
       this.fileupload = new FileuploadView({
@@ -96,31 +94,83 @@ define([
       this.fileupload.render();
     },
 
-    createEditToolbar: function(template) {
-      template = '#'+template;
-      return new Marionette.ItemView({
-        template: template,
-        className: 'widget-toolbar'
-      });
+    createEditIcons: function() {
+      this.eventDemoView.ui.detailContainer
+                        .find('.widget-header')
+                        .append(this.editIcon({
+                          content: 'eu-edit-detail-template',
+                          my: 'top right',
+                          at: 'bottom left'
+                        }));
+
+      this.eventDemoView.ui.locationContainer
+                        .find('.widget-header')
+                        .append(this.editIcon({
+                          content: 'eu-edit-location-template',
+                          my: 'top right',
+                          at: 'bottom left'
+                        }));
+
+      this.eventDemoView.ui.ticketContainer
+                        .find('.widget-header')
+                        .append(this.editIcon({
+                          content: 'eu-edit-ticket-template',
+                          my: 'bottom right',
+                          at: 'top left'
+                        }));
+
+      this.eventDemoView.ui.organizer
+                        .find('.widget-header')
+                        .append(this.editIcon({
+                          content: 'eu-edit-organizer-template',
+                          my: 'bottom right',
+                          at: 'top left'
+                        }));
     },
 
     initEditTooltips: function() {
       var self = this;
-      var $tooltip = this.$('.js-edit-tooltip');
-
-      $tooltip.each(function(){
-        var $tooltipContent = $('#'+$(this).data('title'));
-        var title = $tooltipContent.html();
-        $tooltipContent.remove();
-
-        $(this).bstooltip({
-          html: true,
-          title: title,
-          trigger: $(this).data('trigger') || 'click',
-          placement: $(this).data('placement') || 'auto'
-        });
+      this.$('.js-edit').each(function(){
+        var $el = $(this);
+        $el.qtip({
+          content: {
+            text: function(e, api) {
+              var view = new TooltipContentView({
+                template: '#'+$el.data('content'),
+                model: self.model
+              });
+              return view.render().$el;
+            }
+          },
+          style: {
+            classes: 'qtip-flat qtip-bootstrap qtip-shadow'
+          },
+          position: {
+            my: $el.data('my'),
+            at: $el.data('at'),
+            of: $el,
+            viewport: true,
+            adjust: {
+              method: 'shift'
+            }
+          },
+          show: 'click',
+          hide: 'click',
+          events: {
+            render: function(e) {
+              $(e.currentTarget).find('.js-common-style').each(function(){
+                self.model.buildControl({
+                  attribute: $(this).data('attribute'),
+                  el: $(this),
+                  type: 'colorpicker',
+                  width: 100,
+                  inputWidth: 80
+                });                
+              });
+            }
+          }
+        })
       });
-
     },
 
     onTriggerDialog: function(e){
