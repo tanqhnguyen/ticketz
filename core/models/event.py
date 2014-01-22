@@ -15,7 +15,7 @@ class Event(AbstractModel):
     address1 = models.TextField(blank=True)
     address2 = models.TextField(blank=True)
     city = models.TextField(blank=True)
-    zipcode = models.TextField(max_length=5, blank=True),
+    zipcode = models.TextField(max_length=5, blank=True)
     description = models.TextField(default="")
     end_date = models.BigIntegerField(default=int(round(time.time() * 1000)))
     start_date = models.BigIntegerField(default=int(round(time.time() * 1000)))
@@ -23,18 +23,12 @@ class Event(AbstractModel):
     organizer_name = models.TextField(blank=True)
     organizer_contact = models.TextField(blank=True)
     is_active = models.BooleanField(default=False)
-<<<<<<< HEAD
-    user = models.ForeignKey(User)
-#    newly added
-    ticket_type=models.ForeignKey('core.TicketType',null=False)
-=======
     json = JSONField()
 
     user = models.ForeignKey('User')
 
     class Meta:
         app_label = "core"
->>>>>>> 1804af7bb096b0302c616409c557a6da1cb1fb09
 
     def create_event_types(self,ticket_types):
         keep_ids = [ticket_type.get('id') for ticket_type in ticket_types]
@@ -145,7 +139,3 @@ class Event(AbstractModel):
 
             event.save()
         return event
-
-
-    class Meta:
-        app_label = "core"
