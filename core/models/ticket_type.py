@@ -5,9 +5,9 @@ from django.forms.models import model_to_dict
 class TicketType(AbstractModel):
     name = models.CharField(max_length=45)
     price = models.DecimalField(decimal_places=2, max_digits=5)
-    type = models.CharField(max_length=45)
     amount = models.IntegerField()
     event = models.ForeignKey('Event', related_name="ticket_types")
+    description = models.TextField(max_length=128)
 
     class Meta:
         app_label = "core"

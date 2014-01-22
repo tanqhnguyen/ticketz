@@ -4,6 +4,7 @@ from django.forms.models import model_to_dict
 from core.models import AbstractModel, TicketType
 import time
 import uuid
+from django.utils.translation import ugettext as _
 
 class UserException(Exception):
     pass
@@ -30,10 +31,10 @@ class User(AbstractUser, AbstractModel):
         event = ticket_type.event
 
         if current_time > event.end_date:
-            raise UserException("The event has been ended")
+            raise UserException(_("The event has been ended"))
 
         if ticket_type.get_amount_left() <= 0:
-            raise UserException("No ticket left to buy")
+            raise UserException(_("No ticket left to buy"))
 
         data = {
             'ticket_type_id': ticket_type_id,

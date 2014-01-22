@@ -18,10 +18,6 @@
       return {};
     },
 
-    getName: function() {
-      return null;
-    },
-
     _nestedSet: function(attr, value, options) {
       var relations = this.relations();
       var relation = relations[attr];
@@ -53,9 +49,9 @@
 
         instance = new relation[0](value, options);
 
-
-        if (this.getName()) {
-          instance[this.getName()] = this;
+        var name = _.result(this, 'name');
+        if (name) {
+          instance[name] = this;
         }
 
         return instance;

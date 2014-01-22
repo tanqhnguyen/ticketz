@@ -32,7 +32,7 @@ define([
         ticketTypes.add({
           name: 'Free for all',
           price: 0,
-          type: 'free',
+          description: 'Ticket description',
           amount: 100
         }, {validate: true});
     }

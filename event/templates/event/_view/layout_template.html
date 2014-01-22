@@ -1,17 +1,24 @@
 {% load i18n %}
 
 <script type="text/template" id="ev-ticket-type-detail-template">
-<td class="js-name" style="width: 50%">
+<td class="js-name" width="30%">
 
 </td>
-<td style="width: 20%">
+<td>
+  <span class="js-description"></span>
+</td>
+<td width="10%">
   €<span class="js-price"></span>
 </td>
-<td>
-  <span class="js-amount-left"></span>/<span class="js-amount"></span>
-</td>
-<td>
-  <button class="btn btn-xs btn-primary">{% trans 'Select' %}</button>
+<td width="20%">
+  <input class="form-control input-sm" value="1" name="amount" style="width: 40px; display: inline-block; text-align: right;" />
+  <button class="btn btn-sm btn-primary js-buy">
+    <% if (model.get('price') == 0) { %>
+      <%= _.t('Select') %>
+    <% } else { %>
+      <%= _.t('Buy') %>
+    <% } %>
+  </button>
 </td>
 </script>
 
@@ -94,7 +101,7 @@
         </div>
         <div class="widget-body">
           <div class="widget-main no-padding">
-            <table class="table">
+            <table class="table table-hover">
               <tbody class="js-ticket">
 
               </tbody>

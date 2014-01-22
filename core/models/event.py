@@ -34,7 +34,7 @@ class Event(AbstractModel):
         keep_ids = [ticket_type.get('id') for ticket_type in ticket_types]
         self.ticket_types.exclude(id__in=keep_ids).all().delete()
         for ticket_type in ticket_types:
-            keys = ['price', 'amount', 'name', 'type']
+            keys = ['price', 'amount', 'name', 'description']
             data = {key: ticket_type.get(key) for key in keys}
             try:
                 ticket_type = self.ticket_types.get(id=ticket_type.get('id'))
@@ -56,6 +56,7 @@ class Event(AbstractModel):
             'update': reverse('event_update', kwargs={'event_id': self.id}),
             'uploadBanner': reverse('api_event_upload_banner'),
             'deleteBanner': reverse('api_event_delete_banner'),
+            'purchaseTicket': reverse('api_ticket_purchase')
         }
 
     def json_data(self):
