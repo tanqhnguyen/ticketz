@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from core.decorators import event_owner
 import simplejson
 from django.core.urlresolvers import reverse
+from django.http import Http404
 
 class CreateView(View):
     @method_decorator(login_required)
@@ -54,4 +55,23 @@ class DetailView(TemplateView):
         context['requirejs'] = 'event_view'
         context['less'] = 'event_view'
         context['event'] = event.json_data()
+        return context
+
+class TicketView(TemplateView):
+    template_name = 'event/ticket.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(TicketView, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        code = kwargs.get('code')
+        ticket = self.request.user.tickets.get(code=code)
+        event = ticket.ticket_type.event
+        context = super(TicketView, self).get_context_data(**kwargs)
+        print event
+        context['event'] = event
+        context['start_date'] = event.format_date('start_date')
+        context['end_date'] = event.format_date('end_date')
+        context['ticket'] = ticket
         return context

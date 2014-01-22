@@ -1,3 +1,4 @@
+@import 'bootstrap/mixins.less';
 @import 'bootstrap/buttons.less';
 @import 'core.less';
 @import 'vendors/select2.less';
@@ -6,6 +7,7 @@
 @import 'vendors/colorpicker.less';
 @import 'event_view.less';
 @import 'common/jquery.fileupload.less';
+@import 'common/jquery.qtip2.less';
 
 #event-update {
   .nav {
@@ -35,16 +37,30 @@
   }
 
   .tooltip {
+    @shadow: 0 0px 10px rgba(0, 0, 0, 0.75);
+    &.in {
+      opacity: 1;
+    }
+
+    .tooltip-arrow {
+      display: none;
+    }
+
     .tooltip-inner {
+      background-color: #ffffff;
+      color: #000000;
+      .box-shadow(@shadow);
+
       min-width: 150px;
-      max-width: 400px;
-      ul {
-        padding: 0px;
-        li {
-          list-style: none;
+      max-width: 600px;
+      table {
+        width: 200px;
+
+        td {
           text-align: left;
-          a {
-            color: white;
+
+          label {
+            font-size: 11px;
           }
         }
       }
@@ -81,6 +97,18 @@
         line-height: 37px;
         color: #ffffff;
       }
+    }
+  }
+}
+
+.colorpicker {
+  z-index: 15002;
+}
+
+.qtip {
+  table {
+    label {
+      font-size: 11px;
     }
   }
 }

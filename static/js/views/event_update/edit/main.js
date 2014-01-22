@@ -51,14 +51,6 @@ define([
     },
 
     onSubmitForm: function(e) {
-      var $currentTarget = $(e.currentTarget);
-
-      $currentTarget.find('button[type=submit]').bsbutton('loading');
-
-      this.model.save().success(function(){
-
-      });
-
       return false;
     }
   });

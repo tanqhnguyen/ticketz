@@ -19,7 +19,8 @@ define([
     ui: {
       price: '.js-price',
       amount: '.js-amount',
-      name: '.js-name'
+      name: '.js-name',
+      amountLeft: '.js-amount-left'
     },
 
     initialize: function() {
@@ -30,7 +31,8 @@ define([
       return {
         'price': this.ui.price,
         'name': this.ui.name,
-        'amount': this.ui.amount
+        'amount': this.ui.amount,
+        'amount_left': this.ui.amountLeft
       };
     },
 
