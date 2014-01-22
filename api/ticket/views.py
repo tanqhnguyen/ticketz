@@ -19,19 +19,24 @@ class PurchaseView(ApiView):
             self.json({'error': e})
 
 class ListView(ApiView):
+    @method_decorator(login_required)
     def get(self, request):
         offset = int(request.GET.get('offset', 0))
         limit = int(request.GET.get('limit', 10))
-        user_id = int(request.GET.get('user_id', None))
+        event_id = request.GET.get('event_id', None)
 
-        conditions = {
+        if event_id:
+            try:
+                event = Event.objects.get(pk=int(event_id))
 
-        }
+                if event.user.id != request.user.id:
+                    return self.json({'error': _("Invalid request")})
 
-        if user_id:
-            conditions['user_id'] = user_id
-
-        sold_tickets = SoldTicket.objects.filter(**conditions).all()[offset:limit]
+                sold_tickets = event.tickets.all()[offset:limit]
+            except Event.DoesNotExist:
+                return self.json({'error': _("Invalid request")})
+        else:
+            sold_tickets = request.user.tickets.all()[offset:limit]
 
         return self.json({
             'data': [sold_ticket.json_data() for sold_ticket in sold_tickets]    

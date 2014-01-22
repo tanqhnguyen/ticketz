@@ -38,7 +38,8 @@ class User(AbstractUser, AbstractModel):
 
         data = {
             'ticket_type_id': ticket_type_id,
-            'code': str(uuid.uuid4())
+            'code': str(uuid.uuid4()),
+            'event_id': event.id
         }
         sold_ticket = self.tickets.create(**data)
 
