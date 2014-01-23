@@ -56,7 +56,9 @@ class Event(AbstractModel):
             'update': reverse('event_update', kwargs={'event_id': self.id}),
             'uploadBanner': reverse('api_event_upload_banner'),
             'deleteBanner': reverse('api_event_delete_banner'),
-            'purchaseTicket': reverse('api_ticket_purchase')
+            'purchaseTicket': reverse('api_ticket_purchase'),
+            'publish': reverse('api_event_publish'),
+            'unpublish': reverse('api_event_unpublish'),
         }
 
         if name is None:

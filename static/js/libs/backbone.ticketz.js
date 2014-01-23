@@ -54,11 +54,6 @@ define([
     // Make the request, allowing the user to override any Ajax options.
     //var xhr = options.xhr = Backbone.ajax(_.extend(params, options));
     var xhr = options.xhr = Backbone.callApi(params.type, params.url, params.data, options);
-    xhr.success(function(response){
-      if (response.success) {
-        Backbone.Dispatch.trigger('success', response.success);
-      }
-    });
     model.trigger('request', model, xhr, options);
     return xhr;
   };
@@ -103,6 +98,12 @@ define([
         Backbone.Dispatch.trigger('error', Backbone.parseApiError(xhr));
       });      
     }
+
+    xhr.success(function(response){
+      if (response.success) {
+        Backbone.Dispatch.trigger('success', response.success);
+      }
+    });
 
 
     return xhr;

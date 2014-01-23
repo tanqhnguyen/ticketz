@@ -41,7 +41,7 @@ class UpdateView(ApiView):
             for key, value in json.iteritems():
                 event.json[key] = value
         
-        unsafe_attributes = ['id', 'user_id', 'ticket_types', 'json']
+        unsafe_attributes = ['id', 'user_id', 'ticket_types', 'json', 'is_active']
         for attr in unsafe_attributes:
             if data.get(attr):
                 del data[attr]
@@ -96,5 +96,26 @@ class DeleteBannerView(ApiView):
 
         event.delete_old_banner()
 
+class PublishView(ApiView):
+    @method_decorator(login_required)
+    @method_decorator(event_owner())
+    def post(self, request):
+        event = request.event
+        event.is_active = True
+        event.save()
+        return self.json({
+            'data': event.json_data(),
+            'success': _('Your event has been published')    
+        })  
 
-
+class UnpublishView(ApiView):
+    @method_decorator(login_required)
+    @method_decorator(event_owner())
+    def post(self, request):
+        event = request.event
+        event.is_active = False
+        event.save()
+        return self.json({
+            'data': event.json_data(),
+            'success': _('Your event has been unpublished')    
+        })  

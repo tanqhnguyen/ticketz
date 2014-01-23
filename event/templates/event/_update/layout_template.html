@@ -14,6 +14,10 @@
   <li class="pull-right">
     <a class="btn btn-primary js-save" target="_blank" href="#">{% trans 'Save' %}</a>
   </li>
+  <li class="pull-right">
+    <a class="btn btn-danger js-unpublish <%= model.get('is_active')? "" : "hide" %>" href="#">{% trans 'Unpublish' %}</a>
+    <a class="btn btn-success js-publish <%= model.get('is_active')? "hide" : "" %>" href="#">{% trans 'Publish' %}</a>
+  </li>
 </ul>
 
 <div class="tab-content">
