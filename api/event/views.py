@@ -4,6 +4,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from core.decorators import event_owner
 import re
+from django.utils.translation import ugettext as _
 
 class CreateView(ApiView):
     @method_decorator(login_required)
@@ -47,7 +48,10 @@ class UpdateView(ApiView):
 
         event.set_attributes(**data)
         event.save()
-        return self.json({'data': event.json_data()})
+        return self.json({
+            'data': event.json_data(),
+            'success': _('Saved event successfully')
+        })
 
 class ListView(ApiView):
     def get(self, request):

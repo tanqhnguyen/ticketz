@@ -1,8 +1,9 @@
 define([
-  'vendors/backbone'
+  'vendors/underscore'
+  , 'vendors/backbone'
   , 'libs/backbone.maze'
   , 'libs/arrg'
-], function(Backbone, Maze, arrg){
+], function(_, Backbone, Maze, arrg){
   Backbone.Dispatch = {};
   Backbone.Dispatch = _.extend(Backbone.Dispatch, Backbone.Events);
 
@@ -52,7 +53,12 @@ define([
 
     // Make the request, allowing the user to override any Ajax options.
     //var xhr = options.xhr = Backbone.ajax(_.extend(params, options));
-    var xhr = options.xhr = Backbone.callApi(params.type, params.url, params.data, options)
+    var xhr = options.xhr = Backbone.callApi(params.type, params.url, params.data, options);
+    xhr.success(function(response){
+      if (response.success) {
+        Backbone.Dispatch.trigger('success', response.success);
+      }
+    });
     model.trigger('request', model, xhr, options);
     return xhr;
   };

@@ -14,6 +14,10 @@ define([
       'click .js-save': 'onSave'
     },
 
+    initialize: function() {
+      this.setupNotyAlertListeners();
+    },
+
     serializeData: function() {
       return {
         model: this.model
