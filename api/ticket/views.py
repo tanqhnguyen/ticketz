@@ -14,7 +14,11 @@ class PurchaseView(ApiView):
 
         try:
             sold_ticket = user.purchase_ticket(data.get('ticket_type_id'))
-            return self.json({"data": sold_ticket.json_data()})
+            return self.json({
+                "data": sold_ticket.json_data(),
+                "redirect": sold_ticket.get_absolute_url(),
+                "success": _("You have purchased the ticket")
+            })
         except UserException, e:
             self.json({'error': e})
 
@@ -25,6 +29,7 @@ class ListView(ApiView):
         limit = int(request.GET.get('limit', 10))
         event_id = request.GET.get('event_id', None)
         pagination = {}
+        user = request.user
 
         if event_id:
             try:
@@ -34,12 +39,12 @@ class ListView(ApiView):
                     return self.json({'error': _("Invalid request")})
 
                 pagination['total'] = event.tickets.count()
-                sold_tickets = event.tickets.all()[offset:limit]
+                sold_tickets = event.tickets.all()[offset:offset+limit]
             except Event.DoesNotExist:
                 return self.json({'error': _("Invalid request")})
         else:
-            pagination['total'] = request.user.tickets.count()
-            sold_tickets = request.user.tickets.all()[offset:limit]
+            pagination['total'] = user.tickets.count()
+            sold_tickets = user.tickets.all()[offset:offset+limit]
 
         pagination['limit'] = limit
         pagination['offset'] = offset

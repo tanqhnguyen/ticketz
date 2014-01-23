@@ -54,7 +54,6 @@ define([
         offset: offset,
         limit: pagination.limit
       }, Marionette.getOption(this, 'data'));
-
       this.collection.list({
         data: data
       }).success(function(){

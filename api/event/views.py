@@ -64,7 +64,7 @@ class ListView(ApiView):
             'is_active': request.GET.get('active') == 'true'
         }
         
-        events = Event.objects.filter(**conditions).all()[offset:limit]
+        events = Event.objects.filter(**conditions).all()[offset:offset+limit]
         count = Event.objects.filter(user_id=user_id).count()
 
 

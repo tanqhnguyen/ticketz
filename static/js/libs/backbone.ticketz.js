@@ -44,6 +44,8 @@ define([
     if (options.data == null && model && (method === 'create' || method === 'update' || method === 'patch')) {
       params.contentType = 'application/json';
       params.data = options.attrs || model.toJSON(options);
+    } else {
+      params.data = options.data;
     }
 
     // Don't process data on a non-GET request.
@@ -102,6 +104,12 @@ define([
     xhr.success(function(response){
       if (response.success) {
         Backbone.Dispatch.trigger('success', response.success);
+      }
+
+      if (response.redirect) {
+        setTimeout(function(){
+          window.location.href = response.redirect;
+        }, 2000);
       }
     });
 

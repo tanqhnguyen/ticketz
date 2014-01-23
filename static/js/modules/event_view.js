@@ -11,6 +11,7 @@ require([
     el: $('#event-view'),
     model: event    
   });
+  view.setupNotyAlertListeners();
 
   view.render();
 });
