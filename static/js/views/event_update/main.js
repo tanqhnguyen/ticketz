@@ -56,6 +56,26 @@ define([
 
       $currentTarget.bsbutton('loading');
 
+      var models = [];
+      models.push(this.model);
+      models = this.model.get('ticket_types').models;
+      var failedModelCount = 0;
+
+      for (var i in models) {
+        var model = models[i];
+        var errors = model.validate();
+        if (errors) {
+          model.trigger('validationFailed', errors);
+          Backbone.Dispatch.trigger('error', errors);
+          failedModelCount++
+        }
+      }
+
+      if (failedModelCount > 0) {
+        $currentTarget.bsbutton('reset');
+        return;
+      }
+
       this.model.save().success(function(){
 
       }).complete(function(){

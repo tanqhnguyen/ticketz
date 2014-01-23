@@ -1,8 +1,9 @@
 define([
   'marionette'
+  , 'models/controls/abstract'
   , 'vendors/jquery.typing'
-], function(Marionette){
-  var View = Marionette.ItemView.extend({
+], function(Marionette, AbstractView){
+  var View = AbstractView.extend({
     tagName: 'input',
 
     template: function(data) {
@@ -25,18 +26,26 @@ define([
           var $target = $(e.currentTarget);
           var val = $target.val();
           if (!self.model.set(attribute, val, {validate: true})) {
-            $target.bstooltip({
-              title: self.model.validationError[attribute][0],
-              trigger: 'manual',
-              placement: 'auto left'
-            });
-            $target.bstooltip('show');
+            self.triggerMethod('modelError', self.model.validationError[attribute][0]);
           } else {
             $target.bstooltip('hide');
             $target.bstooltip('destroy');
           }
         }
       });
+    },
+
+    onModelError: function(error) {
+      var $target = this.$el;
+
+      $target.bstooltip({
+        title: error,
+        trigger: 'manual',
+        placement: 'auto left',
+        template: '<div class="tooltip tooltip-error"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
+      });
+
+      $target.bstooltip('show');   
     }
   });
 

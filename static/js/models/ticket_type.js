@@ -19,6 +19,14 @@ define([
           min: 3,
           max: 64
         }
+      ],
+      [
+        'description',
+        'length',
+        {
+          min: 6,
+          max: 128
+        }
       ]
     ]
   });
