@@ -20,7 +20,7 @@ class PurchaseView(ApiView):
                 "success": _("You have purchased the ticket")
             })
         except UserException, e:
-            self.json({'error': e})
+            return self.json({'error': str(e)})
 
 class ListView(ApiView):
     @method_decorator(login_required)
@@ -70,11 +70,11 @@ class VerifyView(ApiView):
             ticket.is_used = True
             ticket.save()
 
-            self.json({
+            return self.json({
                 'data': ticket.json_data()    
             })
         except Exception, e:
-            self.json({'error': e})
+            return self.json({'error': str(e)})
         
         
         

@@ -30,6 +30,9 @@ class User(AbstractUser, AbstractModel):
 
         event = ticket_type.event
 
+        if not event.is_active:
+            raise UserException(_("Hold your breath, the organizer is trying to publish the event as soon as possible"))
+
         if current_time > event.end_date:
             raise UserException(_("The event has been ended"))
 
