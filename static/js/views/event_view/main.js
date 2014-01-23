@@ -32,7 +32,7 @@ define([
     },
 
     initialize: function() {
-      this.listenTo(this.model, 'change:map', this.onPlacesChanged);
+      this.listenTo(this.model.get('json'), 'change:map', this.onPlacesChanged);
     },
 
     serializeData: function() {
@@ -67,13 +67,27 @@ define([
         });
       }, this);
 
-      this.map = new GoogleMapView({
+      var mapOptions = {
         height: '300px',
         autoComplete: false
-      });
+      }
+
+      var map = self.model.get('json.map');
+      if (map) {
+        var location = self.model.get('json.map').toJSON();
+        mapOptions['latitude'] = location.lat;
+        mapOptions['longitude'] = location.lng;
+        mapOptions['markerTitle'] = this.model.get('json.address_name');
+        mapOptions['showMarker'] = true;
+      }
+
+      this.map = new GoogleMapView(mapOptions);
+
       this.map.render();
       this.ui.map.html(this.map.$el);
       this.map.initMap();
+
+
 
       this.style = new CustomStyleView({
         model: this.model
@@ -96,7 +110,7 @@ define([
     },
 
     onPlacesChanged: function() {
-      this.map.triggerMethod('placesChanged', this.model.get('map'));
+      this.map.triggerMethod('placesChanged', this.model.get('json.map'));
     }
   });
 })

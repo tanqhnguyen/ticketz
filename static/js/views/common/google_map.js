@@ -18,6 +18,9 @@ define([
     autoCompleteId: 'google-map-autocomplete',
     autoComplete: true,
 
+    showMarker: false,
+    markerTitle: 'TicketZ',
+
     initialize: function(options) {
       var self = this;
       this.options.apiKey = this.options.apiKey || window.googleMapKey;
@@ -25,10 +28,17 @@ define([
       if (!this.options.apiKey) {
         throw "Must supply google map API key";
       }
-    },
 
-    onInitMap: function() {
-      this.renderMap();
+      this.once('initMap', function(){
+        this.renderMap();
+        var showMarker = Marionette.getOption(this, 'showMarker');
+        if (showMarker) {
+          var lat = Marionette.getOption(this, 'latitude');
+          var lng = Marionette.getOption(this, 'longitude');
+          var markerTitle = Marionette.getOption(this, 'markerTitle');
+          this.renderMarker(lat, lng, markerTitle);
+        }
+      }, this);
     },
 
     initMap: function() {
@@ -85,7 +95,6 @@ define([
       var longitude = Marionette.getOption(this, 'longitude');
 
       this.map = new google.maps.Map(this.$el[0], {
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
         zoom: Marionette.getOption(this, 'zoom'),
         center: new google.maps.LatLng(latitude, longitude)
       });
@@ -123,40 +132,37 @@ define([
       });
     },
 
+    renderMarker: function(lat, lng, title) {
+      var latLng = new google.maps.LatLng(lat,lng);
+      var title = title || Marionette.getOption(this, 'markerTitle');
+
+      this.marker = new google.maps.Marker({
+          position: latLng,
+          map: this.map,
+          title: title
+      });
+
+      return this.marker
+    },
+
     onPlacesChanged: function(places) {
       if (!_.isArray(places)) {
         places = [places];
       }
 
-      this.markers = this.markers || [];
+      if (this.marker) {
+        this.marker.setMap(null);
+      }
+
+      var place = _.first(places);
+
       for (var i = 0, marker; marker = this.markers[i]; i++) {
         marker.setMap(null);
       }
 
-      // For each place, get the icon, place name, and location.
       var bounds = new google.maps.LatLngBounds();
-      for (var i = 0, place; place = places[i]; i++) {
-        var image = {
-          url: place.icon,
-          size: new google.maps.Size(71, 71),
-          origin: new google.maps.Point(0, 0),
-          anchor: new google.maps.Point(17, 34),
-          scaledSize: new google.maps.Size(25, 25)
-        };
-
-        // Create a marker for each place.
-        var marker = new google.maps.Marker({
-          map: this.map,
-          icon: image,
-          title: place.name,
-          position: place.geometry.location
-        });
-
-        this.markers.push(marker);
-
-        bounds.extend(place.geometry.location);
-      }
-
+      bounds.extend(place.geometry.location);
+      this.renderMarker(place.geometry.location.d, place.geometry.location.e);
       this.map.fitBounds(bounds);
       this.map.setZoom(Marionette.getOption(this, 'zoom'));
     }

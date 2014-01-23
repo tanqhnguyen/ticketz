@@ -95,7 +95,8 @@ class Event(AbstractModel):
         'commonBodyColor': '#000000',
         'commonTitleBgColor': '#307ecc',
         'commonTitleColor': '#ffffff',
-        'banner': None
+        'banner': None,
+        'map': None
     }
 
     def generate_banner_path(name=None):
