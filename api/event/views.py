@@ -97,6 +97,10 @@ class DeleteBannerView(ApiView):
         event = request.event
 
         event.delete_old_banner()
+        return self.json({
+            'data': event.json_data(),
+            'success': _("Your banner has been deleted")    
+        })
 
 class PublishView(ApiView):
     @method_decorator(login_required)

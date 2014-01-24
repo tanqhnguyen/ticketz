@@ -33,7 +33,8 @@ define([
       },
       'click .js-edit': function() {
         return false;
-      }
+      },
+      'click .js-delete-banner': 'onClickDeleteBanner'
     },
 
     regions: {
@@ -221,6 +222,20 @@ define([
       }, this);
 
       this.customStyleView.render();
+    },
+
+    onClickDeleteBanner: function(e) {
+      var self = this;
+      var $target = $(e.currentTarget);
+      $target.bsbutton('loading');
+
+      Backbone.callApi('post', this.model.get('url.deleteBanner'), {
+        event_id: this.model.id
+      }).success(function(){
+        self.model.set('json.banner.full', null);
+      }).complete(function(){
+        $target.bsbutton('reset');
+      });
     }
   });
 
