@@ -83,10 +83,12 @@ class UploadBannerView(ApiView):
     def post(self, request):
         event = request.event
         banner = request.FILES['banner']
-        event.delete_old_banner()
-        event.store_banner(banner)
+        event.upload_banner(banner)
 
-        return self.json({'data': 'nothing'})
+        return self.json({
+            'data': event.json_data(),
+            'success': _("New banner has been uploaded successfully")
+        })
 
 class DeleteBannerView(ApiView):
     @method_decorator(login_required)

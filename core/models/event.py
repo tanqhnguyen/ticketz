@@ -7,6 +7,10 @@ from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from slugify import slugify
 import uuid
+from PIL import Image
+import StringIO
+from django.conf import settings
+import os
 
 
 class Event(AbstractModel):
@@ -101,45 +105,68 @@ class Event(AbstractModel):
         'map': None
     }
 
-    def generate_banner_path(name=None):
-        if name is None:
-            name = self.generate_logo_name()
-
-        prefix = 'static/uploads/%s'
-        return prefix % name
-
-    def generate_banner_name():
-        return "%s.%s" % (str(uuid.uuid4()), 'jpg')
-
     def delete_old_banner(self):
-        # TODO: implement this
+        banner = self.json['banner']
+        if banner:
+            try:
+                os.remove(self.generate_banner_path(banner['name']))
+                os.remove(self.generate_banner_thumb_path(banner['name']))
+            except OSError, e:
+                pass
+            self.json['banner'] = None
+            self.save()
+        return self
 
-        # delete file at {self.generate_banner_path(self.json['banner'])}
+    def generate_banner_path(self, name):
+        banner_name = name+'.jpg'
+        return os.path.join(settings.MEDIA_ROOT, 'banner', banner_name)
 
-        # set event['json']['banner'] to None
-        pass
+    def generate_banner_thumb_path(self, name):
+        thumbnail_name = name+'_thumb.jpg'
+        return os.path.join(settings.MEDIA_ROOT, 'banner_thumb', thumbnail_name)
 
-    def store_banner(self, file):
-        # TODO: implement this
+    def upload_banner(self, file):
+        self.delete_old_banner()
+        name = str(uuid.uuid4())
 
-        # if the width of uploaded file > 1140px, resize it to 1140px
-        # if the width of uploaded file < 1140px, keep it
+        im = Image.open(StringIO.StringIO(file.read()))
+        width = im.size[0]
+        max_width = 1084
+        ratio = float(max_width)/width
+        resized_height = int(im.size[1]*ratio)
+        new_size = (max_width,resized_height)
 
-        # compress the size of the image to 80% and change to .jpg
+        if width > max_width:
+            resized_im = im.resize(new_size)
+        else:
+            resized_im = im
 
-        # store the file to {self.generate_logo_path()}
+        banner_path = self.generate_banner_path(name);
+        resized_im.save(banner_path, 'JPEG')
 
-        # set the file path {self.generate_logo_path()} to event['json']['banner']
-        # set the width of the banner to event['json']['banner_width']
-        # set the height of the banner to event['json']['banner_height']
+        # make thumbnail
+        thumbnail_size = 128, 128
+        im.thumbnail(thumbnail_size, Image.ANTIALIAS)
+        thumbnail_path = self.generate_banner_thumb_path(name)
+        im.save(thumbnail_path, 'JPEG')
 
-        # save the event and {return self}
-        pass
+        banner_name = name+'.jpg'
+        thumbnail_name = name+'_thumb.jpg'
+        self.json['banner'] = {
+            'name': name,
+            'full': os.path.join(settings.STATIC_URL, 'uploads', 'banner', banner_name),
+            'thumb': os.path.join(settings.STATIC_URL, 'uploads', 'banner_thumb', thumbnail_name),
+            'width': resized_im.size[0],
+            'height': resized_im.size[1]
+        }
+
+        self.save()
+        return self
 
     @classmethod
     def first_or_create(cls,user_id):
         try:
-            event = cls.objects.get(user_id=user_id)
+            event = cls.objects.get(user_id=user_id, is_active=False)
         except ObjectDoesNotExist,e:
             event = cls()
             event.user_id = user_id

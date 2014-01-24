@@ -8,9 +8,11 @@ define([
   , 'models/controls/colorpicker'
   , 'models/controls/font_family'
   , 'models/controls/datetime'
+  , 'models/controls/image'
 ], function(_, Backbone, Validator, InputControlView, WysiwygControlView
   , HtmlControlView, ColorpickerControlView
-  , FontFamilyControlView, DatetimeControlView){
+  , FontFamilyControlView, DatetimeControlView
+  , ImageControlView){
   return Backbone.Maze.Model.extend({
     controls: {
       'input': InputControlView,
@@ -18,7 +20,8 @@ define([
       'html': HtmlControlView,
       'colorpicker': ColorpickerControlView,
       'font_family': FontFamilyControlView,
-      'datetime': DatetimeControlView
+      'datetime': DatetimeControlView,
+      'image': ImageControlView
     },
 
     computedAttributes: {
