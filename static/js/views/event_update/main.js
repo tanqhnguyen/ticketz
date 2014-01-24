@@ -3,7 +3,8 @@ define([
   , 'marionette'
   , 'views/event_update/edit/main'
   , 'views/event_update/design/main'
-], function(_, Marionette, EditTabView, DesignTabView){
+  , 'views/event_update/manage/main'
+], function(_, Marionette, EditTabView, DesignTabView, ManageTabView){
   return Marionette.Layout.extend({
     template: '#eu-layout-template',
     regions: {
@@ -45,7 +46,8 @@ define([
 
     tabs: {
       'edit': EditTabView,
-      'design': DesignTabView
+      'design': DesignTabView,
+      'manage': ManageTabView
     },
 
     renderTab: function(tabName) {

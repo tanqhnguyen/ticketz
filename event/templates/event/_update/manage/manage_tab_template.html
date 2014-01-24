@@ -1,0 +1,25 @@
+{% load i18n %}
+
+<script type="text/template" id="eu-manage-tab-template">
+<h4>{% trans 'Sold tickets' %}</h4>
+<div class="col-sm-12 js-ticket-list">
+
+</div>
+
+<h4>{% trans 'Page views' %}</h4>
+<div class="col-sm-12 js-page-view">
+Coming soon...
+</div>
+</script>
+
+<script type="script/template" id="eu-ticket-grid-item-template">
+<td>
+<%= model.get('code') %>
+</td>
+<td>
+<a href="<%= model.get('event.url.view') %>"><%= model.get('event.title') %></a>
+</td>
+<td>
+<a class="btn btn-primary btn-xs" href='<%= model.get('url.view') %>'>{% trans 'View' %}</a>
+</td>
+</script>
