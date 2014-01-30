@@ -1,5 +1,5 @@
 from api.views import ApiView
-from core.models import Event
+from core.models import Event, SoldTicket
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from core.decorators import event_owner
@@ -57,16 +57,23 @@ class ListView(ApiView):
     def get(self, request):
         offset = int(request.GET.get('offset', 0))
         limit = int(request.GET.get('limit', 10))
-        user_id = int(request.GET.get('user_id', request.user.id))
+        upcoming = request.GET.get('filter[upcoming]', 'false') == 'true'
+
+        event_objects = Event.objects
 
         conditions = {
-            'user_id': user_id,
-            'is_active': request.GET.get('active') == 'true'
+            'is_active': request.GET.get('active', 'true') == 'true'
         }
-        
-        events = Event.objects.filter(**conditions).all()[offset:offset+limit]
-        count = Event.objects.filter(user_id=user_id).count()
-
+        print upcoming
+        if upcoming:
+            tickets = SoldTicket.objects.filter(user_id=request.user.id).all().distinct('event')
+            conditions['id__in'] = [ticket.event.id for ticket in tickets]
+        else:
+            user_id = int(request.GET.get('user_id', request.user.id))
+            conditions['user_id'] = user_id    
+        print conditions
+        events = event_objects.filter(**conditions).all()[offset:offset+limit]
+        count = event_objects.filter(**conditions).count()
 
         return self.json({
             "data": [event.json_data() for event in events],

@@ -163,6 +163,9 @@ class Event(AbstractModel):
         self.save()
         return self
 
+    def is_ended(self):
+        return self.end_date > int(round(time.time() * 1000))
+
     @classmethod
     def first_or_create(cls,user_id):
         try:

@@ -3,26 +3,31 @@ define([
   , 'backbone'
   , 'marionette'
   , 'collections/events'
+  , 'collections/tickets'
   , 'views/common/grid'
   , 'views/event_list/event_grid_item'
-], function(_, Backbone, Marionette, Events, GridView, EventGridItemView){
+  , 'views/event_list/recent_purchase_item'
+], function(_, Backbone, Marionette, Events, Tickets, GridView, EventGridItemView, RecentPurchaseItemView){
   var View = Marionette.Layout.extend({
     template: '#em-layout-template',
 
     regions: {
       draft: '#draft',
-      live: '#live'
+      live: '#live',
+      recentPurchase: '#recent-purchase'
     },
 
     initialize: function(options) {
       this.draftEvents = new Events();
       this.liveEvents = new Events();
+      this.recentTickets = new Tickets();
     },
 
     onRender: function() {
       var self = this;
       this.loadDraftEvents();
       this.loadLiveEvents();
+      this.loadRecentPurchases();
     },
 
     loadDraftEvents: function() {
@@ -66,6 +71,26 @@ define([
         });
 
         self.live.show(gridView);
+      });
+    },
+
+    loadRecentPurchases: function() {
+      var self = this;
+      var data = {
+        order: {
+          created_date: 'desc'
+        }
+      }
+
+      this.recentTickets.list({
+        data: data
+      }).success(function(){
+        var gridView = new Marionette.CollectionView({
+          itemView: RecentPurchaseItemView,
+          collection: self.recentTickets
+        });
+
+        self.recentPurchase.show(gridView);
       });
     }
   });

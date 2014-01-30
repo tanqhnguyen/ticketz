@@ -31,6 +31,12 @@ class ListView(ApiView):
         pagination = {}
         user = request.user
 
+        order_by_created_date = request.GET.get('order[created_date]', 'asc')
+        if order_by_created_date == 'desc':
+            order_by_created_date = '-created_date'
+        else: 
+            order_by_created_date = 'created_date'
+
         if event_id:
             try:
                 event = Event.objects.get(pk=int(event_id))
@@ -39,13 +45,14 @@ class ListView(ApiView):
                     return self.json({'error': _("Invalid request")})
 
                 pagination['total'] = event.tickets.count()
-                sold_tickets = event.tickets.all()[offset:offset+limit]
+                tickets = event.tickets
             except Event.DoesNotExist:
                 return self.json({'error': _("Invalid request")})
         else:
             pagination['total'] = user.tickets.count()
-            sold_tickets = user.tickets.all()[offset:offset+limit]
+            tickets = user.tickets
 
+        sold_tickets = tickets.order_by(order_by_created_date).all()[offset:offset+limit]
         pagination['limit'] = limit
         pagination['offset'] = offset
         return self.json({
