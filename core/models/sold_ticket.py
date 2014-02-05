@@ -2,8 +2,9 @@ from django.db import models
 from core.models import AbstractModel
 import time
 from django.forms.models import model_to_dict 
-from qrcode import *
 from django.core.urlresolvers import reverse
+import random, string
+
 
 class SoldTicket(AbstractModel):
     created_date = models.BigIntegerField(default=int(round(time.time() * 1000)))
@@ -35,3 +36,12 @@ class SoldTicket(AbstractModel):
     def generate_qr_code(self):
         # do nothings for now
         return self
+
+    @classmethod
+    def random_code(cls):
+        while 1:
+            random_code = ''.join(random.choice(string.uppercase+'0123456789') for i in range(10))
+            try:
+                cls.objects.get(code=random_code)
+            except:
+                return random_code

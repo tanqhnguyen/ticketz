@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.forms.models import model_to_dict 
-from core.models import AbstractModel, TicketType
+from core.models import AbstractModel, TicketType, SoldTicket
 import time
 import uuid
 from django.utils.translation import ugettext as _
@@ -41,7 +41,7 @@ class User(AbstractUser, AbstractModel):
 
         data = {
             'ticket_type_id': ticket_type_id,
-            'code': str(uuid.uuid4()),
+            'code': SoldTicket.random_code(),
             'event_id': event.id
         }
         sold_ticket = self.tickets.create(**data)
