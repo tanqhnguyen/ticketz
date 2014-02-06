@@ -41,14 +41,12 @@
 <td>
 <%= model.getUser() %>
 </td>
-<td>
-<% if (model.get('is_used')) { %>
-<span class="label label-danger">{% trans 'Invalid' %}</span>
-<% } else { %>
-<span class="label label-success">{% trans 'Valid' %}</span>
-<% } %>
+<td style="vertical-align: middle;">
+  <span class="label label-danger <%= !model.get('is_used') ? "hide" : "" %>">{% trans 'Invalid' %}</span>
+  <span class="label label-success <%= model.get('is_used') ? "hide" : "" %>">{% trans 'Valid' %}</span>
 </td>
 <td>
 <a class="btn btn-primary btn-xs" href='<%= model.get('url.view') %>'>{% trans 'View' %}</a>
+<a class="btn btn-warning btn-xs js-refund-ticket" href='#'>{% trans 'Refund' %}</a>
 </td>
 </script>

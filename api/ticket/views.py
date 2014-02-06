@@ -66,7 +66,10 @@ class VerifyView(ApiView):
         data = self.request.json_data
 
         try:
-            ticket = SoldTicket.objects.get(code=data.get('code'))
+            code = data.get('code')
+            code = code.upper()
+            
+            ticket = SoldTicket.objects.get(code=code)
             event = ticket.ticket_type.event
             if event.user.id != self.request.user.id:
                 raise Exception(_("Invalid request"))
@@ -80,6 +83,29 @@ class VerifyView(ApiView):
             return self.json({
                 'data': ticket.json_data(),
                 'success': _("The ticket is valid and marked as used")
+            })
+        except Exception, e:
+            return self.json({'error': str(e)})
+
+class RefundView(ApiView):
+    @method_decorator(login_required)
+    def post(self, request):
+        data = self.request.json_data
+
+        try:
+            code = data.get('code')
+            code = code.upper()
+            
+            ticket = SoldTicket.objects.get(code=code)
+            event = ticket.ticket_type.event
+            if event.user.id != self.request.user.id:
+                raise Exception(_("Invalid request"))
+
+            ticket.is_used = False
+            ticket.save()
+
+            return self.json({
+                'data': ticket.json_data()
             })
         except Exception, e:
             return self.json({'error': str(e)})

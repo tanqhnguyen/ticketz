@@ -55,17 +55,23 @@ define([
     },
 
     onVerifyTicket: function(e) {
+      var self = this;
       var $target = $(e.currentTarget);
 
       $target.bsbutton('loading');
 
       var code = this.$('.js-ticket-code').val();
 
-      Backbone.callApi('post', 'ticket/verify', {code: code}, function(response){
-
+      Backbone.callApi('post', 'ticket/verify', {code: code})
+      .success(function(){
+        var ticket = self.tickets.findWhere({code: code});
+        if (ticket) {
+          ticket.set('is_used', true);
+        }
+      })
+      .complete(function(){
+        $target.bsbutton('reset');  
       });
-
-      $target.bsbutton('reset');
     }
   });
 
