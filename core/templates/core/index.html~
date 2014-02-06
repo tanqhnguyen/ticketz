@@ -8,7 +8,7 @@
 				<a href="#" class = "navbar-brand pull-left">TicketZ</a>
 				</div>
 				{% if user.is_authenticated %}
-				<div class="col-md-2" font-size:16px>
+				<div class="col-md-2">
 				<a href="{% url 'event_create' %}" class = "navbar-brand pull-left">Create Event</a>
 				</div>
 				<div class="col-md-2">
@@ -81,7 +81,7 @@
 
 	<div class="container">
 	
-		<img src="{{ MEDIA_URL }}Front_page_large.jpg" class="img-responsive img-rounded" alt="Reponsive image">	
+		<img src="{% static 'images/Front_page_large.jpg' %}" class="img-responsive img-rounded" alt="Reponsive image">	
 	</div>
 		
 	
@@ -112,23 +112,23 @@
 
 	<div class="container ">
 	<div class=" col-offset-6 center-block">
-        
+        {% static 'Ticketz_website_icons/audience.png' %}
     
 		<div class="row text-centered width:16px margin: 0 auto">
 			<div class="col-md-2 col-md-offset-1 width:16px margin: 0 auto">
-				<img src="{{ MEDIA_URL }}Ticketz_website_icons/adjust3.svg" class="img-responsive img-rounded" alt="Reponsive image" style="min-height:30px;height:30px;">
+				<img src="{% static 'Ticketz_website_icons/adjust3.svg' %}" class="img-responsive img-rounded" alt="Reponsive image" style="min-height:30px;height:30px;">
 			</div>
 			
 			<div class="col-md-2 width:16px margin: 0 auto">
-				<img src="{{ MEDIA_URL }}Ticketz_website_icons/apple.svg" class="img-responsive img-rounded" alt="Reponsive image" style="min-height:30px;height:30px;">
+				<img src="{% static 'Ticketz_website_icons/apple.svg' %}" class="img-responsive img-rounded" alt="Reponsive image" style="min-height:30px;height:30px;">
 </div>
 			
 			<div class="col-md-2">
-				<img src="{{ MEDIA_URL }}Ticketz_website_icons/audience.png" class="img-responsive img-rounded" alt="Reponsive image" style="min-height:30px;height:30px;">
+				<img src="{% static 'Ticketz_website_icons/audience.png' %}" class="img-responsive img-rounded" alt="Reponsive image" style="min-height:30px;height:30px;">
 				</div>
 			
 			<div class="col-md-2">
-				<img src="{{ MEDIA_URL }}Ticketz_website_icons/chart15.svg" class="img-responsive img-rounded" alt="Reponsive image" style="min-height:30px;height:30px;">
+				<img src="{% static 'Ticketz_website_icons/chart15.svg' %}" class="img-responsive img-rounded" alt="Reponsive image" style="min-height:30px;height:30px;">
 				</div>
 			</div>
 		</div>
