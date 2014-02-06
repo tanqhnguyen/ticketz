@@ -78,7 +78,8 @@ class VerifyView(ApiView):
             ticket.save()
 
             return self.json({
-                'data': ticket.json_data()    
+                'data': ticket.json_data(),
+                'success': _("The ticket is valid and marked as used")
             })
         except Exception, e:
             return self.json({'error': str(e)})

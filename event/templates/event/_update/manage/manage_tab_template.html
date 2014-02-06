@@ -1,20 +1,36 @@
 {% load i18n %}
 
 <script type="text/template" id="eu-manage-tab-template">
-<h4>{% trans 'Sold tickets' %}</h4>
-<div class="col-sm-12 js-ticket-list">
+<h4>{% trans 'Verify ticket' %}</h4>
+<div class="row">
+  <div class="col-lg-3">
+    <div class="input-group">
+      <input type="text" class="form-control js-ticket-code" placeholder="{% trans 'Code' %}">
+      <span class="input-group-btn">
+        <button class="btn btn-success js-verify-ticket" type="button">{% trans 'Verify' %}</button>
+      </span>
+    </div>
+  </div>
+</div>
 
+<h4>{% trans 'Sold tickets' %} (<span class="js-count-sold-ticket"></span>)</h4>
+<div class="row">
+  <div class="col-lg-12 js-ticket-list">
+
+  </div>
 </div>
 
 <h4>{% trans 'Page views' %}</h4>
-<div class="col-sm-12 js-page-view">
-Coming soon...
+<div class="row">
+  <div class="col-lg-12 js-page-view">
+  Coming soon...
+  </div>
 </div>
 </script>
 
 <script type="script/template" id="eu-ticket-grid-item-template">
 <td>
-<%= model.get('code') %>
+<a href="<%= model.get('url.view') %>"><%= model.get('code') %></a>
 </td>
 <td>
 <a href="<%= model.get('event.url.view') %>"><%= model.get('event.title') %></a>
@@ -24,6 +40,13 @@ Coming soon...
 </td>
 <td>
 <%= model.getUser() %>
+</td>
+<td>
+<% if (model.get('is_used')) { %>
+<span class="label label-danger">{% trans 'Invalid' %}</span>
+<% } else { %>
+<span class="label label-success">{% trans 'Valid' %}</span>
+<% } %>
 </td>
 <td>
 <a class="btn btn-primary btn-xs" href='<%= model.get('url.view') %>'>{% trans 'View' %}</a>

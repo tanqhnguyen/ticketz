@@ -14,6 +14,10 @@ define([
       }
     },
 
+    events: {
+      'click .js-verify-ticket': 'onVerifyTicket'
+    },
+
     ui: {
       ticketList: '.js-ticket-list'
     },
@@ -34,9 +38,10 @@ define([
 
       this.tickets.list({
         data: data
-      }).success(function(){
+      }).success(function(response){
+        self.$('.js-count-sold-ticket').html(response.pagination.total);
         var gridView = new GridView({
-          headers: [_.t('Code'), _.t('Event'), _.t('Date'), _.t('User'), '&nbsp;'],
+          headers: [_.t('Code'), _.t('Event'), _.t('Date'), _.t('User'), _.t('Status'), '&nbsp;'],
           itemView: TicketGridItemView,
           collection: self.tickets,
           pageRange: 9,
@@ -47,6 +52,20 @@ define([
 
         self.ui.ticketList.html(gridView.$el);
       });
+    },
+
+    onVerifyTicket: function(e) {
+      var $target = $(e.currentTarget);
+
+      $target.bsbutton('loading');
+
+      var code = this.$('.js-ticket-code').val();
+
+      Backbone.callApi('post', 'ticket/verify', {code: code}, function(response){
+
+      });
+
+      $target.bsbutton('reset');
     }
   });
 

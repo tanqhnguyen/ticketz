@@ -38,7 +38,7 @@ define([
       throw "URL is not defined";
     }
 
-    params.url = apiPrefix + '/' + params.url + '/' + method;
+    params.url = '/' + params.url + '/' + method;
 
     // Ensure that we have the appropriate request data.
     if (options.data == null && model && (method === 'create' || method === 'update' || method === 'patch')) {
@@ -73,6 +73,7 @@ define([
   }
 
   Backbone.callApi = function(type, uri, data, options) {
+    type = type.toLowerCase();
     data = data || {};
     options = options || {};
 
@@ -80,13 +81,15 @@ define([
       uri = '/' + uri;
     }
 
+    uri = apiPrefix + uri;
+
     var params = _.extend({
       type: type,
       url: uri,
       dataType: 'json'
     }, options);
 
-    if (type.toLowerCase() == 'post') {
+    if (type == 'post') {
       params['contentType'] = 'application/json';
       params['data'] = JSON.stringify(data);
     } else {
