@@ -41,7 +41,7 @@ define([
       }).success(function(response){
         self.$('.js-count-sold-ticket').html(response.pagination.total);
         var gridView = new GridView({
-          headers: [_.t('Code'), _.t('Event'), _.t('Date'), _.t('User'), _.t('Status'), '&nbsp;'],
+          headers: [_.t('Code'), _.t('Event'), '&nbsp;'],
           itemView: TicketGridItemView,
           collection: self.tickets,
           pageRange: 9,

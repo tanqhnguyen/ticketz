@@ -1,7 +1,6 @@
 define([
-  'underscore'
-  , 'basemodel'
-], function(_, BaseModel){
+  'basemodel'
+], function(BaseModel){
   var Model = BaseModel.extend({
     url: 'ticket',
 
