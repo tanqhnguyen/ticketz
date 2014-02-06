@@ -7,6 +7,18 @@ define([
   var Model = BaseModel.extend({
     url: 'event',
 
+    name: 'event',
+
+    rules: [
+      [
+        'title address_name address1 address2 city zipcode',
+        'length',
+        {
+          min: 3
+        }
+      ]
+    ],
+
     computedAttributes: {
       'datetime': ['start_date', 'end_date', function(){
         var startDate = moment(this.get('start_date')).format(Model.MOMENT_DATETIME_FORMAT);

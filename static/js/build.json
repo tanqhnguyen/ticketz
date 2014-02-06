@@ -8,7 +8,7 @@
     "text": "vendors/requirejs-text",
     "backbone.babysitter": "vendors/backbone.babysitter",
     "backbone.wreqr": "vendors/backbone.wreqr",
-    "marionette": "vendors/backbone.marionette",
+    "marionette": "libs/marionette.ticketz",
     "bootstrap3.datetimepicker": "vendors/bootstrap3.datetimepicker",
     "moment": "vendors/moment",
     "summernote": "vendors/summernote"
@@ -31,7 +31,16 @@
     "bootstrap3.datetimepicker": ["moment"],
     "vendors/less": {
       "exports": "less"
-    }
+    },
+    "vendors/jquery.noty": {
+      "exports": "noty"
+    },
+    "vendors/jquery.noty.top": [
+      "vendors/jquery.noty"
+    ],
+    "vendors/jquery.noty.bootstrap": [
+      "vendors/jquery.noty"
+    ]
   },
 
   "modules": [

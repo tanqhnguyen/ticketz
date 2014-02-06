@@ -8,6 +8,12 @@ define([
       this.listenTo(this.model, 'change:'+attribute, function(){
         self.triggerMethod('changeModelValue');
       });
+
+      this.listenTo(this.model, 'validationFailed', function(errors){
+        if (errors[attribute]) {
+          self.triggerMethod('modelError', errors[attribute]);
+        }
+      });
     },
 
     getModelValue: function() {

@@ -19,7 +19,8 @@ define([
     ui: {
       price: '.js-ticket-type-price',
       amount: '.js-ticket-type-amount',
-      name: '.js-ticket-type-name'
+      name: '.js-ticket-type-name',
+      description: '.js-ticket-type-description'
     },
 
     initialize: function() {
@@ -41,6 +42,12 @@ define([
 
       this.ui.name.html(this.model.buildControl({
         attribute: 'name',
+        type: 'input',
+        className: 'form-control'
+      }).$el);
+
+      this.ui.description.html(this.model.buildControl({
+        attribute: 'description',
         type: 'input',
         className: 'form-control'
       }).$el);

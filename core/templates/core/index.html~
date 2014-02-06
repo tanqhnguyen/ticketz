@@ -8,7 +8,7 @@
 				<a href="#" class = "navbar-brand pull-left">TicketZ</a>
 				</div>
 				{% if user.is_authenticated %}
-				<div class="col-md-2">
+				<div class="col-md-2" font-size:16px>
 				<a href="{% url 'event_create' %}" class = "navbar-brand pull-left">Create Event</a>
 				</div>
 				<div class="col-md-2">

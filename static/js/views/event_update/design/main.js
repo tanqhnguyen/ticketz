@@ -33,7 +33,8 @@ define([
       },
       'click .js-edit': function() {
         return false;
-      }
+      },
+      'click .js-delete-banner': 'onClickDeleteBanner'
     },
 
     regions: {
@@ -81,6 +82,7 @@ define([
     // },
 
     renderFileUpload: function() {
+      var self = this;
       this.fileupload = new FileuploadView({
         el: this.$('.js-fileupload'),
         name: 'banner',
@@ -89,6 +91,17 @@ define([
           event_id: this.model.id
         },
         buttonTitle: this.model.get('json.banner') ? _.t('Change') : _.t('Upload')
+      });
+
+      this.listenTo(this.fileupload, 'uploaded', function(data){
+        var previousBanner = self.model.get('json.banner');
+        self.model.set('json.banner', data.json.banner);
+
+        if (!previousBanner) {
+          self.eventDemoView.renderBanner();
+        } else {
+          self.model.trigger('change:json.banner.full');
+        }
       });
 
       this.fileupload.render();
@@ -209,6 +222,20 @@ define([
       }, this);
 
       this.customStyleView.render();
+    },
+
+    onClickDeleteBanner: function(e) {
+      var self = this;
+      var $target = $(e.currentTarget);
+      $target.bsbutton('loading');
+
+      Backbone.callApi('post', this.model.get('url.deleteBanner'), {
+        event_id: this.model.id
+      }).success(function(){
+        self.model.set('json.banner.full', null);
+      }).complete(function(){
+        $target.bsbutton('reset');
+      });
     }
   });
 

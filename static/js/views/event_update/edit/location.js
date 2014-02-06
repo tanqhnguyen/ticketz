@@ -30,18 +30,33 @@ define([
       this.renderMap();
     },
 
+    initialize: function() {
+    },
+
     renderMap: function() {
       var self = this;
       if (this.map.currentView) {
         return;
       }
-      
-      this.map.show(new GoogleMapView({
+
+      var mapOptions = {
         height: '300px',
         autoCompletePlaceholder: _.t('Enter location'),
         autoCompleteClassName: 'form-control',
         autoCompleteId: 'event-location'
-      }));
+      }
+
+      var map = self.model.get('json.map');
+      if (map) {
+        var location = self.model.get('json.map').toJSON();
+        mapOptions['latitude'] = location.lat;
+        mapOptions['longitude'] = location.lng;
+        mapOptions['markerTitle'] = this.model.get('json.address_name');
+        mapOptions['showMarker'] = true;
+      }
+      
+      this.map.show(new GoogleMapView(mapOptions));
+
       this.map.currentView.initMap();
       this.listenTo(this.map.currentView, 'placesChanged', this.onPlacesChanged);
     },
@@ -50,7 +65,10 @@ define([
       var place = _.first(places);
 
       if (place) {
-        this.model.set('map', place, {raw: true});
+        this.model.get('json').set('map', {
+          lat: place.geometry.location.d,
+          lng: place.geometry.location.e
+        });
       }
     },
 

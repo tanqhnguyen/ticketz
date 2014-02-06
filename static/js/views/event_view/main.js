@@ -28,11 +28,12 @@ define([
       ticketContainer: '.js-ticket-container',
       organizer: '.js-organizer',
       organizerName: '.js-organizer-name',
-      organizerContact: '.js-organizer-contact'
+      organizerContact: '.js-organizer-contact',
+      banner: '.js-banner'
     },
 
     initialize: function() {
-      this.listenTo(this.model, 'change:map', this.onPlacesChanged);
+      this.listenTo(this.model.get('json'), 'change:map', this.onPlacesChanged);
     },
 
     serializeData: function() {
@@ -67,13 +68,30 @@ define([
         });
       }, this);
 
-      this.map = new GoogleMapView({
+      this.renderBanner();
+
+
+      var mapOptions = {
         height: '300px',
         autoComplete: false
-      });
+      }
+
+      var map = self.model.get('json.map');
+      if (map) {
+        var location = self.model.get('json.map').toJSON();
+        mapOptions['latitude'] = location.lat;
+        mapOptions['longitude'] = location.lng;
+        mapOptions['markerTitle'] = this.model.get('json.address_name');
+        mapOptions['showMarker'] = true;
+      }
+
+      this.map = new GoogleMapView(mapOptions);
+
       this.map.render();
       this.ui.map.html(this.map.$el);
       this.map.initMap();
+
+
 
       this.style = new CustomStyleView({
         model: this.model
@@ -90,13 +108,22 @@ define([
 
       this.ticketType = new TicketTypeCollectionView({
         collection: this.model.get('ticket_types'),
-        el: this.ui.ticket
+        el: this.ui.ticket,
       });
       this.ticketType.render();
     },
 
     onPlacesChanged: function() {
-      this.map.triggerMethod('placesChanged', this.model.get('map'));
+      this.map.triggerMethod('placesChanged', this.model.get('json.map'));
+    },
+
+    renderBanner: function() {
+      if (this.model.get('json.banner')) {
+        this.ui.banner.html(this.model.buildControl({
+          attribute: 'json.banner.full',
+          type: 'image'
+        }).$el);        
+      }
     }
   });
 })

@@ -7,20 +7,19 @@ define([
     tagName: 'tr',
 
     events: {
-      
+      'click .js-buy': 'onClickBuy'
     },
 
     serializeData: function() {
       return {
-        ticketType: this.model
+        model: this.model
       }
     },
 
     ui: {
       price: '.js-price',
-      amount: '.js-amount',
-      name: '.js-name',
-      amountLeft: '.js-amount-left'
+      description: '.js-description',
+      name: '.js-name'
     },
 
     initialize: function() {
@@ -31,8 +30,7 @@ define([
       return {
         'price': this.ui.price,
         'name': this.ui.name,
-        'amount': this.ui.amount,
-        'amount_left': this.ui.amountLeft
+        'description': this.ui.description,
       };
     },
 
@@ -44,6 +42,24 @@ define([
           type: 'html'
         });
       }, this);
+    },
+
+    onClickBuy: function(e) {
+      var amount = this.$('input[name=amount]').val();
+      amount = parseInt(amount);
+
+      if (_.isNaN(amount)) {
+        amount = 1;
+      }
+
+      Backbone.callApi('post', this.model.collection.event.get('url.purchaseTicket'), {
+        amount: amount,
+        ticket_type_id: this.model.id
+      }).success(function(){
+
+      }).complete(function(){
+
+      });
     }
   });
 

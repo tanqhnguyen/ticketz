@@ -1,0 +1,46 @@
+{% load static %}
+{% load i18n %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="language" content="en_US" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+    var btn = $.fn.button.noConflict();
+    var tooltip = $.fn.tooltip.noConflict();
+    $.fn.bsbutton = btn;
+    $.fn.bstooltip = tooltip;
+  </script>
+  <script src="//code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+  
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+
+  {% if less %}
+  {% with "less/"|add:less|add:".less" as template %}
+  <link rel="stylesheet/less" type="text/css" href="{% static template %}" />
+  {% endwith %}
+  {% endif %}
+
+  {% block less %} {% endblock %}
+
+  <script type="text/javascript" src="{% static 'js/vendors/less.js' %}"></script>
+  <script type="text/javascript">
+    window.ticketz = {};
+  </script>
+  {% block javascript %}{% endblock %}
+  {% block javascript_templates %}{% endblock %}
+
+  <title>Ticketz</title>
+</head>
+
+<body>
+</body>
+
+</html>
