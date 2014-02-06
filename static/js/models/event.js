@@ -9,15 +9,15 @@ define([
 
     name: 'event',
 
-    rules: [
-      [
-        'title address_name address1 address2 city zipcode',
-        'length',
-        {
-          min: 3
-        }
-      ]
-    ],
+    // rules: [
+    //   [
+    //     'title address_name address1 city zipcode',
+    //     'length',
+    //     {
+    //       min: 3
+    //     }
+    //   ]
+    // ],
 
     computedAttributes: {
       'datetime': ['start_date', 'end_date', function(){

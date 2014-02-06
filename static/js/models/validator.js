@@ -20,7 +20,6 @@ define([
           min: options.min, 
           max: options.max, 
           attribute: this.getAttributeLabel(attribute)});
-
         validator.check(value, msg).len(options.min, options.max);
       } catch (e) {
         return e.message;

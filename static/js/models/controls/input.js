@@ -25,8 +25,11 @@ define([
         stop: function(e, el) {
           var $target = $(e.currentTarget);
           var val = $target.val();
-          if (!self.model.set(attribute, val, {validate: true})) {
-            self.triggerMethod('modelError', self.model.validationError[attribute][0]);
+
+          self.model.set(attribute, val, {validate: true});
+
+          if (self.model.validationError && self.model.validationError[attribute]) {
+            self.triggerMethod('modelError', self.model.validationError[attribute][0]);  
           } else {
             $target.bstooltip('hide');
             $target.bstooltip('destroy');
