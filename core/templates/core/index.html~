@@ -112,7 +112,7 @@
 
 	<div class="container ">
 	<div class=" col-offset-6 center-block">
-        {% static 'Ticketz_website_icons/audience.png' %}
+
     
 		<div class="row text-centered width:16px margin: 0 auto">
 			<div class="col-md-2 col-md-offset-1 width:16px margin: 0 auto">
