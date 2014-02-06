@@ -36,7 +36,7 @@ define([
         data: data
       }).success(function(){
         var gridView = new GridView({
-          headers: [_.t('Code'), _.t('Event'), '&nbsp;'],
+          headers: [_.t('Code'), _.t('Event'), _.t('Date'), _.t('User'), '&nbsp;'],
           itemView: TicketGridItemView,
           collection: self.tickets,
           pageRange: 9,

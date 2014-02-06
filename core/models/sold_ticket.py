@@ -31,6 +31,7 @@ class SoldTicket(AbstractModel):
         data = model_to_dict(self, exclude=['user', 'ticket_type', 'event'])
         data['event'] = self.event.json_data(['ticket_types', 'json'])
         data['url'] = self.generate_url()
+        data['user'] = self.user.json_data()
         return data
 
     def generate_qr_code(self):

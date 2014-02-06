@@ -20,8 +20,9 @@ class User(AbstractUser, AbstractModel):
     class Meta:
         app_label = "core"
 
-    def json_data(self):
+    def json_data(self, exclude=[]):
         data = model_to_dict(self, fields=['id', 'username', 'first_name', 'last_name', 'email'])
+        data = {key: value for key, value in data.iteritems() if key not in exclude}
         return data
 
     def purchase_ticket(self, ticket_type_id):

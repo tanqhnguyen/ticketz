@@ -64,14 +64,14 @@ class ListView(ApiView):
         conditions = {
             'is_active': request.GET.get('active', 'true') == 'true'
         }
-        print upcoming
+        
         if upcoming:
             tickets = SoldTicket.objects.filter(user_id=request.user.id).all().distinct('event')
             conditions['id__in'] = [ticket.event.id for ticket in tickets]
         else:
             user_id = int(request.GET.get('user_id', request.user.id))
             conditions['user_id'] = user_id    
-        print conditions
+        
         events = event_objects.filter(**conditions).all()[offset:offset+limit]
         count = event_objects.filter(**conditions).count()
 

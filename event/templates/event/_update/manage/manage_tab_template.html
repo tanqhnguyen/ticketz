@@ -20,6 +20,12 @@ Coming soon...
 <a href="<%= model.get('event.url.view') %>"><%= model.get('event.title') %></a>
 </td>
 <td>
+<%= model.relativeDate('created_date') %>
+</td>
+<td>
+<%= model.getUser() %>
+</td>
+<td>
 <a class="btn btn-primary btn-xs" href='<%= model.get('url.view') %>'>{% trans 'View' %}</a>
 </td>
 </script>

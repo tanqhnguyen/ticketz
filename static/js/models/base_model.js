@@ -9,10 +9,11 @@ define([
   , 'models/controls/font_family'
   , 'models/controls/datetime'
   , 'models/controls/image'
+  , 'moment'
 ], function(_, Backbone, Validator, InputControlView, WysiwygControlView
   , HtmlControlView, ColorpickerControlView
   , FontFamilyControlView, DatetimeControlView
-  , ImageControlView){
+  , ImageControlView, moment){
   return Backbone.Maze.Model.extend({
     controls: {
       'input': InputControlView,
@@ -133,5 +134,13 @@ define([
       control.render();
       return control;
     },
+
+    formatDate: function(attr, format) {
+
+    },
+
+    relativeDate: function(attr) {
+      return moment(this.get(attr)).fromNow();
+    }
   });
 })

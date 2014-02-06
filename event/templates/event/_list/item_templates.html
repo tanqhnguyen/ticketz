@@ -14,5 +14,5 @@
 </script>
 
 <script type="script/template" id="em-recent-purchase-item-template">
-<%= model.get('code') %>
+<a href="<%= model.get('url.view') %>"><%= model.get('code') %></a> {% trans 'to' %} <a href="<%= model.get('event.url.view') %>"><%= model.get('event.title') %></a> <b><%= model.relativeDate('created_date') %></b> {% trans 'by' %} <b><%= model.getUser() %></b>
 </script>
