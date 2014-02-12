@@ -102,7 +102,10 @@ class Event(AbstractModel):
         'commonTitleBgColor': '#307ecc',
         'commonTitleColor': '#ffffff',
         'banner': None,
-        'map': None
+        'map': None,
+        'bgColor': '#ffffff',
+        'titleColor': '#2679b5',
+        'dateColor': '#8089a0'
     }
 
     def delete_old_banner(self):

@@ -24,6 +24,16 @@
 
 <script type="text/template" id="ev-custom-style-template">
   #event-view {
+    background-color: <%= model.get('json.bgColor') %>;
+
+    .title {
+      color: <%= model.get('json.titleColor') %>;      
+    }
+
+    .datetime {
+      color: <%= model.get('json.dateColor') %>;
+    }
+
     .detail {
       .widget-header {
         background-color: <%= model.get('json.detailTitleBgColor') %>;
@@ -87,7 +97,7 @@
     <div class="page-header">
       <h1>
       <span class="js-title title bold"></span>
-      <small>
+      <small class="datetime">
         <i class="fa fa-angle-double-right"></i>
         <span class="js-datetime"></span>
       </small>

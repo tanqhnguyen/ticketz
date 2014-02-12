@@ -69,6 +69,14 @@ define([
         });
       });
 
+      this.$('.js-general-color').each(function(){
+        self.model.buildControl({
+          attribute: $(this).data('attribute'),
+          el: $(this),
+          type: 'colorpicker'
+        });
+      });
+
       this.createEditIcons();
       this.initEditTooltips();
       this.renderFileUpload();
