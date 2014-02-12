@@ -1,5 +1,65 @@
-{% extends 'layouts/static.html' %}
+{% extends 'layouts/requirejs.html' %}
+
+{% load i18n %}
+{% load custom_filters %}
+
+{% block javascript_templates %}
+<script type="text/template" id="up-layout-template">
+<div class="row">
+  <div class="col-sm-8">
+    <form class="form-horizontal" role="form">
+      <legend>
+        {% trans 'Update information' %}
+      </legend>
+      <fieldset>
+        <div class="form-group">
+          <label for="first_name" class="col-sm-2 control-label">{% trans 'First name' %}</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="first_name" placeholder="{% trans 'First name' %}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="last_name" class="col-sm-2 control-label">{% trans 'Last name' %}</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="last_name" placeholder="{% trans 'Last name' %}">
+          </div>
+        </div>
+        <% if (!model.get('social_user')) { %>
+        <div class="form-group">
+          <label for="new_password" class="col-sm-2 control-label">{% trans 'New password' %}</label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" id="new_password" placeholder="{% trans 'If you want to change password, enter new password here' %}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="current_password" class="col-sm-2 control-label">{% trans 'Current password' %}</label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" id="current_password" placeholder="{% trans 'Current password' %}">
+          </div>
+        </div>
+        <% } %>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">{% trans 'Change' %}</button>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+
+  <div class="col-sm-4">
+  </div>
+</div>
+</script>
+
+<script type="text/javascript">
+  window.ticketz = window.ticketz || {};
+  window.ticketz.user = {{ user.json_data|json_dumps|safe }}
+</script>
+{% endblock %}
 
 {% block content %}
-Profile page
+<div id="update-profile">
+
+</div>
 {% endblock %}

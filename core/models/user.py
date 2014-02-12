@@ -23,6 +23,12 @@ class User(AbstractUser, AbstractModel):
     def json_data(self, exclude=[]):
         data = model_to_dict(self, fields=['id', 'username', 'first_name', 'last_name', 'email'])
         data = {key: value for key, value in data.iteritems() if key not in exclude}
+
+        social_user = self.get_social_user()
+        if social_user:
+            data['social_user'] = {
+                'provider': social_user.provider
+            }
         return data
 
     def purchase_ticket(self, ticket_type_id):
