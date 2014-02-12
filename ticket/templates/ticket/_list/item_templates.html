@@ -13,5 +13,5 @@
 </script>
 
 <script type="script/template" id="tv-upcoming-event-item-template">
-<%= model.get('title') %>
+<a href="<%= model.get('url.view') %>"><%= model.get('title') %></a> (<%= model.relativeDate('start_date') %>)
 </script>
