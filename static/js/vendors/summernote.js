@@ -2150,7 +2150,7 @@
 
     tplDialog = function (lang) {
       return '<div class="note-dialog">' +
-               '<div class="note-image-dialog modal" aria-hidden="false">' +
+               '<div class="note-image-dialog modal" aria-hidden="false" data-backdrop="false">' +
                  '<div class="modal-dialog">' +
                    '<div class="modal-content">' +
                      '<div class="modal-header">' +
@@ -2171,7 +2171,7 @@
                    '</div>' +
                  '</div>' +
                '</div>' +
-               '<div class="note-link-dialog modal" aria-hidden="false">' +
+               '<div class="note-link-dialog modal" aria-hidden="false" data-backdrop="false">' +
                  '<div class="modal-dialog">' +
                    '<div class="modal-content">' +
                      '<div class="modal-header">' +
@@ -2197,7 +2197,7 @@
                    '</div>' +
                  '</div>' +
                '</div>' +
-                   '<div class="note-video-dialog modal" aria-hidden="false">' +
+                   '<div class="note-video-dialog modal" aria-hidden="false" data-backdrop="false">' +
                      '<div class="modal-dialog">' +
                        '<div class="modal-content">' +
                          '<div class="modal-header">' +
@@ -2219,7 +2219,7 @@
                        '</div>' +
                      '</div>' +
                    '</div>' +
-               '<div class="note-help-dialog modal" aria-hidden="false">' +
+               '<div class="note-help-dialog modal" aria-hidden="false" data-backdrop="false">' +
                  '<div class="modal-dialog">' +
                    '<div class="modal-content">' +
                      '<div class="modal-body">' +

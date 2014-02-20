@@ -9,10 +9,11 @@ define([
       return '<input type="text" class="form-control" /><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>';
     },
 
-    defaultDate: '',
+    defaultDate: null,
     placeholder: null,
     dateFormat: 'yy-mm-dd',
     timeFormat: 'HH:mm',
+    momentFormat: 'ddd DD-MM-YYYY HH:mm',
 
     onRender: function() {
       this.$el.addClass('input-group');
@@ -34,21 +35,19 @@ define([
 
       var self = this;
       var initialDate = this.model.get(attribute) || Marionette.getOption(this, 'defaultDate') || new Date().getTime();
-      initialDate = new Date(initialDate);
+      //initialDate = new Date(initialDate);
 
       var $input = this.$('input');
+      $input.val(moment(initialDate).format(Marionette.getOption(this, 'momentFormat')));
 
       $input.datetimepicker({
         dateFormat: dateFormat,
         timeFormat: timeFormat,
-        defaultDate: initialDate,
         onSelect: function(dateTime) {
           var date = $(this).datetimepicker('getDate').getTime();
           self.model.set(attribute, date);
         }
       });
-
-      $input.datetimepicker('setDate', initialDate);
     }
   });
 

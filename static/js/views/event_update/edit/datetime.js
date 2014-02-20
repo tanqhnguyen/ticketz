@@ -26,6 +26,7 @@ define([
         el: this.ui.startDate,
         dateFormat: Event.JQUERYUI_DATE_FORMAT,
         timeFormat: Event.JQUERYUI_TIME_FORMAT,
+        momentFormat: Event.MOMENT_DATETIME_FORMAT,
         placeholder: _.t('From')
       });
 
@@ -35,6 +36,7 @@ define([
         el: this.ui.endDate,
         dateFormat: Event.JQUERYUI_DATE_FORMAT,
         timeFormat: Event.JQUERYUI_TIME_FORMAT,
+        momentFormat: Event.MOMENT_DATETIME_FORMAT,
         placeholder: _.t('To')
       });
     }

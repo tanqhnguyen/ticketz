@@ -74,3 +74,18 @@ class TicketView(TemplateView):
         context['end_date'] = event.format_date('end_date')
         context['ticket'] = ticket
         return context
+
+class SearchView(TemplateView):
+    template_name='event/search.html'
+
+    def get_context_data(self, **kwargs):
+        query = self.request.GET.get('q', '')
+
+        events = Event.objects.filter(title__icontains=query.lower()).all()[0:10]
+
+        context = super(SearchView, self).get_context_data(**kwargs)
+        context['less'] = 'event_search'
+        context['requirejs'] = 'event_search'
+        context['search_query'] = query
+        context['events'] = [event.json_data() for event in events]
+        return context

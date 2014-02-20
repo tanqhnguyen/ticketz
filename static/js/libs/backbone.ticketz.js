@@ -1,9 +1,10 @@
 define([
   'vendors/underscore'
+  , 'vendors/underscore.string'
   , 'vendors/backbone'
   , 'libs/backbone.maze'
   , 'libs/arrg'
-], function(_, Backbone, Maze, arrg){
+], function(_, _s, Backbone, Maze, arrg){
   Backbone.Dispatch = {};
   Backbone.Dispatch = _.extend(Backbone.Dispatch, Backbone.Events);
 
@@ -81,7 +82,12 @@ define([
       uri = '/' + uri;
     }
 
-    uri = apiPrefix + uri;
+    if (_s.startsWith(uri, apiPrefix)) {
+
+    } else {
+      uri = apiPrefix + uri;
+    }
+    
 
     var params = _.extend({
       type: type,

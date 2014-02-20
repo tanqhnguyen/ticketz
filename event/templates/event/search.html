@@ -1,0 +1,25 @@
+{% extends 'layouts/requirejs.html' %}
+
+{% load i18n %}
+{% load custom_filters %}
+
+{% block javascript_templates %}
+<script type="text/javascript">
+  window.ticketz = window.ticketz || {};
+  window.ticketz.events = {{ events|json_dumps|safe }}
+</script>
+
+{% include 'event/_search/search_result_template.html' %}
+
+{% endblock %}
+
+
+{% block content %}
+<div id="event-search">
+  <div class="row">
+    <div class="col-lg-12 js-results">
+
+    </div>
+  </div>
+</div>
+{% endblock %}

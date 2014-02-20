@@ -1,0 +1,13 @@
+<script type="text/template" id="es-item-template">
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <a href="<%= model.get('title') %>">
+      <%= model.get('title') %>
+    </a>
+    (<%= model.relativeDate('created_date') %>)
+  </div>
+  <div class="panel-body">
+    <%= model.get('description') %>
+  </div>
+</div>
+</script>
