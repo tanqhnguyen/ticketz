@@ -70,7 +70,7 @@ class SoldTicket(AbstractModel):
 
         message = EmailMessage(**context)
         message.content_subtype = "html"
-        message.attach(self.code+'.pdj', self.generate_pdf().getvalue(), 'application/pdf')
+        message.attach(self.code+'.pdf', self.generate_pdf().getvalue(), 'application/pdf')
         message.send()
 
 
