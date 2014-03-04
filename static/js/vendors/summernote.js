@@ -1513,8 +1513,8 @@
       } else if (bCmd && keyCode === key.NUM0) { // formatBlock Paragraph
         editor.formatBlock(oLayoutInfo.editable(), 'P');
       } else if (bCmd && (key.NUM1 <= keyCode && keyCode <= key.NUM6)) {
-        var sHeading = 'H' + String.fromCharCode(keyCode); // H1~H6
-        editor.formatBlock(oLayoutInfo.editable(), sHeading);
+        //var sHeading = 'H' + String.fromCharCode(keyCode); // H1~H6
+        //editor.formatBlock(oLayoutInfo.editable(), sHeading);
       } else if (bCmd && keyCode === key.ENTER) {
         editor.insertHorizontalRule(oLayoutInfo.editable());
       } else {
@@ -1982,7 +1982,7 @@
         return '<button type="button" class="btn btn-default btn-sm btn-small" title="' + lang.font.clear + '" data-shortcut="Ctrl+\\" data-mac-shortcut="⌘+\\" data-event="removeFormat" tabindex="-1"><i class="fa fa-eraser icon-eraser"></i></button>';
       },
       ul: function (lang) {
-        return '<button type="button" class="btn btn-default btn-sm btn-small" title="' + lang.lists.unordered + '" data-shortcut="Ctrl+Shift+8" data-mac-shortcut="⌘+⇧+7" data-event="insertUnorderedList" tabindex="-1"><i class="fa fa-list-ul icon-list-ul"></i></button>';
+        return '<button type="button" class="btn btn-default btn-sm btn-small" title="' + lang.lists.unordered + '" data-shortcut="Ctrl+Shift+8" data-c="⌘+⇧+7" data-event="insertUnorderedList" tabindex="-1"><i class="fa fa-list-ul icon-list-ul"></i></button>';
       },
       ol: function (lang) {
         return '<button type="button" class="btn btn-default btn-sm btn-small" title="' + lang.lists.ordered + '" data-shortcut="Ctrl+Shift+7" data-mac-shortcut="⌘+⇧+8" data-event="insertOrderedList" tabindex="-1"><i class="fa fa-list-ol icon-list-ol"></i></button>';
