@@ -55,5 +55,7 @@ class User(AbstractUser, AbstractModel):
 
         if sold_ticket:
             sold_ticket.generate_qr_code()
+            sold_ticket.generate_pdf()
+            sold_ticket.send_email()
 
         return sold_ticket

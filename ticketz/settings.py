@@ -229,3 +229,12 @@ SOCIAL_AUTH_PIPELINE = (
 
 # GOOGLE MAP
 GOOGLE_MAP_KEY = config["google_map_key"]
+
+# MAIL
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'tan.nguyen.yaas.abo@gmail.com'
+EMAIL_HOST_PASSWORD = 'aboakademi'
+DEFAULT_FROM_EMAIL = 'Ticketz <tan.nguyen.yaas.abo@gmail.com>'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

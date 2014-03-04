@@ -31,11 +31,7 @@ class DetailView(TemplateView):
     def get_context_data(self, **kwargs):
         code = kwargs.get('code')
         ticket = self.request.user.tickets.get(code=code)
-        event = ticket.ticket_type.event
         context = super(DetailView, self).get_context_data(**kwargs)
-        print event
-        context['event'] = event
-        context['start_date'] = event.format_date('start_date')
-        context['end_date'] = event.format_date('end_date')
-        context['ticket'] = ticket
-        return context
+
+        detail_template_context = ticket.generate_detail_template_context()
+        return dict(context.items() + detail_template_context.items())

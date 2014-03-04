@@ -5,6 +5,12 @@ from django.forms.models import model_to_dict
 from django.core.urlresolvers import reverse
 import random, string
 
+from django.template import Context
+from django.template.loader import get_template
+
+from core.utils import create_pdf
+from django.core.mail import EmailMessage
+
 
 class SoldTicket(AbstractModel):
     created_date = models.BigIntegerField(default=int(round(time.time() * 1000)))
@@ -14,6 +20,9 @@ class SoldTicket(AbstractModel):
     ticket_type = models.ForeignKey('TicketType', related_name="tickets")
     user = models.ForeignKey('User', related_name="tickets")
     event = models.ForeignKey('Event', related_name="tickets")
+
+    html = None
+    pdf = None
 
     class Meta:
         app_label = "core"
@@ -37,6 +46,43 @@ class SoldTicket(AbstractModel):
     def generate_qr_code(self):
         # do nothings for now
         return self
+
+    def generate_pdf(self):
+        if not self.pdf:
+            self.pdf = create_pdf(self.get_detail_template())
+        return self.pdf
+
+    def get_detail_template(self):
+        if not self.html:
+            template = get_template('ticket/view.html')
+            context = Context(self.generate_detail_template_context())
+            self.html = template.render(context)
+        return self.html
+
+    def send_email(self):
+        event = self.ticket_type.event
+        html = self.get_detail_template()
+        context = dict()
+
+        context['subject'] = "Ticket for event %s" % event.title
+        context['to'] = (self.user.email, )
+        context['body'] = html
+
+        message = EmailMessage(**context)
+        message.content_subtype = "html"
+        message.attach(self.code+'.pdj', self.generate_pdf().getvalue(), 'application/pdf')
+        message.send()
+
+
+    def generate_detail_template_context(self):
+        context = dict()
+        event = self.ticket_type.event
+        context['event'] = event
+        context['start_date'] = event.format_date('start_date')
+        context['end_date'] = event.format_date('end_date')
+        context['ticket'] = self
+
+        return context
 
     @classmethod
     def random_code(cls):
