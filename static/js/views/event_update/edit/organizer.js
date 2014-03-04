@@ -37,8 +37,7 @@ define([
           ['color', ['color']],
           ['para', ['ul', 'ol', 'paragraph']],
           ['height', ['height']],
-          ['table', ['table']],
-          ['help', ['help']]
+          ['table', ['table']]
         ],
         height: 200
       });

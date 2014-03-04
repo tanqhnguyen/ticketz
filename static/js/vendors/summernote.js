@@ -1474,49 +1474,49 @@
       if (keyCode === key.TAB && oLayoutInfo.editable().data('tabsize')) {
         editor.tab(oLayoutInfo.editable());
       } else if (bCmd && ((bShift && keyCode === key.Z) || keyCode === key.Y)) {
-        editor.redo(oLayoutInfo.editable());
+        //editor.redo(oLayoutInfo.editable());
       } else if (bCmd && keyCode === key.Z) {
-        editor.undo(oLayoutInfo.editable());
+        //editor.undo(oLayoutInfo.editable());
       } else if (bCmd && keyCode === key.B) {
-        editor.bold(oLayoutInfo.editable());
+        //editor.bold(oLayoutInfo.editable());
       } else if (bCmd && keyCode === key.I) {
-        editor.italic(oLayoutInfo.editable());
+        //editor.italic(oLayoutInfo.editable());
       } else if (bCmd && keyCode === key.U) {
-        editor.underline(oLayoutInfo.editable());
+        //editor.underline(oLayoutInfo.editable());
       } else if (bCmd && bShift && keyCode === key.S) {
-        editor.strikethrough(oLayoutInfo.editable());
+        //editor.strikethrough(oLayoutInfo.editable());
       } else if (bCmd && keyCode === key.BACKSLACH) {
-        editor.removeFormat(oLayoutInfo.editable());
+        //editor.removeFormat(oLayoutInfo.editable());
       } else if (bCmd && keyCode === key.K) {
-        oLayoutInfo.editable();
-        editor.setLinkDialog(oLayoutInfo.editable(), function (linkInfo, cb) {
-          dialog.showLinkDialog(oLayoutInfo.dialog(), linkInfo, cb);
-        });
+        // oLayoutInfo.editable();
+        // editor.setLinkDialog(oLayoutInfo.editable(), function (linkInfo, cb) {
+        //   dialog.showLinkDialog(oLayoutInfo.dialog(), linkInfo, cb);
+        // });
       } else if (bCmd && keyCode === key.SLASH) {
-        dialog.showHelpDialog(oLayoutInfo.dialog());
+        //dialog.showHelpDialog(oLayoutInfo.dialog());
       } else if (bCmd && bShift && keyCode === key.L) {
-        editor.justifyLeft(oLayoutInfo.editable());
+        //editor.justifyLeft(oLayoutInfo.editable());
       } else if (bCmd && bShift && keyCode === key.E) {
-        editor.justifyCenter(oLayoutInfo.editable());
+        //editor.justifyCenter(oLayoutInfo.editable());
       } else if (bCmd && bShift && keyCode === key.R) {
-        editor.justifyRight(oLayoutInfo.editable());
+        //editor.justifyRight(oLayoutInfo.editable());
       } else if (bCmd && bShift && keyCode === key.J) {
-        editor.justifyFull(oLayoutInfo.editable());
+        //editor.justifyFull(oLayoutInfo.editable());
       } else if (bCmd && bShift && keyCode === key.NUM7) {
-        editor.insertUnorderedList(oLayoutInfo.editable());
+        //editor.insertUnorderedList(oLayoutInfo.editable());
       } else if (bCmd && bShift && keyCode === key.NUM8) {
-        editor.insertOrderedList(oLayoutInfo.editable());
+        //editor.insertOrderedList(oLayoutInfo.editable());
       } else if (bCmd && keyCode === key.LEFTBRACKET) {
-        editor.outdent(oLayoutInfo.editable());
+        //editor.outdent(oLayoutInfo.editable());
       } else if (bCmd && keyCode === key.RIGHTBRACKET) {
-        editor.indent(oLayoutInfo.editable());
+        //editor.indent(oLayoutInfo.editable());
       } else if (bCmd && keyCode === key.NUM0) { // formatBlock Paragraph
-        editor.formatBlock(oLayoutInfo.editable(), 'P');
+        //editor.formatBlock(oLayoutInfo.editable(), 'P');
       } else if (bCmd && (key.NUM1 <= keyCode && keyCode <= key.NUM6)) {
         //var sHeading = 'H' + String.fromCharCode(keyCode); // H1~H6
         //editor.formatBlock(oLayoutInfo.editable(), sHeading);
       } else if (bCmd && keyCode === key.ENTER) {
-        editor.insertHorizontalRule(oLayoutInfo.editable());
+        // editor.insertHorizontalRule(oLayoutInfo.editable());
       } else {
         if (keyCode === key.BACKSPACE || keyCode === key.ENTER ||
             keyCode === key.SPACE) {

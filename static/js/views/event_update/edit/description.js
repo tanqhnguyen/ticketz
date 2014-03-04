@@ -30,8 +30,7 @@ define([
           ['para', ['ul', 'ol', 'paragraph']],
           ['height', ['height']],
           ['table', ['table']],
-          ['insert', ['link', 'picture', 'video']],
-          ['help', ['help']]
+          ['insert', ['link', 'picture', 'video']]
         ],
         height: 200
       });
