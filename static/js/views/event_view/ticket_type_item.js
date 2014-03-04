@@ -52,13 +52,16 @@ define([
         amount = 1;
       }
 
+      var $currentTarget = $(e.currentTarget);
+      $currentTarget.bsbutton('loading');
+
       Backbone.callApi('post', this.model.collection.event.get('url.purchaseTicket'), {
         amount: amount,
         ticket_type_id: this.model.id
       }).success(function(){
 
       }).complete(function(){
-
+        $currentTarget.bsbutton('reset');
       });
     }
   });
