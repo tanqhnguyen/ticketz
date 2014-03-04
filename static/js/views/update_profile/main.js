@@ -31,6 +31,12 @@ define([
         type: 'input',
         el: $('#last_name')
       });
+
+      this.model.buildControl({
+        attribute: 'email',
+        type: 'input',
+        el: $('#email')
+      });
     },
 
     onSubmitForm: function(e) {

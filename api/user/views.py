@@ -12,6 +12,7 @@ class UpdateView(ApiView):
         new_password = data.get('new_password')
         first_name = data.get('first_name')
         last_name = data.get('last_name')
+        email = data.get('email')
 
         social_user = user.get_social_user()
         if not social_user and not user.check_password(current_password):
@@ -25,6 +26,9 @@ class UpdateView(ApiView):
 
         if last_name:
             user.last_name = last_name
+
+        if email:
+            user.email = email
 
         user.save()
         return self.json({
