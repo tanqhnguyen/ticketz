@@ -23,7 +23,7 @@
             <tr>
               <td bgcolor="#698291" height="115" align="center">
             <h1 style="color: #fff; font: normal 33px Georgia, serif; margin: 0; padding: 0; line-height: 33px;">
-              <a style="color: #fff; text-decoration: none;" href="{{ event.get_absolute_url }}">{{ event.title }}</a>
+              <a style="color: #fff; text-decoration: none;" href="{{request.build_absolute_uri}}{{ event.get_absolute_url }}">{{ event.title }}</a>
             </h1>
             <p style="color: #dfa575; font: normal 11px Georgia, serif; margin: 0; padding: 0; line-height: 11px;">
               {{ ticket.ticket_type.name }}
