@@ -7,7 +7,7 @@ from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from slugify import slugify
 import uuid
-#from PIL import Image
+from PIL import Image
 import StringIO
 from django.conf import settings
 import os
