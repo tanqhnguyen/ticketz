@@ -4,6 +4,7 @@ define([
   , 'collections/tickets'
   , 'views/common/grid'
   , 'views/event_update/manage/ticket_grid_item'
+  , 'vendors/jquery.flot.pie'
 ], function(_, Marionette, Tickets, GridView, TicketGridItemView){
   var View = Marionette.ItemView.extend({
     template: '#eu-manage-tab-template',
@@ -19,7 +20,8 @@ define([
     },
 
     ui: {
-      ticketList: '.js-ticket-list'
+      ticketList: '.js-ticket-list',
+      pieChart: '.js-pie-chart'
     },
 
     initialize: function() {
@@ -27,7 +29,8 @@ define([
     },
 
     onRender: function() {
-      this.loadTickets()
+      this.loadTickets();
+      this.loadChart(); 
     },
 
     loadTickets: function() {
@@ -72,6 +75,33 @@ define([
       .complete(function(){
         $target.bsbutton('reset');  
       });
+    },
+
+    loadChart: function() {
+      var self = this;
+
+      var options = {
+        series: {
+          pie: {show: true}
+        },
+        legend: {
+          show: false
+        }
+      };
+
+      Backbone.callApi('get', 'event/report', {
+        id: this.model.id
+      }).success(function(response){
+        var data = [];
+        _.each(response.data, function(count, label){
+          data.push({
+            label: label,
+            data: count
+          });
+          $.plot(self.ui.pieChart, data, options); 
+        })
+      });
+      
     }
   });
 

@@ -169,6 +169,13 @@ class Event(AbstractModel):
     def is_ended(self):
         return self.end_date > int(round(time.time() * 1000))
 
+    def sale_report(self):
+        ticket_types = self.ticket_types.all()
+        data = {}
+        for ticket_type in ticket_types:
+            data[ticket_type.name] = ticket_type.tickets.count()
+        return data
+
     @classmethod
     def first_or_create(cls,user_id):
         try:

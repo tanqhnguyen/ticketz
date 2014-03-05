@@ -132,3 +132,14 @@ class UnpublishView(ApiView):
             'data': event.json_data(),
             'success': _('Your event has been unpublished')    
         })  
+
+class ReportView(ApiView):
+    @method_decorator(login_required)
+    @method_decorator(event_owner())
+
+    def get(self, request):
+        event = request.event
+
+        return self.json({
+            'data': event.sale_report()
+        })

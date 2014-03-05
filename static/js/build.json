@@ -40,6 +40,9 @@
     ],
     "vendors/jquery.noty.bootstrap": [
       "vendors/jquery.noty"
+    ],
+    "vendors/jquery.flot.pie": [
+      "vendors/jquery.flot"
     ]
   },
 

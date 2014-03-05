@@ -11,4 +11,5 @@ urlpatterns = patterns('',
     url(r'^delete-banner$', views.DeleteBannerView.as_view(), name="api_event_delete_banner"),
     url(r'^publish$', views.PublishView.as_view(), name="api_event_publish"),
     url(r'^unpublish$', views.UnpublishView.as_view(), name="api_event_unpublish"),
+    url(r'^report$', views.ReportView.as_view(), name="api_event_report"),
 )
